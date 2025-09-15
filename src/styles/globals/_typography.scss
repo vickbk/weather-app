@@ -1,0 +1,39 @@
+@use "../functions/" as f;
+@use "../main/font";
+@use "../main/colors" as c;
+
+@import url(font.$link);
+
+:root {
+  font-size: 100%;
+}
+body {
+  font-family: font.$primary-font;
+  font-weight: font.$weight-normal;
+
+  line-height: 1.1;
+  font-size: font.$primary-size;
+
+  background-color: c.$primary-color;
+  color: c.$text-color;
+}
+h1,
+h2,
+h3 {
+  font-weight: font.$bold;
+}
+a,
+a:visited,
+a:active {
+  text-decoration: none;
+}
+input,
+select,
+textarea,
+button {
+  font-family: inherit; /* This makes the elements inherit the font-family from their parent */
+  font-size: inherit; /* Optional: Also inherit font-size for consistency */
+}
+.upper-case {
+  text-transform: uppercase;
+}

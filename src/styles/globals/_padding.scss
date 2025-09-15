@@ -1,0 +1,11 @@
+// Generating padding with sizes from 1 to 5em for .p-$
+// and 0.1 to 0.5em for .sp-$
+
+@for $i from 1 through 10 {
+  .p-#{$i} {
+    padding: #{$i}em;
+  }
+  .sp-#{$i} {
+    padding: #{$i/10}em;
+  }
+}

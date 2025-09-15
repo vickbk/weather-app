@@ -1,0 +1,38 @@
+@use "sass:string";
+@use "sass:list";
+@use "sass:meta";
+
+$units: "em" "px" "rem" "vh" "%" "vw" "cm" "pt" "pc" "vmin" "vmax" "ex" "ch"
+  "deg" "rad" "grad" "turn"; // if some units are missing they need to be added
+
+$number-list: "0123456789";
+
+@function is-numeric($string, $has-decimal: false, $is-negative: false) {
+  @if meta.type-of($string) == number {
+    @return true;
+  }
+  $str-length: string.length($string);
+  @if $str-length == 0 {
+    @return false;
+  }
+  @if list.index($units, $string) or
+    ($str-length == 1 and string.index($number-list, $string))
+  {
+    @return true;
+  }
+  $first-char: string.slice($string, 1, 1);
+  @if $first-char == "." and $has-decimal == false {
+    @return is-numeric(string.slice($string, 2), true, $is-negative);
+  } @else if $first-char == "." {
+    @return false;
+  }
+  @if ($first-char == "-" and $is-negative == false) or
+    string.index($number-list, $first-char)
+  {
+    @if $first-char == "-" {
+      $is-negative: true;
+    }
+    @return is-numeric(string.slice($string, 2), $has-decimal, $is-negative);
+  }
+  @return false;
+}

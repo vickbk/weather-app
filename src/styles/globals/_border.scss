@@ -1,0 +1,14 @@
+@use "../functions/" as f;
+
+@for $i from 1 to 11 {
+  .br-#{$i} {
+    border-radius: #{$i}em;
+  }
+  .sbr-#{$i} {
+    border-radius: #{$i/10}em;
+  }
+}
+
+.no-border {
+  border: none;
+}

@@ -1,0 +1,38 @@
+@use "colors" as c;
+@use "font";
+@use "../globals/" as g;
+@use "../functions/" as f;
+
+.splitter {
+  background-color: c.$white;
+  display: grid;
+  gap: 2em;
+  max-inline-size: f.to-r-em(900);
+  input,
+  & button {
+    font-size: f.clamp-builder(f.to-r-em(24), font.$preferred-size);
+    font-weight: font.$bold;
+  }
+  &__calculator {
+    display: grid;
+    gap: 1.5em;
+  }
+  &__result {
+    background-color: c.$text-color;
+    color: c.$green-400;
+  }
+  @include g.mobile-queries(g.$tablet) {
+    grid-template-columns: 1fr 1fr;
+    &__result {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      .result__types {
+        margin-top: 1em;
+      }
+      .result__reset {
+        margin-top: auto;
+      }
+    }
+  }
+}

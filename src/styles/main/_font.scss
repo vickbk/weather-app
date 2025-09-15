@@ -1,0 +1,11 @@
+@use "../functions/" as f;
+$link: "https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap";
+
+$primary-font: "Space Mono", monospace;
+
+$primary-size: 100%;
+$preferred-size: f.to-r-em(28);
+
+$weight-normal: 400;
+$min-bold: 600;
+$bold: 700;

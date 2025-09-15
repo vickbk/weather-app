@@ -1,0 +1,18 @@
+@use "../globals/" as g;
+@use "../functions/" as f;
+@use "font";
+
+.container {
+  .header {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    text-align: center;
+    font-size: f.clamp-builder(1.5rem, font.$preferred-size);
+  }
+  @include g.mobile-queries(g.$tablet) {
+    min-block-size: 100vh;
+    display: grid;
+    place-items: center;
+    gap: 0;
+  }
+}

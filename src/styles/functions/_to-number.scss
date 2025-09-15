@@ -1,0 +1,90 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:map";
+@use "sass:meta";
+@use "is-numeric" as *;
+@use "extract-unit" as *;
+$numMap: (
+  "0": 0,
+  "1": 1,
+  "2": 2,
+  "3": 3,
+  "4": 4,
+  "5": 5,
+  "6": 6,
+  "7": 7,
+  "8": 8,
+  "9": 9,
+  ".": 0,
+);
+$unitMap: (
+  "em": 1em,
+  "px": 1px,
+  "rem": 1rem,
+  "vh": 1vh,
+  "%": 1%,
+  "vw": 1vw,
+  "cm": 1cm,
+  "pt": 1pt,
+  "pc": 1pc,
+  "vmin": 1vmin,
+  "vmax": 1vmax,
+  "ex": 1ex,
+  "ch": 1ch,
+  "": 1,
+  "deg": 1deg,
+  "rad": 1rad,
+  "grad": 1grad,
+  "turn": 1turn,
+);
+// returns unitless numbers
+@function to-number($string) {
+  @if meta.type-of($string) == number {
+    @return $string;
+  }
+  @if not is-numeric($string) {
+    @error "Your value is not numeric. #{$string}";
+  }
+  $unit: extract-unit($string);
+  $negative: string.slice($string, 1, 1) == "-";
+  $start: 1;
+  @if $negative {
+    $start: 2;
+  }
+  $pure-num: string.slice(
+    $string,
+    $start,
+    string.length($string) - string.length($unit)
+  );
+  $result: convert-to-number($pure-num) * map.get($unitMap, $unit);
+  @if $negative {
+    $result: $result * -1;
+  }
+  @return $result;
+}
+
+// converts only strings without units
+@function convert-to-number($string, $lev: null) {
+  $str-length: string.length($string);
+  @if $lev == null {
+    $lev: string.index($string, ".");
+    @if $lev == null {
+      $lev: $str-length - 1;
+    } @else {
+      $lev: $lev - 2;
+    }
+  }
+  @if $str-length == 1 {
+    @return map.get($numMap, $key: $string) * math.pow(10, $lev);
+  }
+  $first-char: string.slice($string, 1, 1);
+
+  $top: map.get(
+      $map: $numMap,
+      $key: $first-char,
+    ) * math.pow(10, $lev);
+  @if ($first-char != ".") {
+    $lev: $lev - 1;
+  }
+  @return $top + convert-to-number(string.slice($string, 2), $lev);
+}

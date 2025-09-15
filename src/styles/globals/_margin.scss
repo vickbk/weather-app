@@ -1,0 +1,28 @@
+$sides: (
+  t: "top",
+  b: "bottom",
+  l: "left",
+  r: "right",
+);
+
+// Generating margins from 1em to 10em
+
+@for $i from 1 through 10 {
+  .m-#{$i} {
+    margin: #{$i}em;
+  }
+  .sm-#{$i} {
+    margin: #{$i/10}em;
+  }
+
+  // creating separate margins for each side separatly like mt-1,ml-5
+
+  @each $name, $value in $sides {
+    .m#{$name}-#{$i} {
+      margin-#{$value}: #{$i}em;
+    }
+    .sm#{$name}-#{$i} {
+      margin-#{$value}: #{$i/10}em;
+    }
+  }
+}

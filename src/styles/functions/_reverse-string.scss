@@ -1,0 +1,7 @@
+@use "sass:string";
+@function reverse-string($string) {
+  @if string.length($string) == 1 {
+    @return $string;
+  }
+  @return reverse-string(string.slice($string, 2)) + string.slice($string, 1, 1);
+}

@@ -1,0 +1,18 @@
+@use "../functions/" as f;
+
+$mobile: f.to-r-em(576px, em);
+$tablet: f.to-r-em(768px, em);
+$pc: f.to-r-em(992px, em);
+$large-screen: f.to-r-em(1200px, em);
+
+@mixin mobile-queries($min-inline-size) {
+  @media (min-width: $min-inline-size) {
+    @content;
+  }
+}
+
+@mixin desktop-queries($max-inline-size) {
+  @media (max-width: $max-inline-size) {
+    @content;
+  }
+}

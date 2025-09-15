@@ -1,0 +1,14 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+img {
+  max-inline-size: 100%;
+}
+button,
+input[type="submit"] {
+  cursor: pointer;
+}

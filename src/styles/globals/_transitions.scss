@@ -1,0 +1,3 @@
+@mixin ease-in-out($trigger: display, $time: 0.5s) {
+  transition: $trigger $time ease-in-out;
+}

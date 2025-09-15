@@ -1,0 +1,39 @@
+@use "../main/colors" as c;
+@use "../main/font";
+@use "../globals/" as g;
+@use "../functions/" as f;
+
+.result {
+  &__types {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &-description {
+      > * {
+        display: block;
+      }
+      .description-title {
+        color: c.$white;
+      }
+      .description-details {
+        color: c.$grey-400;
+      }
+    }
+    &-amount {
+      font-size: f.clamp-builder(f.to-r-em(28), f.to-r-em(32));
+    }
+  }
+  &__reset {
+    inline-size: 100%;
+    background-color: c.$green-400;
+    color: c.$text-color;
+    @include g.active-state {
+      background-color: c.$grey-200;
+      outline: none;
+    }
+    @include g.inactive-state {
+      background-color: c.$grey-500;
+      color: c.$grey-400;
+    }
+  }
+}

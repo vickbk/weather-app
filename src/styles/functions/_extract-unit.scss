@@ -1,0 +1,21 @@
+@use "sass:meta";
+@use "sass:math";
+@use "reverse-string" as *;
+@use "sass:string";
+@function extract-unit($string) {
+  @if meta.type-of($string) == number {
+    @return math.unit($string);
+  }
+  @return extract-string-unit(reverse-string($string));
+}
+$num-list: "0123456789";
+@function extract-string-unit($string) {
+  $str-length: string.length($string);
+  @if $str-length == 0 or string.index($num-list, string.slice($string, 1, 1)) {
+    @return "";
+  } @else if $str-length == 1 {
+    @return $str-length;
+  }
+  @return extract-string-unit(string.slice($string, 2)) +
+    string.slice($string, 1, 1);
+}
