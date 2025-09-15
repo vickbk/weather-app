@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $sides: (
   t: "top",
   b: "bottom",
@@ -12,7 +14,7 @@ $sides: (
     margin: #{$i}em;
   }
   .sm-#{$i} {
-    margin: #{$i/10}em;
+    margin: #{math.div($i, 10)}em;
   }
 
   // creating separate margins for each side separatly like mt-1,ml-5
@@ -22,7 +24,7 @@ $sides: (
       margin-#{$value}: #{$i}em;
     }
     .sm#{$name}-#{$i} {
-      margin-#{$value}: #{$i/10}em;
+      margin-#{$value}: #{math.div($i, 10)}em;
     }
   }
 }
