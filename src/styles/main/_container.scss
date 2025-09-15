@@ -4,7 +4,6 @@
 
 .container {
   .header {
-    text-transform: uppercase;
     letter-spacing: 0.2em;
     text-align: center;
     font-size: f.clamp-builder(1.5rem, font.$preferred-size);
