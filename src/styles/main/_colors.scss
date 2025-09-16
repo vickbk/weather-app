@@ -1,19 +1,29 @@
 // ### Primary
 
-$green-400: hsl(172, 67%, 45%);
+$neutral-900: hsl(243, 96%, 9%);
+$neutral-800: hsl(243, 27%, 20%);
+$neutral-700: hsl(243, 23%, 24%);
+$neutral-600: hsl(243, 23%, 30%);
+$neutral-300: hsl(240, 6%, 70%);
+$neutral-200: hsl(250, 6%, 84%);
+$neutral-0: hsl(0, 0%, 100%);
 
-// ### Neutral
+$orange-500: hsl(28, 100%, 52%);
 
-$green-900: hsl(183, 100%, 15%);
-$grey-500: hsl(186, 14%, 43%);
-$grey-400: hsl(184, 14%, 56%);
-$grey-200: hsl(185, 41%, 84%);
-$grey-50: hsl(189, 47%, 97%);
-$white: hsl(0, 100%, 100%);
+$blue-500: hsl(233, 67%, 56%);
+$blue-700: hsl(248, 70%, 36%);
 
-$red: hsl(4, 100%, 67%);
 //
 
-$primary-color: $grey-200;
-$link-color: $green-400;
-$text-color: $green-900;
+$primary-color: $neutral-900;
+$link-color: $neutral-300;
+$text-color: $neutral-0;
+
+:root {
+  --background: $primary-color;
+  --foreground: $text-color;
+  @media (prefers-color-scheme: dark) {
+    --background: $text-color;
+    --foreground: $primary-color;
+  }
+}

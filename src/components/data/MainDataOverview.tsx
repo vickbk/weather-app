@@ -19,7 +19,12 @@ export default function MainDataOverview({
           dateTime={`${date.getFullYear()}-${date.getMonth()}-${date.getUTCDate()}`}
           className="overview-date"
         >
-          {date.toLocaleTimeString()}
+          {date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "2-digit",
+            weekday: "long",
+          })}
         </time>
       </div>
       <Image src={image} alt={desc} />
