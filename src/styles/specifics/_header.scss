@@ -1,0 +1,13 @@
+@use "../functions/" as f;
+@use "../main/font";
+.header {
+  &__top {
+    &-image {
+      height: f.to-r-em(30);
+    }
+  }
+  &__title {
+    font-size: f.clamp-builder(3.5rem, 6rem);
+    font-family: font.$secondary-font;
+  }
+}
