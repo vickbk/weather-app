@@ -13,7 +13,19 @@ $sides: (
   ie: "inline-end",
 );
 
-// Generating margins from 1em to 10em
+// Generating margins from 1em to 10em and auto
+.m-auto {
+  margin: auto;
+}
+
+@each $name, $value in $sides {
+  .m#{$name}-auto {
+    margin-#{$value}: auto;
+  }
+  .sm#{$name}-auto {
+    margin-#{$value}: auto;
+  }
+}
 
 @for $i from 1 through 10 {
   .m-#{$i} {

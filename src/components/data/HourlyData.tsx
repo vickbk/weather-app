@@ -4,10 +4,12 @@ import DataPerHour from "./DataPerHour";
 
 export default function HourlyData() {
   return (
-    <article className="data__hourly">
-      <section className="hourly__data">
-        <p>Hourly forecast</p>
-        <Dropdown text="The day" />
+    <article className="data__hourly neutral-700 br-1 p-1">
+      <section className="hourly">
+        <div className="flex space-between center">
+          <h4 className="hourly__title">Hourly forecast</h4>
+          <Dropdown specialClass="neutral-600" text="The day" />
+        </div>
         {[
           {
             icon: { image: partlyCloudy, desc: "Partly cloudy" },
