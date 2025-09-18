@@ -1,0 +1,9 @@
+.main {
+  &__data {
+    &-overview {
+      background: url("/weather-app-main/assets/images/bg-today-small.svg")
+        no-repeat;
+      background-position: center;
+    }
+  }
+}

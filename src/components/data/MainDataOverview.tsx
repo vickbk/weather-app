@@ -12,12 +12,12 @@ export default function MainDataOverview({
   temp: string;
 }) {
   return (
-    <article className="main__data-overview">
-      <div>
-        <h2 className="overview-town">{city}</h2>
+    <article className="main__data-overview pb-2 pi-1 br-1">
+      <div className="overview-heading mb-2">
+        <h2 className="overview-heading-town smb-3">{city}</h2>
         <time
           dateTime={`${date.getFullYear()}-${date.getMonth()}-${date.getUTCDate()}`}
-          className="overview-date"
+          className="overview-heading-date"
         >
           {date.toLocaleDateString("en-US", {
             year: "numeric",
@@ -27,7 +27,10 @@ export default function MainDataOverview({
           })}
         </time>
       </div>
-      <Image src={image} alt={desc} />
+      <div className="overview-temp flex center space-between">
+        <Image src={image} alt={desc} width={100} />
+        {temp}°
+      </div>
     </article>
   );
 }

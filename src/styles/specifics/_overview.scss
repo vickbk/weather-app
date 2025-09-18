@@ -1,0 +1,15 @@
+@use "../functions/" as f;
+@use "../main/font";
+.overview {
+  &-heading {
+    text-align: center;
+    &-town {
+      font-size: f.clamp-builder(1.8rem, 3rem);
+    }
+  }
+  &-temp {
+    font-size: 6rem;
+    font-weight: font.$bold;
+    font-style: italic;
+  }
+}
