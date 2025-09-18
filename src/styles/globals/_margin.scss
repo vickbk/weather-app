@@ -5,6 +5,12 @@ $sides: (
   b: "bottom",
   l: "left",
   r: "right",
+  bl: "block",
+  i: "inline",
+  bls: "block-start",
+  ble: "block-end",
+  is: "inline-start",
+  ie: "inline-end",
 );
 
 // Generating margins from 1em to 10em
