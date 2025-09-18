@@ -16,6 +16,12 @@ $sides: (
   .sm-#{$i} {
     margin: #{math.div($i, 10)}em;
   }
+  .g-#{$i} {
+    gap: #{$i}em;
+  }
+  .sg-#{$i} {
+    gap: #{math.div($i, 10)}em;
+  }
 
   // creating separate margins for each side separatly like mt-1,ml-5
 

@@ -6,8 +6,13 @@ import SearchForm from "./SearchForm";
 export default function AppHeader() {
   return (
     <header className="header">
-      <section className="header__top">
-        <Image src={icon} alt="icon image" width={50} height={200} />
+      <section className="header__top flex space-between center">
+        <Image
+          src={icon}
+          height={30}
+          alt="icon image"
+          className="header__top-image"
+        />
         <UnitSelector />
       </section>
       <h1 className="header__title">How's the sky looking today?</h1>
