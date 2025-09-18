@@ -1,5 +1,6 @@
 @use "../functions/" as f;
 @use "../main/font";
+@use "../main/colors" as c;
 .header {
   &__top {
     &-image {
@@ -7,9 +8,27 @@
     }
   }
   &__title {
-    font-size: f.clamp-builder(3.5rem, 6rem);
+    font-size: f.clamp-builder(3.3rem, 6rem);
     font-family: font.$secondary-font;
   }
-  &__search {
+  .search {
+    font-size: f.clamp-builder(20, 25);
+    &-label {
+      position: relative;
+      &-icon {
+        position: absolute;
+        inset: 0;
+        margin: auto 1.25em;
+      }
+    }
+    &-input {
+      inline-size: 100%;
+      background-color: c.$neutral-700;
+      color: c.$text-color;
+    }
+    &-button {
+      background-color: c.$blue-500;
+      color: c.$text-color;
+    }
   }
 }

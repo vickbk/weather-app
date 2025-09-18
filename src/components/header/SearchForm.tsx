@@ -1,18 +1,26 @@
 import searchIcon from "@images/icon-search.svg";
 import Image from "next/image";
-
+import { Button } from "@progress/kendo-react-buttons";
+import { TextBox, Input } from "@progress/kendo-react-inputs";
 export default function SearchForm() {
   return (
-    <section className="header__search">
-      <form className="search-form">
-        <label className="search-label">
-          <Image src={searchIcon} alt="search icon" />
-          <input type="text" placeholder="Search for a place..." />
-        </label>
-        <button type="submit" className="search-button">
-          Search
-        </button>
-      </form>
-    </section>
+    <form className="search grid sg-7">
+      <label className="search-label">
+        <Image
+          className="search-label-icon"
+          src={searchIcon}
+          alt="search icon"
+          width={18}
+          height={18}
+        />
+        <Input
+          className="search-input sp-5 pis-3 sbr-5 no-border"
+          placeholder="Search for a place..."
+        />
+      </label>
+      <Button type="submit" className="search-button sp-5 sbr-5 no-border">
+        Search
+      </Button>
+    </form>
   );
 }

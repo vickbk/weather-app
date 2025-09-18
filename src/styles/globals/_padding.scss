@@ -11,53 +11,53 @@
     padding: #{math.div($i, 10)}em;
   }
   // Padding block / padding top-bottom
-  .pb-#{$i} {
+  .pb-#{$i}.pb-#{$i} {
     padding-block: #{$i}em;
   }
   // Padding block fraction format
-  .spb-#{$i} {
+  .spb-#{$i}.spb-#{$i} {
     padding-block: #{math.div($i, 10)}em;
   }
   // Padding block start / padding top
-  .pbs-#{$i} {
+  .pbs-#{$i}.pbs-#{$i} {
     padding-block-start: #{$i}em;
   }
   // Fraction padding block start
-  .spbs-#{$i} {
+  .spbs-#{$i}.spbs-#{$i} {
     padding-block-start: #{math.div($i, 10)}em;
   }
   // Padding Block end / paddind bottom
-  .pbe-#{$i} {
+  .pbe-#{$i}.pbe-#{$i} {
     padding-block-end: #{$i}em;
   }
   // Fraction Padding block end / padding bottom
-  .spbe-#{$i} {
+  .spbe-#{$i}.spbe-#{$i} {
     padding-block-end: #{math.div($i, 10)}em;
   }
 
   // Padding inline / padding left-right
-  .pi-#{$i} {
+  .pi-#{$i}.pi-#{$i} {
     padding-inline: #{$i}em;
   }
   // Fraction padding inline
-  .spi-#{$i} {
+  .spi-#{$i}.spi-#{$i} {
     padding-inline: #{math.div($i, 10)}em;
   }
 
   // Padding inline start / padding left
-  .pis-#{$i} {
+  .pis-#{$i}.pis-#{$i} {
     padding-inline-start: #{$i}em;
   }
   // Fraction padding inline start
-  .spis-#{$i} {
+  .spis-#{$i}.spis-#{$i} {
     padding-inline-start: #{math.div($i, 10)}em;
   }
   // Padding inline end / paddind right
-  .pie-#{$i} {
+  .pie-#{$i}.pie-#{$i} {
     padding-inline-end: #{$i}em;
   }
   // Fraction Padding inline end / padding bottom
-  .spie-#{$i} {
+  .spie-#{$i}.spie-#{$i} {
     padding-inline-end: #{math.div($i, 10)}em;
   }
 }
