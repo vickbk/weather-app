@@ -12,7 +12,9 @@ export default function Dropdown({
 }) {
   return (
     <article
-      className={`${specialClass && specialClass + " "}flex sg-2 center`}
+      className={`${
+        specialClass && specialClass + " "
+      }dropdown flex sg-3 sp-4 center cursor-p`}
     >
       {icon && <Image src={icon.img} alt={icon.text} />}
       {text}
