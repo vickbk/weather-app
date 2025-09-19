@@ -5,7 +5,7 @@ import image from "@images/icon-sunny.webp";
 
 export default function MainData() {
   return (
-    <section className="data__main grid g-1 mt-2">
+    <section className="data__main grid g-2">
       <MainDataOverview
         icon={{ image, desc: "sunny day" }}
         city="Berlin, Germany"

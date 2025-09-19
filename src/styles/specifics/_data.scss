@@ -23,3 +23,9 @@ $asset-path: "/weather-app-main/assets/images";
     }
   }
 }
+
+.data {
+  @include queries.from-mobile(queries.$pc) {
+    grid-template-columns: 2fr 1fr;
+  }
+}

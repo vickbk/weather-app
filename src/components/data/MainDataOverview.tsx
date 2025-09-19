@@ -12,9 +12,9 @@ export default function MainDataOverview({
   temp: string;
 }) {
   return (
-    <article className="main__data-overview pb-2 pi-1 br-1">
-      <div className="overview-heading mb-2">
-        <h2 className="overview-heading-town smb-3">{city}</h2>
+    <article className="main__data-overview pbl-2 pi-1 br-1 sm-up-flex space-between sm-up-pbl-5 a-center">
+      <div className="overview-heading">
+        <h2 className="overview-heading-town">{city}</h2>
         <time
           dateTime={`${date.getFullYear()}-${date.getMonth()}-${date.getUTCDate()}`}
           className="overview-heading-date"
@@ -27,7 +27,7 @@ export default function MainDataOverview({
           })}
         </time>
       </div>
-      <div className="overview-temp flex center space-between">
+      <div className="overview-temp flex sm-up-sg-3 center space-between">
         <Image src={image} alt={desc} width={100} />
         {temp}°
       </div>

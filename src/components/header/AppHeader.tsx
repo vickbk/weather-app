@@ -15,7 +15,7 @@ export default function AppHeader() {
         />
         <UnitSelector />
       </section>
-      <h1 className="header__title pb-1">How's the sky looking today?</h1>
+      <h1 className="header__title pbl-1">How's the sky looking today?</h1>
       <SearchForm />
     </header>
   );

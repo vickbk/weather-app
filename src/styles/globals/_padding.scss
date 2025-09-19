@@ -1,4 +1,7 @@
 @use "sass:math";
+@use "margin";
+@use "media-queries" as queries;
+@use "sass:list";
 
 // Generating padding with sizes from 1 to 5em for .p-$
 // and 0.1 to 0.5em for .sp-$
@@ -10,54 +13,51 @@
   .sp-#{$i} {
     padding: #{math.div($i, 10)}em;
   }
-  // Padding block / padding top-bottom
-  .pb-#{$i}.pb-#{$i} {
-    padding-block: #{$i}em;
-  }
-  // Padding block fraction format
-  .spb-#{$i}.spb-#{$i} {
-    padding-block: #{math.div($i, 10)}em;
-  }
-  // Padding block start / padding top
-  .pbs-#{$i}.pbs-#{$i} {
-    padding-block-start: #{$i}em;
-  }
-  // Fraction padding block start
-  .spbs-#{$i}.spbs-#{$i} {
-    padding-block-start: #{math.div($i, 10)}em;
-  }
-  // Padding Block end / paddind bottom
-  .pbe-#{$i}.pbe-#{$i} {
-    padding-block-end: #{$i}em;
-  }
-  // Fraction Padding block end / padding bottom
-  .spbe-#{$i}.spbe-#{$i} {
-    padding-block-end: #{math.div($i, 10)}em;
-  }
 
-  // Padding inline / padding left-right
-  .pi-#{$i}.pi-#{$i} {
-    padding-inline: #{$i}em;
+  @each $name, $value in margin.$directions {
+    .p#{$name}-#{$i}.p#{$name}-#{$i} {
+      padding-#{$value}: #{$i}em;
+    }
+    .sp#{$name}-#{$i}.p#{$name}-#{$i} {
+      padding-#{$value}: #{$i}em;
+    }
   }
-  // Fraction padding inline
-  .spi-#{$i}.spi-#{$i} {
-    padding-inline: #{math.div($i, 10)}em;
-  }
+  @each $n, $values in queries.$devices {
+    $size: list.nth($values, 1);
+    $class: list.nth($values, 2);
+    @include queries.from-mobile($size) {
+      .#{$class}-up-p-#{$i} {
+        padding: #{$i}em;
+      }
+      .#{$class}-up-sp-#{$i} {
+        padding: #{math.div($i, 10)}em;
+      }
 
-  // Padding inline start / padding left
-  .pis-#{$i}.pis-#{$i} {
-    padding-inline-start: #{$i}em;
-  }
-  // Fraction padding inline start
-  .spis-#{$i}.spis-#{$i} {
-    padding-inline-start: #{math.div($i, 10)}em;
-  }
-  // Padding inline end / paddind right
-  .pie-#{$i}.pie-#{$i} {
-    padding-inline-end: #{$i}em;
-  }
-  // Fraction Padding inline end / padding bottom
-  .spie-#{$i}.spie-#{$i} {
-    padding-inline-end: #{math.div($i, 10)}em;
+      @each $name, $value in margin.$directions {
+        .#{$class}-up-p#{$name}-#{$i}.#{$class}-up-p#{$name}-#{$i} {
+          padding-#{$value}: #{$i}em;
+        }
+        .#{$class}-up-sp#{$name}-#{$i}.#{$class}-up-sp#{$name}-#{$i} {
+          padding-#{$value}: #{$i}em;
+        }
+      }
+    }
+    @include queries.from-desktop($size) {
+      .#{$class}-down-p-#{$i} {
+        padding: #{$i}em;
+      }
+      .#{$class}-down-sp-#{$i} {
+        padding: #{math.div($i, 10)}em;
+      }
+
+      @each $name, $value in margin.$directions {
+        .#{$class}-down-p#{$name}-#{$i}.#{$class}-down-p#{$name}-#{$i} {
+          padding-#{$value}: #{$i}em;
+        }
+        .#{$class}-down-sp#{$name}-#{$i}.#{$class}-down-sp#{$name}-#{$i} {
+          padding-#{$value}: #{$i}em;
+        }
+      }
+    }
   }
 }

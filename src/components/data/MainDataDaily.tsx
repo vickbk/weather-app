@@ -3,7 +3,7 @@ import iconRain from "@images/icon-rain.webp";
 
 export default function MainDataDaily() {
   return (
-    <section className="main__data-daily mbl-1">
+    <section className="main__data-daily">
       <h4 className="daily-heading mb-1">Daily Forecast</h4>
       <div className="daily-days grid gc-3 gc-sm-up-4 gc-md-up-7 g-1">
         {[

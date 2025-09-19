@@ -5,9 +5,11 @@ import AppHeader from "./header/AppHeader";
 export default function MainPage() {
   return (
     <main className="container p-1">
-      <AppHeader />
-      <AppData />
-      <Attribution />
+      <div>
+        <AppHeader />
+        <AppData />
+        <Attribution />
+      </div>
     </main>
   );
 }
