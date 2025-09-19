@@ -1,6 +1,6 @@
 export default function MainDataDetails() {
   return (
-    <section className="data__details grid gc-2 g-1">
+    <section className="data__details grid gc-2 gc-sm-up-4 g-1">
       {[
         ["Feels Like", "18"],
         ["Humidity", "46%"],
