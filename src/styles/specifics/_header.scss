@@ -1,6 +1,7 @@
 @use "../functions/" as f;
 @use "../main/font";
 @use "../main/colors" as c;
+@use "../globals/media-queries" as queries;
 .header {
   &__top {
     &-image {
@@ -15,6 +16,8 @@
     font-size: f.clamp-builder(20, 25);
     &-label {
       position: relative;
+      flex-basis: f.to-r-em(300px);
+      max-inline-size: f.to-r-em(400px);
       &-icon {
         position: absolute;
         inset: 0;
@@ -29,6 +32,9 @@
     &-button {
       background-color: c.$blue-500;
       color: c.$text-color;
+      @include queries.from-mobile(queries.$small-screen) {
+        max-inline-size: f.to-r-em(150);
+      }
     }
   }
 }
