@@ -1,0 +1,14 @@
+@use "../main/font";
+@use "../functions/" as f;
+
+.hourly {
+  &__title {
+    font-size: f.clamp-builder(1.3rem, 1.5rem);
+  }
+  &__data {
+    &-time {
+      font-size: f.clamp-builder(1.3rem, 1.5rem);
+      font-weight: font.$weight-natural;
+    }
+  }
+}

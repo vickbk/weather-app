@@ -1,0 +1,37 @@
+@use "media-queries" as queries;
+@use "sass:list";
+
+.grid {
+  display: grid;
+}
+
+@for $i from 1 to 12 {
+  .gc-#{$i} {
+    grid-template-columns: repeat($i, 1fr);
+  }
+}
+
+@each $name, $values in queries.$devices {
+  $size: list.nth($values, 1);
+  $class: list.nth($values, 2);
+  @include queries.from-mobile($size) {
+    .#{$class}-up-grid.#{$class}-up-grid {
+      display: grid;
+    }
+    @for $i from 1 to 12 {
+      .gc-#{$class}-up-#{$i} {
+        grid-template-columns: repeat($i, 1fr);
+      }
+    }
+  }
+  @include queries.from-desktop($size) {
+    .#{$class}-down-grid.#{$class}-down-grid {
+      display: grid;
+    }
+    @for $i from 1 to 12 {
+      .gc-#{$class}-down-#{$i} {
+        grid-template-columns: repeat($i, 1fr);
+      }
+    }
+  }
+}

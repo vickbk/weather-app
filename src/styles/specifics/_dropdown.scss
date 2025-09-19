@@ -1,0 +1,7 @@
+@use "../functions/" as f;
+@use "../main/colors" as c;
+.dropdown {
+  font-size: f.to-r-em(16);
+  background-color: c.$neutral-700;
+  border-radius: f.to-r-em(5);
+}

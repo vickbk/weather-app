@@ -1,0 +1,15 @@
+@use "../functions/" as f;
+@use "sass:math";
+
+@for $i from 1 to 11 {
+  .br-#{$i} {
+    border-radius: #{$i}em;
+  }
+  .sbr-#{$i} {
+    border-radius: #{math.div($i, 10)}em;
+  }
+}
+
+.no-border {
+  border: none;
+}

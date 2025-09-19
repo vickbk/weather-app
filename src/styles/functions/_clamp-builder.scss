@@ -1,0 +1,36 @@
+@use "to-r-em" as *;
+@use "sass:math";
+@use "is-numeric" as *;
+@use "to-number" as *;
+
+// generate the clamp property with min max
+@function clamp-builder(
+  $min,
+  $max,
+  $min-screen: to-r-em(375),
+  $max-screen: to-r-em(1440)
+) {
+  $middle: em;
+  //   check if some parameters are not numbers
+  @each $value in $min, $max, $min-screen, $max-screen {
+    @if not is-numeric($value) {
+      @error "Some of your values are not numbers. Eg. #{$value}";
+    }
+  }
+  $min: to-r-em($min);
+  $max: to-r-em($max);
+  $min-screen: to-r-em($min-screen);
+  $max-screen: to-r-em($max-screen);
+  $actual-min: math.min($min, $max);
+  $actual-max: math.max($min, $max);
+  $actual-min-screen: math.min($min-screen, $max-screen);
+  $actual-max-screen: math.max($min-screen, $max-screen);
+
+  // for more explanation, implementation from this git rep: https://github.com/walbo/font-size-clamp/blob/main/utils/clamp-builder.ts
+  $slope: math.div(
+    $actual-max - $actual-min,
+    $actual-max-screen - $actual-min-screen
+  );
+  $y-axis-inter: (-$actual-min-screen * $slope) + $actual-min;
+  @return clamp($min, to-r-em($y-axis-inter) + ($slope * 100vw), $max);
+}

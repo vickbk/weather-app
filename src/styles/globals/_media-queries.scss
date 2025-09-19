@@ -1,0 +1,54 @@
+@use "../functions/" as f;
+
+$small-screen: f.to-r-em(376px, em);
+$mobile: f.to-r-em(576px, em);
+$tablet: f.to-r-em(768px, em);
+$pc: f.to-r-em(992px, em);
+$large-screen: f.to-r-em(1200px, em);
+
+$devices: (
+  small-screen: (
+    $small-screen,
+    xs,
+  ),
+  mobile: (
+    $mobile,
+    sm,
+  ),
+  tablet: (
+    $tablet,
+    md,
+  ),
+  pc: (
+    $pc,
+    lg,
+  ),
+  large-screen: (
+    $large-screen,
+    xl,
+  ),
+);
+
+@mixin mobile-queries($min-inline-size) {
+  @media (min-width: $min-inline-size) {
+    @content;
+  }
+}
+
+@mixin from-mobile($min-inline-size) {
+  @include mobile-queries($min-inline-size) {
+    @content;
+  }
+}
+
+@mixin desktop-queries($max-inline-size) {
+  @media (max-width: ($max-inline-size - 0.1)) {
+    @content;
+  }
+}
+
+@mixin from-desktop($max-inline-size) {
+  @include desktop-queries($max-inline-size) {
+    @content;
+  }
+}

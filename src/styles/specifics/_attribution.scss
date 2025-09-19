@@ -1,0 +1,9 @@
+@use "../main/colors" as c;
+.attribution {
+  font-size: 0.85em;
+  text-align: center;
+}
+.attribution a {
+  color: c.$link-color;
+  text-decoration: underline;
+}

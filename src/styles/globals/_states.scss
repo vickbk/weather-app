@@ -1,0 +1,13 @@
+@mixin active-state {
+  &:hover,
+  &:active,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin inactive-state {
+  &:disabled {
+    @content;
+  }
+}

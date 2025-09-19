@@ -1,0 +1,19 @@
+@use "media-queries" as *;
+@use "transitions" as trans;
+.hide.hide,
+.sm-hide.sm-hide {
+  @include trans.ease-in-out(display, 2s);
+  display: none;
+  opacity: 0;
+}
+.sm-hide.sm-hide {
+  @include mobile-queries($mobile) {
+    display: unset;
+    opacity: 1;
+  }
+}
+.sm-show.sm-show {
+  @include mobile-queries($mobile) {
+    display: none;
+  }
+}

@@ -1,0 +1,40 @@
+@use "../functions/" as f;
+@use "../main/font";
+@use "../main/colors" as c;
+@use "../globals/media-queries" as queries;
+.header {
+  &__top {
+    &-image {
+      height: f.to-r-em(30);
+    }
+  }
+  &__title {
+    font-size: f.clamp-builder(3.3rem, 4rem);
+    font-family: font.$secondary-font;
+  }
+  .search {
+    font-size: f.clamp-builder(20, 25);
+    &-label {
+      position: relative;
+      flex-basis: f.to-r-em(300px);
+      max-inline-size: f.to-r-em(550px);
+      &-icon {
+        position: absolute;
+        inset: 0;
+        margin: auto 1.25em;
+      }
+    }
+    &-input {
+      inline-size: 100%;
+      background-color: c.$neutral-700;
+      color: c.$text-color;
+    }
+    &-button {
+      background-color: c.$blue-500;
+      color: c.$text-color;
+      @include queries.from-mobile(queries.$small-screen) {
+        max-inline-size: f.to-r-em(150);
+      }
+    }
+  }
+}
