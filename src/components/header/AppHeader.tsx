@@ -2,8 +2,10 @@ import icon from "@images/logo.svg";
 import Image from "next/image";
 import UnitSelector from "./UnitSelector";
 import SearchForm from "./SearchForm";
+import { LoadingStatus } from "@/lib/types/loading-status";
+import ErrorElement from "../error/ErrorElement";
 
-export default function AppHeader() {
+export default function AppHeader({ status }: { status: LoadingStatus }) {
   return (
     <header className="header">
       <section className="header__top flex space-between center">
@@ -15,8 +17,14 @@ export default function AppHeader() {
         />
         <UnitSelector />
       </section>
-      <h1 className="header__title pbl-1">How's the sky looking today?</h1>
-      <SearchForm />
+      {status !== "error" ? (
+        <>
+          <h1 className="header__title pbl-1">How's the sky looking today?</h1>
+          <SearchForm />
+        </>
+      ) : (
+        <ErrorElement />
+      )}
     </header>
   );
 }
