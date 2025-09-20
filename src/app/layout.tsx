@@ -6,6 +6,8 @@ import {
   Bricolage_Grotesque,
 } from "next/font/google";
 // import "./globals.css";
+
+import "@progress/kendo-theme-default/dist/all.css";
 import "../styles/styles.scss";
 
 const geistSans = Geist({

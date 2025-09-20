@@ -27,14 +27,12 @@ export default function HourlyData({ status }: { status: LoadingStatus }) {
         </div>
         {data.map(({ temp, time, icon }, index) =>
           status === "loading" ? (
-            <div className="mbls-1">
-              <Skeleton
-                key={index}
-                shape="text"
-                className="hourly__loader p-2 br-1 neutral-600"
-                animation={{ type: "wave" }}
-              />
-            </div>
+            <Skeleton
+              key={index}
+              shape="rectangle"
+              className="hourly__loader p-2 mbls-1 br-1"
+              animation={{ type: "wave" }}
+            />
           ) : (
             <DataPerHour key={icon.desc} temp={temp} time={time} icon={icon} />
           )
