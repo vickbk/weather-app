@@ -7,27 +7,31 @@ import getLocation from "@/actions/getLocation";
 import getDateOnly from "@/lib/date/get-date-only";
 import getNextDay from "@/lib/date/get-next-day";
 import loadLocationData from "@/actions/loadLocationData";
+import getPlaceName from "@/actions/getPlaceName";
 
 export default function MainPage() {
-  const [message, getLocationData, loadingData] = useActionState(
+  const [locationData, getLocationData, loadingState] = useActionState(
     loadLocationData,
     null
   );
+  const [place, placeGetter, placeLoader] = useActionState(getPlaceName, null);
   useEffect(() => {
     (async () => {
       const location = await getLocation();
-      const fetchRequest = {
-        start_date: getDateOnly(),
-        end_date: getDateOnly(getNextDay()),
-        ...location,
-      };
-      startTransition(() => getLocationData(fetchRequest));
-      console.log({ location, fetchRequest });
+      startTransition(() => {
+        getLocationData({
+          start_date: getDateOnly(),
+          end_date: getDateOnly(getNextDay()),
+          ...location,
+        });
+        placeGetter(location);
+      });
     })();
   }, []);
   useEffect(() => {
-    if (message && !loadingData) console.log(message);
-  }, [message, loadingData]);
+    if (locationData && !loadingState) console.log(locationData);
+    if (place && !placeLoader) console.log(place);
+  }, [locationData, loadingState, place, placeLoader]);
   return (
     <main className="container p-1">
       <div>

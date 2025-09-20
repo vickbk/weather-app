@@ -1,6 +1,21 @@
 import { WeatherResponce } from "./load-data";
 
-export default function readWeatherData(weatherData: WeatherResponce[]) {
+export type WeatherData = {
+  lat: number;
+  lon: number;
+  elevation: number;
+  utcSec: number;
+  hourly: WeatherHourlyData[];
+};
+
+export type WeatherHourlyData = {
+  time: Date;
+  temp?: number;
+};
+
+export default function readWeatherData(
+  weatherData: WeatherResponce[]
+): WeatherData[] {
   return weatherData.map((data) => ({
     lat: data.latitude(),
     lon: data.longitude(),
@@ -10,7 +25,7 @@ export default function readWeatherData(weatherData: WeatherResponce[]) {
   }));
 }
 
-function getHourlyData(data: WeatherResponce) {
+function getHourlyData(data: WeatherResponce): WeatherHourlyData[] {
   const hourly = data.hourly()!;
   const timeVal = Number(hourly?.time());
   const timeEndVal = Number(hourly?.timeEnd());
