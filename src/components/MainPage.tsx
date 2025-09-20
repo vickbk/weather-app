@@ -1,13 +1,18 @@
 "use client";
-import { useEffect } from "react";
+import { startTransition, useActionState, useEffect } from "react";
 import Attribution from "./Attributions";
 import AppData from "./data/AppData";
 import AppHeader from "./header/AppHeader";
 import getLocation from "@/actions/getLocation";
 import getDateOnly from "@/lib/date/get-date-only";
 import getNextDay from "@/lib/date/get-next-day";
+import loadLocationData from "@/actions/loadLocationData";
 
 export default function MainPage() {
+  const [message, getLocationData, loadingData] = useActionState(
+    loadLocationData,
+    null
+  );
   useEffect(() => {
     (async () => {
       const location = await getLocation();
@@ -16,10 +21,13 @@ export default function MainPage() {
         end_date: getDateOnly(getNextDay()),
         ...location,
       };
-
+      startTransition(() => getLocationData());
       console.log({ location, fetchRequest });
     })();
   }, []);
+  useEffect(() => {
+    if (message && !loadingData) console.log(message);
+  }, [message, loadingData]);
   return (
     <main className="container p-1">
       <div>
