@@ -1,9 +1,10 @@
+import { LoadingStatus } from "../MainPage";
 import MainDataDaily from "./MainDataDaily";
 import MainDataDetails from "./MainDataDetails";
 import MainDataOverview from "./MainDataOverview";
 import image from "@images/icon-sunny.webp";
 
-export default function MainData() {
+export default function MainData({ status }: { status: LoadingStatus }) {
   return (
     <section className="data__main grid g-2">
       <MainDataOverview

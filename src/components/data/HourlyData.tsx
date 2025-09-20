@@ -1,8 +1,9 @@
 import partlyCloudy from "@images/icon-partly-cloudy.webp";
 import Dropdown from "../common/Dropdown";
 import DataPerHour from "./DataPerHour";
+import { LoadingStatus } from "../MainPage";
 
-export default function HourlyData() {
+export default function HourlyData({ status }: { status: LoadingStatus }) {
   return (
     <article className="data__hourly neutral-700 br-1 p-1">
       <section className="hourly">

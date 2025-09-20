@@ -1,5 +1,5 @@
 "use client";
-import { startTransition, useActionState, useEffect } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 import Attribution from "./Attributions";
 import AppData from "./data/AppData";
 import AppHeader from "./header/AppHeader";
@@ -9,12 +9,16 @@ import getNextDay from "@/lib/date/get-next-day";
 import loadLocationData from "@/actions/loadLocationData";
 import getPlaceName from "@/actions/getPlaceName";
 
+export type LoadingStatus = "loading" | "ready" | "error";
+
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
     loadLocationData,
     null
   );
   const [place, placeGetter, placeLoader] = useActionState(getPlaceName, null);
+  const [status, setStatus] = useState<LoadingStatus>("loading");
+
   useEffect(() => {
     (async () => {
       const location = await getLocation();
@@ -36,7 +40,7 @@ export default function MainPage() {
     <main className="container p-1">
       <div>
         <AppHeader />
-        <AppData />
+        <AppData status={status} />
         <Attribution />
       </div>
     </main>
