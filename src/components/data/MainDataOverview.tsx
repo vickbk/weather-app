@@ -1,3 +1,4 @@
+import getDateOnly from "@/lib/date/get-date-only";
 import Image from "next/image";
 
 export default function MainDataOverview({
@@ -16,7 +17,7 @@ export default function MainDataOverview({
       <div className="overview-heading">
         <h2 className="overview-heading-town">{city}</h2>
         <time
-          dateTime={`${date.getFullYear()}-${date.getMonth()}-${date.getUTCDate()}`}
+          dateTime={`${getDateOnly(date)}`}
           className="overview-heading-date"
         >
           {date.toLocaleDateString("en-US", {
