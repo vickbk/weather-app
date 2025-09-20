@@ -16,7 +16,7 @@ export default function MainPage() {
     null
   );
   const [place, placeGetter, placeLoader] = useActionState(getPlaceName, null);
-  const [status, setStatus] = useState<LoadingStatus>("error");
+  const [status, setStatus] = useState<LoadingStatus>("loading");
 
   useEffect(() => {
     (async () => {
