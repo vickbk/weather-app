@@ -6,7 +6,7 @@
 // Generating padding with sizes from 1 to 5em for .p-$
 // and 0.1 to 0.5em for .sp-$
 
-@for $i from 1 through 10 {
+@for $i from 0 through 10 {
   .p-#{$i} {
     padding: #{$i}em;
   }
@@ -18,8 +18,8 @@
     .p#{$name}-#{$i}.p#{$name}-#{$i} {
       padding-#{$value}: #{$i}em;
     }
-    .sp#{$name}-#{$i}.p#{$name}-#{$i} {
-      padding-#{$value}: #{$i}em;
+    .sp#{$name}-#{$i}.sp#{$name}-#{$i} {
+      padding-#{$value}: #{math.div($i, 10)}em;
     }
   }
   @each $n, $values in queries.$devices {

@@ -1,4 +1,4 @@
-import { LoadingStatus } from "../MainPage";
+import { LoadingStatus } from "@/lib/types/loading-status";
 import HourlyData from "./HourlyData";
 import MainData from "./MainData";
 

@@ -29,7 +29,7 @@ $directions: (
   }
 }
 
-@for $i from 1 through 10 {
+@for $i from 0 through 10 {
   .m-#{$i} {
     margin: #{$i}em;
   }

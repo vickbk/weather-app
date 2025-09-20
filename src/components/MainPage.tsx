@@ -8,8 +8,7 @@ import getDateOnly from "@/lib/date/get-date-only";
 import getNextDay from "@/lib/date/get-next-day";
 import loadLocationData from "@/actions/loadLocationData";
 import getPlaceName from "@/actions/getPlaceName";
-
-export type LoadingStatus = "loading" | "ready" | "error";
+import { LoadingStatus } from "@/lib/types/loading-status";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
@@ -17,7 +16,7 @@ export default function MainPage() {
     null
   );
   const [place, placeGetter, placeLoader] = useActionState(getPlaceName, null);
-  const [status, setStatus] = useState<LoadingStatus>("loading");
+  const [status, setStatus] = useState<LoadingStatus>("error");
 
   useEffect(() => {
     (async () => {
@@ -39,8 +38,8 @@ export default function MainPage() {
   return (
     <main className="container p-1">
       <div>
-        <AppHeader />
-        <AppData status={status} />
+        <AppHeader status={status} />
+        {status !== "error" && <AppData status={status} />}
         <Attribution />
       </div>
     </main>
