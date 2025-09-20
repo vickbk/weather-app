@@ -1,8 +1,11 @@
 "use server";
 
-import loadData from "@/lib/load-data";
+import loadData, { WeatherRequest } from "@/lib/load-data";
 
-export default async function loadLocationData() {
-  const data = await loadData();
+export default async function loadLocationData(
+  _: unknown,
+  request: WeatherRequest
+) {
+  const data = await loadData(request);
   return data;
 }

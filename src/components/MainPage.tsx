@@ -21,7 +21,7 @@ export default function MainPage() {
         end_date: getDateOnly(getNextDay()),
         ...location,
       };
-      startTransition(() => getLocationData());
+      startTransition(() => getLocationData(fetchRequest));
       console.log({ location, fetchRequest });
     })();
   }, []);

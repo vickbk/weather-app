@@ -5,14 +5,28 @@ export type WeatherResponce = Awaited<
   ReturnType<typeof fetchWeatherApi>
 >[number];
 
-export default async function loadData() {
-  const fetch = await fetchWeatherApi(process.env.OPEN_METEO_WEATHERFORCAST!, {
-    latitude: 52.52,
-    longitude: 13.41,
-    start_date: "2025-08-30",
-    end_date: "2025-09-13",
-    hourly: "temperature_2m",
-  });
+export type WeatherRequest = {
+  latitude: number;
+  longitude: number;
+  hourly?: string;
+  start_date?: string;
+  end_date?: string;
+};
 
-  return readWeatherData(fetch);
+export default async function loadData({
+  latitude = 52.52,
+  longitude = 13.41,
+  hourly = "temperature_2m",
+  start_date,
+  end_date,
+}: WeatherRequest) {
+  return readWeatherData(
+    await fetchWeatherApi(process.env.OPEN_METEO_WEATHERFORCAST!, {
+      latitude,
+      longitude,
+      start_date,
+      end_date,
+      hourly,
+    })
+  );
 }

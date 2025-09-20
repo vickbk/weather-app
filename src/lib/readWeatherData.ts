@@ -15,17 +15,14 @@ function getHourlyData(data: WeatherResponce) {
   const timeVal = Number(hourly?.time());
   const timeEndVal = Number(hourly?.timeEnd());
   const intervalVal = hourly?.interval() ?? 1;
-  return {
-    time: [
-      ...Array((timeEndVal - timeVal) / intervalVal)
-        .fill(null)
-        .map(
-          (_, i) =>
-            new Date(
-              (timeVal + i * intervalVal + data.utcOffsetSeconds()) * 1000
-            )
-        ),
-    ],
-    temp: hourly.variables(0)!.valuesArray(),
-  };
+  const temps = hourly.variables(0)!.valuesArray();
+
+  return Array((timeEndVal - timeVal) / intervalVal)
+    .fill(null)
+    .map((_, i) => ({
+      time: new Date(
+        (timeVal + i * intervalVal + data.utcOffsetSeconds()) * 1000
+      ),
+      temp: temps?.[i],
+    }));
 }
