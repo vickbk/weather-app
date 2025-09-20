@@ -15,8 +15,8 @@ export default function MainData({ status }: { status: LoadingStatus }) {
         date={new Date(getDateOnly())}
         status={status}
       />
-      <MainDataDetails />
-      <MainDataDaily />
+      <MainDataDetails status={status} />
+      <MainDataDaily status={status} />
     </section>
   );
 }

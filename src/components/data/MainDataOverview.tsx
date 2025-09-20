@@ -19,7 +19,7 @@ export default function MainDataOverview({
   return (
     <>
       {status === "loading" ? (
-        <article className="neutral-700 br-1 grid center pbl-5">
+        <article className="neutral-700 br-1 grid center pbl-7">
           <div className="grid">
             <Loader type="pulsing" size="large" themeColor="light" />
             Loading...
