@@ -15,7 +15,7 @@ export default function AppData({
   return (
     <section className="data grid g-2 mt-3">
       <MainData status={status} data={daily} />
-      <HourlyData status={status} />
+      <HourlyData status={status} hourly={daily?.hourly} />
     </section>
   );
 }
