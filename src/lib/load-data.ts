@@ -1,22 +1,22 @@
 import { fetchWeatherApi } from "openmeteo";
 import readWeatherData from "./readWeatherData";
-
-export type WeatherResponce = Awaited<
-  ReturnType<typeof fetchWeatherApi>
->[number];
-
-export type WeatherRequest = {
-  latitude: number;
-  longitude: number;
-  hourly?: string;
-  start_date?: string;
-  end_date?: string;
-};
+import { WeatherRequest } from "./types/weather-request-response";
 
 export default async function loadData({
   latitude = 52.52,
   longitude = 13.41,
-  hourly = "temperature_2m",
+  hourly = [
+    "temperature_2m",
+    "wind_speed_10m",
+    "relative_humidity_2m",
+    "apparent_temperature",
+    "precipitation_probability",
+    "precipitation",
+    "rain",
+    "wind_speed_80m",
+    "wind_speed_120m",
+    "wind_speed_180m",
+  ],
   start_date,
   end_date,
 }: WeatherRequest) {
@@ -27,6 +27,7 @@ export default async function loadData({
       start_date,
       end_date,
       hourly,
-    })
+    }),
+    hourly
   );
 }

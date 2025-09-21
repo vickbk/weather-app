@@ -1,6 +1,7 @@
 "use server";
 
-import loadData, { WeatherRequest } from "@/lib/load-data";
+import loadData from "@/lib/load-data";
+import { WeatherRequest } from "@/lib/types/weather-request-response";
 
 export default async function loadLocationData(
   _: unknown,
