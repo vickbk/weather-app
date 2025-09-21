@@ -9,7 +9,6 @@ import getNextDay from "@/lib/date/get-next-day";
 import loadLocationData from "@/actions/loadLocationData";
 import getPlaceName from "@/actions/getPlaceName";
 import { LoadingStatus } from "@/lib/types/loading-status";
-import { error } from "console";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
@@ -39,6 +38,11 @@ export default function MainPage() {
   }, []);
   useEffect(() => {
     if (locationData && !loadingState) {
+      if ("error" in locationData) {
+        console.log(loadLocationData);
+        setStatus("error");
+        return;
+      }
       console.log(locationData);
       setStatus("ready");
     }
