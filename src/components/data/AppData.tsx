@@ -11,13 +11,10 @@ export default function AppData({
   data?: WeatherData[];
 }) {
   const [daily] = data ?? [];
-  const current = daily?.hourly.find(
-    ({ time }) => time.getHours() === new Date().getHours()
-  );
-  console.log({ daily, current });
+
   return (
     <section className="data grid g-2 mt-3">
-      <MainData status={status} data={current} />
+      <MainData status={status} data={daily} />
       <HourlyData status={status} />
     </section>
   );

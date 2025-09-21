@@ -8,6 +8,7 @@ export default function MainDataDetails({
   status: LoadingStatus;
   data?: WeatherHourlyData;
 }) {
+  const { precipitation, humidity, wind, ambientTemp } = weatherData ?? {};
   const data =
     status === "loading"
       ? [
@@ -17,10 +18,10 @@ export default function MainDataDetails({
           ["Precipitation", "-"],
         ]
       : [
-          ["Feels Like", "18"],
-          ["Humidity", "46%"],
-          ["Wind", "14km/h"],
-          ["Precipitation", "0 mm"],
+          ["Feels Like", `${ambientTemp?.toFixed()}°`],
+          ["Humidity", `${humidity}%`],
+          ["Wind", `${wind?.toFixed()}Km/h`],
+          ["Precipitation", `${precipitation}mm`],
         ];
   return (
     <section className="data__details grid gc-2 gc-sm-up-4 g-1">

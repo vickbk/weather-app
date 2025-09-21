@@ -9,7 +9,7 @@ import getNextDay from "@/lib/date/get-next-day";
 import loadLocationData from "@/actions/loadLocationData";
 import getPlaceName from "@/actions/getPlaceName";
 import { LoadingStatus } from "@/lib/types/loading-status";
-import { WeatherData } from "@/lib/readWeatherData";
+import { WeatherData } from "@/lib/types/weather-data";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
