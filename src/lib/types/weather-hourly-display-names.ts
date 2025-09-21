@@ -11,9 +11,15 @@ const weatherHourlyDisplayName = {
   wind_speed_180m: "wind180",
   get(name: string): string {
     return name in this && name !== "get"
-      ? this[name as Exclude<keyof typeof weatherHourlyDisplayName, "get">]
+      ? this[name as weatherHourlyDisplayNameKeys]
       : name;
   },
-};
+} as const;
 
+export type weatherHourlyDisplayNameKeys = Exclude<
+  keyof typeof weatherHourlyDisplayName,
+  "get"
+>;
+export type weatherHourlyDisplayNameValues =
+  (typeof weatherHourlyDisplayName)[weatherHourlyDisplayNameKeys];
 export default weatherHourlyDisplayName;

@@ -1,6 +1,13 @@
 import { LoadingStatus } from "@/lib/types/loading-status";
+import { WeatherHourlyData } from "@/lib/types/weather-data";
 
-export default function MainDataDetails({ status }: { status: LoadingStatus }) {
+export default function MainDataDetails({
+  status,
+  data: weatherData,
+}: {
+  status: LoadingStatus;
+  data?: WeatherHourlyData;
+}) {
   const data =
     status === "loading"
       ? [

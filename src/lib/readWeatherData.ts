@@ -1,18 +1,6 @@
+import { WeatherData, WeatherHourlyData } from "./types/weather-data";
 import weatherHourlyDisplayName from "./types/weather-hourly-display-names";
 import { WeatherResponce } from "./types/weather-request-response";
-
-export type WeatherData = {
-  lat: number;
-  lon: number;
-  elevation: number;
-  utcSec: number;
-  hourly: WeatherHourlyData[];
-};
-
-export type WeatherHourlyData = {
-  time: Date;
-  temp?: number;
-};
 
 export default function readWeatherData(
   weatherData: WeatherResponce[],
