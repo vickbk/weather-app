@@ -3,7 +3,12 @@ import Image from "next/image";
 import retryIcon from "@images/icon-retry.svg";
 import errorIcon from "@images/icon-error.svg";
 import { redirect } from "next/navigation";
+import { ButtonClasses, UnstyledContext } from "@progress/kendo-react-common";
+import kendoButtonResetterObject from "@/lib/kendoreact/buttonResetterObject";
 export default function ErrorElement() {
+  // const butn : ButtonClasses;
+  // butn.wrapper.
+
   return (
     <article className="error pbl-3 md-up-p-3 ">
       <Image src={errorIcon} alt="" height={50} />
@@ -12,15 +17,18 @@ export default function ErrorElement() {
         We couldn't connect to the server (API error). <br />
         Please try again in a few moments.
       </p>
-      <Button
-        type="button"
-        className="neutral-700 spbl-3 pi-1 sbr-5 no-border"
-        onClick={() => {
-          redirect("/");
-        }}
-      >
-        <Image src={retryIcon} alt="" className="smie-2" /> Retry
-      </Button>
+
+      <UnstyledContext.Provider value={kendoButtonResetterObject}>
+        <Button
+          type="button"
+          className="neutral-700 spbl-3 pi-1 sbr-5 no-border"
+          onClick={() => {
+            location.reload();
+          }}
+        >
+          <Image src={retryIcon} alt="" className="smie-2" /> Retry
+        </Button>
+      </UnstyledContext.Provider>
     </article>
   );
 }

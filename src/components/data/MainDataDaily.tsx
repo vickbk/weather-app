@@ -20,8 +20,12 @@ export default function MainDataDaily({ status }: { status: LoadingStatus }) {
       <h4 className="daily-heading mb-1">Daily Forecast</h4>
       <div className="daily-days grid gc-3 gc-sm-up-4 gc-md-up-7 g-1">
         {status === "loading"
-          ? data.map(() => (
-              <Skeleton className="pbl-7 br-2" animation={{ type: "wave" }} />
+          ? data.map((_, key) => (
+              <Skeleton
+                key={key}
+                className="pbl-7 br-2"
+                animation={{ type: "wave" }}
+              />
             ))
           : data.map(
               ({

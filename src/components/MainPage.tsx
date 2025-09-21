@@ -9,6 +9,7 @@ import getNextDay from "@/lib/date/get-next-day";
 import loadLocationData from "@/actions/loadLocationData";
 import getPlaceName from "@/actions/getPlaceName";
 import { LoadingStatus } from "@/lib/types/loading-status";
+import { error } from "console";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
@@ -21,6 +22,11 @@ export default function MainPage() {
   useEffect(() => {
     (async () => {
       const location = await getLocation();
+      if ("error" in location) {
+        console.log(location.error);
+        setStatus("error");
+        return;
+      }
       startTransition(() => {
         getLocationData({
           start_date: getDateOnly(),
@@ -32,7 +38,10 @@ export default function MainPage() {
     })();
   }, []);
   useEffect(() => {
-    if (locationData && !loadingState) console.log(locationData);
+    if (locationData && !loadingState) {
+      console.log(locationData);
+      setStatus("ready");
+    }
     if (place && !placeLoader) console.log(place);
   }, [locationData, loadingState, place, placeLoader]);
   return (

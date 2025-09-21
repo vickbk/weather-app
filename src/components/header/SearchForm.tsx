@@ -2,11 +2,15 @@ import searchIcon from "@images/icon-search.svg";
 import Image from "next/image";
 import { Input } from "@progress/kendo-react-inputs";
 import { UnstyledContext } from "@progress/kendo-react-common";
+import kendoButtonResetterObject from "@/lib/kendoreact/buttonResetterObject";
+import { Button } from "@progress/kendo-react-buttons";
 
 export default function SearchForm() {
   return (
     <form className="search grid sg-7 j-center xs-up-flex">
-      <UnstyledContext.Provider value={{ uInput: {}, uButton: {} }}>
+      <UnstyledContext.Provider
+        value={{ uInput: {}, ...kendoButtonResetterObject }}
+      >
         <label className="search-label flex-grow">
           <Image
             className="search-label-icon"
@@ -20,12 +24,12 @@ export default function SearchForm() {
             placeholder="Search for a place..."
           />
         </label>
-        <button
+        <Button
           type="submit"
           className="search-button flex-grow sp-5 sbr-5 no-border"
         >
           Search
-        </button>
+        </Button>
       </UnstyledContext.Provider>
     </form>
   );
