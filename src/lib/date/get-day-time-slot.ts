@@ -16,5 +16,5 @@ export default function getDayTimeSlot() {
 
 export function dayNightTime(time: Date) {
   const hours = time.getHours();
-  return hours >= 6 && hours <= 18 ? "day" : "night";
+  return hours >= 6 && hours < 18 ? "day" : "night";
 }
