@@ -59,6 +59,9 @@ importers:
       '@progress/kendo-react-tooltip':
         specifier: ^12.0.2
         version: 12.0.2(@progress/kendo-licensing@1.7.1)(@progress/kendo-react-common@12.0.2(@progress/kendo-licensing@1.7.1)(@progress/kendo-svg-icons@4.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@progress/kendo-react-popup@12.0.2(@progress/kendo-licensing@1.7.1)(@progress/kendo-popup-common@1.9.2)(@progress/kendo-react-common@12.0.2(@progress/kendo-licensing@1.7.1)(@progress/kendo-svg-icons@4.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@progress/kendo-svg-icons@4.5.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@progress/kendo-svg-icons':
+        specifier: ^4.5.0
+        version: 4.5.0
       '@progress/kendo-theme-default':
         specifier: ^12.0.1
         version: 12.0.1

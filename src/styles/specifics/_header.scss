@@ -29,6 +29,14 @@
       background-color: c.$neutral-700;
       color: c.$text-color;
     }
+    &-box {
+      position: absolute;
+      inline-size: 100%;
+      text-align: start;
+      .search-text {
+        border-block-end: 1px solid c.$text-color;
+      }
+    }
     &-button {
       background-color: c.$blue-500;
       color: c.$text-color;
