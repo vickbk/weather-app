@@ -16,6 +16,7 @@ export default async function loadData({
     "wind_speed_80m",
     "wind_speed_120m",
     "wind_speed_180m",
+    "weather_code",
   ],
   start_date,
   end_date,
