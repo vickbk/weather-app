@@ -11,5 +11,8 @@
     min-block-size: 100vh;
     display: grid;
     place-items: center;
+    &__holder {
+      max-inline-size: f.to-r-em(1200);
+    }
   }
 }

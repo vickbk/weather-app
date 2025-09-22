@@ -20,7 +20,7 @@ export default function MainDataDetails({
       : [
           ["Feels Like", `${ambientTemp?.toFixed()}°`],
           ["Humidity", `${humidity}%`],
-          ["Wind", `${wind?.toFixed()}Km/h`],
+          ["Wind", `${wind?.toFixed()}km/h`],
           ["Precipitation", `${precipitation}mm`],
         ];
   return (

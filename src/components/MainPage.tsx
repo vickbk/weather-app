@@ -7,17 +7,12 @@ import getLocation from "@/actions/getLocation";
 import getDateOnly from "@/lib/date/get-date-only";
 import getNextDay from "@/lib/date/get-next-day";
 import loadLocationData from "@/actions/loadLocationData";
-import getPlaceObject from "@/actions/getPlaceObject";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { WeatherData } from "@/lib/types/weather-data";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
     loadLocationData,
-    null
-  );
-  const [place, placeGetter, placeLoader] = useActionState(
-    getPlaceObject,
     null
   );
   const [status, setStatus] = useState<LoadingStatus>("loading");
@@ -36,7 +31,6 @@ export default function MainPage() {
           end_date: getDateOnly(getNextDay()),
           ...location,
         });
-        placeGetter(location);
       });
     })();
   }, []);
@@ -47,14 +41,12 @@ export default function MainPage() {
         setStatus("error");
         return;
       }
-      console.log(locationData);
       setStatus("ready");
     }
-    if (place && !placeLoader) console.log(place);
-  }, [locationData, loadingState, place, placeLoader]);
+  }, [locationData, loadingState]);
   return (
     <main className="container p-1">
-      <div>
+      <div className="container__holder">
         <AppHeader status={status} />
         {status !== "error" && (
           <AppData status={status} data={locationData as WeatherData[]} />
