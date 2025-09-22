@@ -1,14 +1,30 @@
 import searchIcon from "@images/icon-search.svg";
 import Image from "next/image";
-import { Input } from "@progress/kendo-react-inputs";
+import { Input, InputChangeEvent } from "@progress/kendo-react-inputs";
 import { UnstyledContext } from "@progress/kendo-react-common";
 import kendoButtonResetterObject from "@/lib/kendoreact/buttonResetterObject";
 import { Button } from "@progress/kendo-react-buttons";
 import SearchBox from "./search-box/SearchBox";
-import { useState } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
+import getPlaceSuggestions from "@/actions/getPlaceSuggestions";
 
 export default function SearchForm() {
   const [searching, setSearching] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [suggestions, getSuggestionAction, suggestionState] = useActionState(
+    getPlaceSuggestions,
+    null
+  );
+
+  const handleSearch = (e: InputChangeEvent) => {
+    setSearchInput(e.value);
+    startTransition(() => getSuggestionAction(e.value));
+  };
+  useEffect(() => {
+    if (suggestions && !suggestionState) {
+      console.log(suggestions);
+    }
+  }, [suggestions, suggestionState]);
   return (
     <form className="search grid sg-7 j-center xs-up-flex">
       <UnstyledContext.Provider
@@ -27,6 +43,8 @@ export default function SearchForm() {
             placeholder="Search for a place..."
             onFocus={() => setSearching(true)}
             onBlur={() => setSearching(false)}
+            value={searchInput}
+            onChange={handleSearch}
           />
           {searching && <SearchBox />}
         </label>
