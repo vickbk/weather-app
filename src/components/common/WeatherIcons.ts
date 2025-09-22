@@ -37,10 +37,10 @@ const weatherIcons = {
   96: [storm, "Thunderstorm with slight"],
   99: [storm, "heavy hail"],
   get(code: number) {
-    const [icon, desc] = this[code as WeatherCode];
-    return { icon, desc };
+    const [image, desc] = this[code as WeatherCode];
+    return { image, desc };
   },
-};
+} as const;
 
-type WeatherCode = Exclude<keyof typeof weatherIcons, "get">;
+export type WeatherCode = Exclude<keyof typeof weatherIcons, "get">;
 export default weatherIcons;
