@@ -23,7 +23,7 @@ export default function HourlyData({
               hour: "2-digit",
             }),
             temp: `${temp?.toFixed()}`,
-            icon: weatherIcons.get(weatherCode!),
+            icon: weatherIcons.get(weatherCode!, time),
           })) ?? [];
 
   return (

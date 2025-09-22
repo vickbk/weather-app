@@ -19,7 +19,7 @@ export default function MainData({
   return (
     <section className="data__main grid g-2">
       <MainDataOverview
-        icon={weatherIcons.get(current?.weatherCode ?? 0)}
+        icon={weatherIcons.get(current?.weatherCode ?? 0, current?.time)}
         city="Berlin, Germany"
         temp={current?.temp?.toFixed() || "0"}
         date={new Date(getDateOnly())}
