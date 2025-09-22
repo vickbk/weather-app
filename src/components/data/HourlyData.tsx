@@ -1,9 +1,9 @@
-import partlyCloudy from "@images/icon-partly-cloudy.webp";
 import Dropdown from "../common/Dropdown";
 import DataPerHour from "./DataPerHour";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { Skeleton } from "@progress/kendo-react-indicators";
 import { WeatherHourlyData } from "@/lib/types/weather-data";
+import weatherIcons from "../common/WeatherIcons";
 
 export default function HourlyData({
   status,
@@ -15,14 +15,16 @@ export default function HourlyData({
   const data =
     status === "loading"
       ? Array(8).fill({})
-      : hourly?.map(({ time, temp }) => ({
-          time: time.toLocaleTimeString("en-US", {
-            hour12: true,
-            hour: "2-digit",
-          }),
-          temp: `${temp?.toFixed()}`,
-          icon: { image: partlyCloudy, desc: "Partly cloudy" },
-        })) ?? [];
+      : hourly
+          ?.filter(({ time }) => time > new Date())
+          .map(({ time, temp, weatherCode }) => ({
+            time: time.toLocaleTimeString("en-US", {
+              hour12: true,
+              hour: "2-digit",
+            }),
+            temp: `${temp?.toFixed()}`,
+            icon: weatherIcons.get(weatherCode!),
+          })) ?? [];
 
   return (
     <article className="data__hourly neutral-700 br-1 p-1">
