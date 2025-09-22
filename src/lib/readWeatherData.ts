@@ -1,18 +1,25 @@
+import { PlaceDisplay } from "./types/places-types";
 import { WeatherData, WeatherHourlyData } from "./types/weather-data";
 import weatherHourlyDisplayName from "./types/weather-hourly-display-names";
 import { WeatherResponce } from "./types/weather-request-response";
 
 export default function readWeatherData(
   weatherData: WeatherResponce[],
-  hourlyIndexes: string[]
+  hourlyIndexes: string[],
+  placeName: PlaceDisplay
 ): WeatherData[] {
-  return weatherData.map((data) => ({
-    lat: data.latitude(),
-    lon: data.longitude(),
-    elevation: data.elevation(),
-    utcSec: data.utcOffsetSeconds(),
-    hourly: getHourlyData(data, hourlyIndexes),
-  }));
+  return weatherData.map((data) => {
+    const latitude = data.latitude();
+    const longitude = data.longitude();
+    return {
+      lat: latitude,
+      lon: longitude,
+      placeName,
+      elevation: data.elevation(),
+      utcSec: data.utcOffsetSeconds(),
+      hourly: getHourlyData(data, hourlyIndexes),
+    };
+  });
 }
 
 function getHourlyData(

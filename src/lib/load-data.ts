@@ -1,6 +1,8 @@
 import { fetchWeatherApi } from "openmeteo";
 import readWeatherData from "./readWeatherData";
 import { WeatherRequest } from "./types/weather-request-response";
+import getPlaceObject from "@/actions/getPlaceObject";
+import getPlaceName from "@/actions/getPlaceName";
 
 export default async function loadData({
   latitude = 52.52,
@@ -21,6 +23,10 @@ export default async function loadData({
   start_date,
   end_date,
 }: WeatherRequest) {
+  const placeName = getPlaceName(
+    await getPlaceObject(null, { latitude, longitude })
+  );
+
   return readWeatherData(
     await fetchWeatherApi(process.env.OPEN_METEO_WEATHERFORCAST!, {
       latitude,
@@ -29,6 +35,7 @@ export default async function loadData({
       end_date,
       hourly,
     }),
-    hourly
+    hourly,
+    placeName
   );
 }

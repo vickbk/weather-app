@@ -58,17 +58,17 @@ $directions: (
     $size: list.nth($values, 1);
     $class: list.nth($values, 2);
     @include queries.from-mobile($size) {
-      .#{$class}-up-m-#{$i} {
+      .#{$class}-up-m-#{$i}.#{$class}-up-m-#{$i} {
         margin: #{$i}em;
       }
-      .#{$class}-up-sm-#{$i} {
+      .#{$class}-up-sm-#{$i}.#{$class}-up-sm-#{$i} {
         margin: #{math.div($i, 10)}em;
       }
 
-      .#{$class}-up-g-#{$i} {
+      .#{$class}-up-g-#{$i}.#{$class}-up-g-#{$i} {
         gap: #{$i}em;
       }
-      .#{$class}-up-sg-#{$i} {
+      .#{$class}-up-sg-#{$i}.#{$class}-up-sg-#{$i} {
         gap: #{math.div($i, 10)}em;
       }
 

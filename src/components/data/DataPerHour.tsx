@@ -10,7 +10,7 @@ export default function DataPerHour({
   temp: string;
 }) {
   return (
-    <section className="hourly__data sp-5 pi-1 flex sg-5 center br-1 neutral-600">
+    <section className="hourly__data sp-5 pi-1 flex sg-5 sm-up-g-2 lg-up-sg-5 center br-1 neutral-600">
       <Image src={image} alt={desc} height={40} />
       <p className="hourly__data-time">{time}</p>
       <p className="mis-auto">{temp}°</p>

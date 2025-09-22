@@ -8,7 +8,8 @@ $asset-path: "/weather-app-main/assets/images";
     &-overview {
       background: url(#{$asset-path}+"/bg-today-small.svg") no-repeat;
       background-position: center;
-      @include queries.from-mobile(queries.$small-screen) {
+      background-size: cover;
+      @include queries.from-mobile(queries.$mobile) {
         background-image: url(#{$asset-path}+"/bg-today-large.svg");
       }
     }

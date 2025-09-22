@@ -7,7 +7,7 @@ import getLocation from "@/actions/getLocation";
 import getDateOnly from "@/lib/date/get-date-only";
 import getNextDay from "@/lib/date/get-next-day";
 import loadLocationData from "@/actions/loadLocationData";
-import getPlaceName from "@/actions/getPlaceName";
+import getPlaceObject from "@/actions/getPlaceObject";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { WeatherData } from "@/lib/types/weather-data";
 
@@ -16,7 +16,10 @@ export default function MainPage() {
     loadLocationData,
     null
   );
-  const [place, placeGetter, placeLoader] = useActionState(getPlaceName, null);
+  const [place, placeGetter, placeLoader] = useActionState(
+    getPlaceObject,
+    null
+  );
   const [status, setStatus] = useState<LoadingStatus>("loading");
 
   useEffect(() => {
