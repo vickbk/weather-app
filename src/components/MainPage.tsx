@@ -49,9 +49,12 @@ export default function MainPage() {
   return (
     <main className="container p-1">
       <div className="container__holder">
-        <AppHeader status={status} searchTrigger={getLocationData} />
-        {/* <NoResultsElement /> */}
-        {status !== "error" && (
+        <AppHeader
+          status={status}
+          triggers={{ searchTrigger: getLocationData, errorTrigger: setStatus }}
+        />
+        {status === "no-result" && <NoResultsElement />}
+        {!["no-result", "error"].includes(status) && (
           <AppData status={status} data={locationData as WeatherData[]} />
         )}
         <Attribution />

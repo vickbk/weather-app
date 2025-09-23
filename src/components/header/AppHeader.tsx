@@ -6,13 +6,14 @@ import { LoadingStatus } from "@/lib/types/loading-status";
 import ErrorElement from "../error/ErrorElement";
 import getDayTimeSlot from "@/lib/date/get-day-time-slot";
 import { WeatherRequest } from "@/lib/types/weather-request-response";
+import { SearchTriggers } from "@/lib/types/search-types";
 
 export default function AppHeader({
   status,
-  searchTrigger,
+  triggers,
 }: {
   status: LoadingStatus;
-  searchTrigger: (payload: WeatherRequest) => void;
+  triggers: SearchTriggers;
 }) {
   const timeSlots = {
     day: "today",
@@ -37,7 +38,7 @@ export default function AppHeader({
       {status !== "error" ? (
         <>
           <h1 className="header__title pbl-1">{timeSlots.getTitle()}</h1>
-          <SearchForm searchTrigger={searchTrigger} />
+          <SearchForm triggers={triggers} />
         </>
       ) : (
         <ErrorElement />

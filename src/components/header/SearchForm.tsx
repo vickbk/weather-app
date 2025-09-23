@@ -10,12 +10,12 @@ import getPlaceSuggestions from "@/actions/getPlaceSuggestions";
 import { GeocodingPlaceResult } from "@/lib/types/geocoding";
 import { Coordinates } from "@/lib/types/places-types";
 import searchInit from "@/actions/searchInit";
-import { WeatherRequest } from "@/lib/types/weather-request-response";
+import { SearchTriggers } from "@/lib/types/search-types";
 
 export default function SearchForm({
-  searchTrigger,
+  triggers: { searchTrigger, errorTrigger },
 }: {
-  searchTrigger: (payload: WeatherRequest) => void;
+  triggers: SearchTriggers;
 }) {
   const [searching, setSearching] = useState(false);
   const [searchInput, setSearchInput] = useState("");
@@ -39,6 +39,7 @@ export default function SearchForm({
   useEffect(() => {
     if (searchResults && !searchStatus) {
       if ("error" in searchResults) {
+        errorTrigger("no-result");
         console.log(searchResults.error);
         return;
       }
