@@ -8,9 +8,11 @@ import { GeocodingResults } from "@/lib/types/geocoding";
 export default function SearchBox({
   searchProgress,
   searchResults,
+  selectSuggestion,
 }: {
   searchProgress: boolean;
   searchResults: null | { error: any } | GeocodingResults;
+  selectSuggestion: (suggestion: string) => void;
 }) {
   const { results } = (searchResults ?? {}) as GeocodingResults;
   return (
@@ -19,10 +21,12 @@ export default function SearchBox({
         <article className="search-box smbls-5 neutral-700 sbr-5 sp-5 no-border">
           {searchProgress && <ProgressSearch />}
           {results &&
-            results.map(({ name, country }) => (
+            results.map(({ name, country, id }, key) => (
               <SearchElement
+                key={`${key}_${id}`}
                 icon={<SvgIcon icon={mapMarkerIcon} />}
                 text={`${name}, ${country}`}
+                selectSuggestion={selectSuggestion}
               />
             ))}{" "}
         </article>

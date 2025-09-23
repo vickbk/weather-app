@@ -37,7 +37,7 @@ export default function SearchForm() {
             className="search-input sp-5 pis-3 sbr-5 no-border"
             placeholder="Search for a place..."
             onFocus={() => setSearching(true)}
-            onBlur={() => setSearching(false)}
+            onBlur={() => setTimeout(() => setSearching(false), 500)}
             value={searchInput}
             onChange={handleSearch}
           />
@@ -45,6 +45,7 @@ export default function SearchForm() {
             <SearchBox
               searchProgress={suggestionState}
               searchResults={suggestions}
+              selectSuggestion={setSearchInput}
             />
           )}
         </label>
