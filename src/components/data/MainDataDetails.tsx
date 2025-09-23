@@ -1,6 +1,14 @@
 import { LoadingStatus } from "@/lib/types/loading-status";
+import { WeatherHourlyData } from "@/lib/types/weather-data";
 
-export default function MainDataDetails({ status }: { status: LoadingStatus }) {
+export default function MainDataDetails({
+  status,
+  data: weatherData,
+}: {
+  status: LoadingStatus;
+  data?: WeatherHourlyData;
+}) {
+  const { precipitation, humidity, wind, ambientTemp } = weatherData ?? {};
   const data =
     status === "loading"
       ? [
@@ -10,10 +18,10 @@ export default function MainDataDetails({ status }: { status: LoadingStatus }) {
           ["Precipitation", "-"],
         ]
       : [
-          ["Feels Like", "18"],
-          ["Humidity", "46%"],
-          ["Wind", "14km/h"],
-          ["Precipitation", "0 mm"],
+          ["Feels Like", `${ambientTemp?.toFixed()}°`],
+          ["Humidity", `${humidity}%`],
+          ["Wind", `${wind?.toFixed()}km/h`],
+          ["Precipitation", `${precipitation}mm`],
         ];
   return (
     <section className="data__details grid gc-2 gc-sm-up-4 g-1">

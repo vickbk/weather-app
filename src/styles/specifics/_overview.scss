@@ -7,12 +7,13 @@
     &-town {
       font-size: f.clamp-builder(1.8rem, 3rem);
     }
-    @include queries.from-mobile(queries.$mobile) {
+    @include queries.from-mobile(queries.$tablet) {
       text-align: start;
+      flex-basis: 60%;
     }
   }
   &-temp {
-    font-size: 6rem;
+    font-size: f.clamp-builder(5rem, 6rem);
     font-weight: font.$bold;
     font-style: italic;
   }

@@ -1,40 +1,68 @@
 import Image from "next/image";
-import iconRain from "@images/icon-rain.webp";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { Skeleton } from "@progress/kendo-react-indicators";
+import { WeatherData } from "@/lib/types/weather-data";
+import { startTransition, useActionState, useEffect, useState } from "react";
+import loadLocationData from "@/actions/loadLocationData";
+import getDateOnly from "@/lib/date/get-date-only";
+import getNextDay from "@/lib/date/get-next-day";
+import processDailyData from "@/actions/processDailyData";
+import { DailyDataType } from "@/lib/types/daily-data-type";
 
-export default function MainDataDaily({ status }: { status: LoadingStatus }) {
-  const data =
-    status === "loading"
-      ? Array(7).fill(null)
-      : [
-          {
-            day: "Tue",
-            highest: "20",
-            lowest: "14",
-            icon: { desc: "", image: iconRain },
-          },
-        ];
+export default function MainDataDaily({
+  status,
+  data: weatherData,
+}: {
+  status: LoadingStatus;
+  data?: WeatherData;
+}) {
+  const [dailyData, loadDaily, loadingState] = useActionState(
+    loadLocationData,
+    null
+  );
+  const [data, setData] = useState<null[] | DailyDataType[]>(
+    Array(7).fill(null)
+  );
+
+  useEffect(() => {
+    const { lat: latitude, lon: longitude } = weatherData ?? {};
+
+    if (status === "ready" && latitude && longitude)
+      startTransition(() =>
+        loadDaily({
+          latitude,
+          longitude,
+          start_date: getDateOnly(getNextDay()),
+          end_date: getDateOnly(getNextDay(undefined, 7)),
+        })
+      );
+  }, [status]);
+
+  useEffect(() => {
+    if (!loadingState && dailyData) {
+      if ("error" in dailyData) {
+        console.log(dailyData.error);
+        return;
+      }
+
+      setData(processDailyData(dailyData));
+    }
+  }, [dailyData, loadingState]);
+
   return (
     <section className="main__data-daily">
       <h4 className="daily-heading mb-1">Daily Forecast</h4>
       <div className="daily-days grid gc-3 gc-sm-up-4 gc-md-up-7 g-1">
-        {status === "loading"
-          ? data.map(() => (
-              <Skeleton className="pbl-7 br-2" animation={{ type: "wave" }} />
+        {status === "loading" || !data[0]
+          ? data.map((_, key) => (
+              <Skeleton
+                key={key}
+                className="pbl-7 br-2"
+                animation={{ type: "wave" }}
+              />
             ))
-          : data.map(
-              ({
-                day,
-                highest,
-                lowest,
-                icon: { image, desc },
-              }: {
-                day: string;
-                icon: { image: any; desc: string };
-                highest: string;
-                lowest: string;
-              }) => (
+          : (data as DailyDataType[]).map(
+              ({ day, highest, lowest, icon: { image, desc } }) => (
                 <article
                   key={day}
                   className="days-day text-center neutral-700 p-1 br-1"

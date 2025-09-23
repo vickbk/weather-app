@@ -26,7 +26,7 @@ export default function MainDataOverview({
           </div>
         </article>
       ) : (
-        <article className="main__data-overview pbl-2 pi-1 br-1 sm-up-flex space-between sm-up-pbl-5 a-center">
+        <article className="main__data-overview pbl-2 pi-1 br-1 md-up-flex space-between sm-up-pbl-5 a-center">
           <div className="overview-heading">
             <h2 className="overview-heading-town">{city}</h2>
             <time

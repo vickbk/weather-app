@@ -1,0 +1,5 @@
+@use "../main/font";
+.no-results {
+  font-size: 2em;
+  font-weight: font.$min-bold;
+}

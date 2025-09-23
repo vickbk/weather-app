@@ -1,10 +1,7 @@
-export type Coordinates = {
-  longitude: number;
-  latitude: number;
-};
+import { Coordinates } from "@/lib/types/places-types";
 
 export default async function getLocation() {
-  return new Promise<Coordinates>((resolve, reject) => {
+  const coords = new Promise<Coordinates>((resolve, reject) => {
     try {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -16,9 +13,14 @@ export default async function getLocation() {
         throw new Error("Geolocation is not supported in this browser");
       }
     } catch (error: any) {
-      reject({ error: error?.message });
+      reject(new Error(error?.message));
     }
   });
+  return coords
+    .then((a) => a)
+    .catch((a) => ({
+      error: a,
+    }));
 }
 
 function retrieveLocation({
