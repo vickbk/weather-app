@@ -33,8 +33,10 @@
       position: absolute;
       inline-size: 100%;
       text-align: start;
+      max-block-size: f.to-r-em(300);
+      overflow-y: auto;
       .search-text {
-        border-block-end: 1px solid c.$text-color;
+        border-block-end: f.to-r-em(1) solid c.$text-color;
       }
     }
     &-button {

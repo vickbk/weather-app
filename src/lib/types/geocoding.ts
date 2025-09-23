@@ -8,7 +8,7 @@ export type GeocodingResults = {
   results?: GeocodingPlaceResult[];
 };
 
-export type GeocodingPlaceResult = {
+export type GeocodingPlaceResult = Partial<{
   id: number;
   name: string;
   latitude: number;
@@ -29,4 +29,4 @@ export type GeocodingPlaceResult = {
   admin2: string;
   admin3: string;
   admin4: string;
-};
+}>;

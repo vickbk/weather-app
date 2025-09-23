@@ -5,8 +5,10 @@ import { UnstyledContext } from "@progress/kendo-react-common";
 import kendoButtonResetterObject from "@/lib/kendoreact/buttonResetterObject";
 import { Button } from "@progress/kendo-react-buttons";
 import SearchBox from "./search-box/SearchBox";
-import { startTransition, useActionState, useEffect, useState } from "react";
+import { startTransition, useActionState, useState } from "react";
 import getPlaceSuggestions from "@/actions/getPlaceSuggestions";
+import { GeocodingPlaceResult } from "@/lib/types/geocoding";
+import { Coordinates } from "@/lib/types/places-types";
 
 export default function SearchForm() {
   const [searching, setSearching] = useState(false);
@@ -15,13 +17,25 @@ export default function SearchForm() {
     getPlaceSuggestions,
     null
   );
+  const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
 
-  const handleSearch = (e: InputChangeEvent) => {
+  const handleSearchSuggestion = (e: InputChangeEvent) => {
     setSearchInput(e.value);
     startTransition(() => getSuggestionAction(e.value));
   };
+
+  const getSearchItem = ({
+    name,
+    latitude,
+    longitude,
+  }: GeocodingPlaceResult) => {
+    setSearchInput(name!);
+    setCoordinates({ latitude: latitude!, longitude: longitude! });
+  };
   return (
     <form className="search grid sg-7 j-center xs-up-flex">
+      <input type="hidden" name="latitude" value={coordinates?.latitude} />
+      <input type="hidden" name="longitude" value={coordinates?.longitude} />
       <UnstyledContext.Provider
         value={{ uInput: {}, ...kendoButtonResetterObject }}
       >
@@ -39,18 +53,19 @@ export default function SearchForm() {
             onFocus={() => setSearching(true)}
             onBlur={() => setTimeout(() => setSearching(false), 500)}
             value={searchInput}
-            onChange={handleSearch}
+            onChange={handleSearchSuggestion}
+            required
           />
           {searching && (
             <SearchBox
               searchProgress={suggestionState}
               searchResults={suggestions}
-              selectSuggestion={setSearchInput}
+              selectSuggestion={getSearchItem}
             />
           )}
         </label>
         <Button
-          type="submit"
+          type="button"
           className="search-button flex-grow sp-5 sbr-5 no-border"
         >
           Search
