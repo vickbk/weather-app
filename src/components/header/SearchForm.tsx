@@ -1,16 +1,12 @@
-import searchIcon from "@images/icon-search.svg";
-import Image from "next/image";
-import { Input, InputChangeEvent } from "@progress/kendo-react-inputs";
-import { UnstyledContext } from "@progress/kendo-react-common";
-import kendoButtonResetterObject from "@/lib/kendoreact/buttonResetterObject";
-import { Button } from "@progress/kendo-react-buttons";
-import SearchBox from "./search-box/SearchBox";
+import { InputChangeEvent } from "@progress/kendo-react-inputs";
 import { startTransition, useActionState, useEffect, useState } from "react";
 import getPlaceSuggestions from "@/actions/getPlaceSuggestions";
 import { GeocodingPlaceResult } from "@/lib/types/geocoding";
 import { Coordinates } from "@/lib/types/places-types";
 import searchInit from "@/actions/searchInit";
 import { SearchTriggers } from "@/lib/types/search-types";
+import SearchCoordinates from "./search/SearchCoordinates";
+import SearchInputs from "./search/SearchInputs";
 
 export default function SearchForm({
   triggers: { searchTrigger, errorTrigger },
@@ -62,52 +58,18 @@ export default function SearchForm({
       className="search grid sg-7 j-center xs-up-flex"
       action={searchInitProcess}
     >
-      <input
-        type="hidden"
-        name="latitude"
-        value={coordinates?.latitude || ""}
+      {coordinates && <SearchCoordinates coordinates={coordinates} />}
+
+      <SearchInputs
+        states={{
+          searchInput,
+          searching,
+          suggestions,
+          suggestionState,
+          searchStatus,
+        }}
+        methods={{ setSearching, handleSearchSuggestion, getSearchItem }}
       />
-      <input
-        type="hidden"
-        name="longitude"
-        value={coordinates?.longitude || ""}
-      />
-      <UnstyledContext.Provider
-        value={{ uInput: {}, ...kendoButtonResetterObject }}
-      >
-        <label className="search-label flex-grow">
-          <Image
-            className="search-label-icon"
-            src={searchIcon}
-            alt="search icon"
-            width={18}
-            height={18}
-          />
-          <Input
-            className="search-input sp-5 pis-3 sbr-5 no-border"
-            placeholder="Search for a place..."
-            onFocus={() => setSearching(true)}
-            onBlur={() => setTimeout(() => setSearching(false), 500)}
-            name="name"
-            value={searchInput}
-            onChange={handleSearchSuggestion}
-            required
-          />
-          {searching && (
-            <SearchBox
-              searchProgress={suggestionState || searchStatus}
-              searchResults={(!searchStatus && suggestions) || null}
-              selectSuggestion={getSearchItem}
-            />
-          )}
-        </label>
-        <Button
-          type="button"
-          className="search-button flex-grow sp-5 sbr-5 no-border"
-        >
-          Search
-        </Button>
-      </UnstyledContext.Provider>
     </form>
   );
 }

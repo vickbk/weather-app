@@ -37,7 +37,6 @@ function getHourlyData(
       .variables(x)!
       .valuesArray();
   }
-  console.log(hourlyData);
 
   return Array((timeEndVal - timeVal) / intervalVal)
     .fill(null)
