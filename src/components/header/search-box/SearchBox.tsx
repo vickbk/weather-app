@@ -30,7 +30,7 @@ export default function SearchBox({
                 icon={<SvgIcon icon={mapMarkerIcon} />}
                 text={`${name}, ${country}`}
                 setSelected={setSelected}
-                searchData={{ latitude, longitude, name }}
+                searchData={{ latitude, longitude, name, country }}
               />
             ))}{" "}
         </article>

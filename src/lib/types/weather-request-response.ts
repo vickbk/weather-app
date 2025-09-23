@@ -1,5 +1,6 @@
 import { fetchWeatherApi } from "openmeteo";
 import { weatherHourlyDisplayNameKeys } from "./weather-hourly-display-names";
+import { PlaceDisplay } from "./places-types";
 
 export type WeatherResponce = Awaited<
   ReturnType<typeof fetchWeatherApi>
@@ -11,4 +12,5 @@ export type WeatherRequest = {
   hourly?: weatherHourlyDisplayNameKeys[];
   start_date?: string;
   end_date?: string;
+  selected_city?: PlaceDisplay;
 };

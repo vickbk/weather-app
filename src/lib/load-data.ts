@@ -3,6 +3,8 @@ import readWeatherData from "./readWeatherData";
 import { WeatherRequest } from "./types/weather-request-response";
 import getPlaceObject from "@/actions/getPlaceObject";
 import getPlaceName from "@/actions/getPlaceName";
+import getDateOnly from "./date/get-date-only";
+import getNextDay from "./date/get-next-day";
 
 export default async function loadData({
   latitude = 52.52,
@@ -20,12 +22,13 @@ export default async function loadData({
     "wind_speed_180m",
     "weather_code",
   ],
-  start_date,
-  end_date,
+  start_date = getDateOnly(),
+  end_date = getDateOnly(getNextDay()),
+  selected_city,
 }: WeatherRequest) {
-  const placeName = getPlaceName(
-    await getPlaceObject(null, { latitude, longitude })
-  );
+  const placeName =
+    selected_city ||
+    getPlaceName(await getPlaceObject(null, { latitude, longitude }));
 
   return readWeatherData(
     await fetchWeatherApi(process.env.OPEN_METEO_WEATHERFORCAST!, {
