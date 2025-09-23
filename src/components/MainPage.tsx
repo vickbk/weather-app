@@ -35,6 +35,7 @@ export default function MainPage() {
     })();
   }, []);
   useEffect(() => {
+    if (loadingState) setStatus("loading");
     if (locationData && !loadingState) {
       if ("error" in locationData) {
         console.log(loadLocationData);
@@ -47,7 +48,7 @@ export default function MainPage() {
   return (
     <main className="container p-1">
       <div className="container__holder">
-        <AppHeader status={status} />
+        <AppHeader status={status} searchTrigger={getLocationData} />
         {status !== "error" && (
           <AppData status={status} data={locationData as WeatherData[]} />
         )}

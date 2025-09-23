@@ -5,8 +5,15 @@ import SearchForm from "./SearchForm";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import ErrorElement from "../error/ErrorElement";
 import getDayTimeSlot from "@/lib/date/get-day-time-slot";
+import { WeatherRequest } from "@/lib/types/weather-request-response";
 
-export default function AppHeader({ status }: { status: LoadingStatus }) {
+export default function AppHeader({
+  status,
+  searchTrigger,
+}: {
+  status: LoadingStatus;
+  searchTrigger: (payload: WeatherRequest) => void;
+}) {
   const timeSlots = {
     day: "today",
     morning: "this morning",
@@ -30,7 +37,7 @@ export default function AppHeader({ status }: { status: LoadingStatus }) {
       {status !== "error" ? (
         <>
           <h1 className="header__title pbl-1">{timeSlots.getTitle()}</h1>
-          <SearchForm />
+          <SearchForm searchTrigger={searchTrigger} />
         </>
       ) : (
         <ErrorElement />

@@ -3,10 +3,11 @@
 import getFormFields from "@/lib/get-form-fields";
 import { getGoogleGeoLocationResults } from "@/lib/google-maps/get-geoLocation-results";
 import getPlaceName from "./getPlaceName";
+import { PlaceDisplay } from "@/lib/types/places-types";
 
 export default async function searchInit(_: unknown, formData: FormData) {
   const { name, latitude, longitude } = getFormFields<{
-    name: string;
+    name: PlaceDisplay;
     latitude: string;
     longitude: string;
   }>(formData);
