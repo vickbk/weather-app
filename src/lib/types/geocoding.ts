@@ -5,7 +5,7 @@ export type GeocodingError = {
 
 export type GeocodingResults = {
   generationtime_ms: number;
-  results: GeocodingPlaceResult[];
+  results?: GeocodingPlaceResult[];
 };
 
 export type GeocodingPlaceResult = {

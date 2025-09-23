@@ -20,11 +20,6 @@ export default function SearchForm() {
     setSearchInput(e.value);
     startTransition(() => getSuggestionAction(e.value));
   };
-  useEffect(() => {
-    if (suggestions && !suggestionState) {
-      console.log(suggestions);
-    }
-  }, [suggestions, suggestionState]);
   return (
     <form className="search grid sg-7 j-center xs-up-flex">
       <UnstyledContext.Provider
@@ -46,7 +41,12 @@ export default function SearchForm() {
             value={searchInput}
             onChange={handleSearch}
           />
-          {searching && <SearchBox />}
+          {searching && (
+            <SearchBox
+              searchProgress={suggestionState}
+              searchResults={suggestions}
+            />
+          )}
         </label>
         <Button
           type="submit"
