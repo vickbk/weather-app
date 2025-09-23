@@ -9,6 +9,7 @@ import getNextDay from "@/lib/date/get-next-day";
 import loadLocationData from "@/actions/loadLocationData";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { WeatherData } from "@/lib/types/weather-data";
+import NoResultsElement from "./error/NoResultsElement";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
@@ -49,6 +50,7 @@ export default function MainPage() {
     <main className="container p-1">
       <div className="container__holder">
         <AppHeader status={status} searchTrigger={getLocationData} />
+        {/* <NoResultsElement /> */}
         {status !== "error" && (
           <AppData status={status} data={locationData as WeatherData[]} />
         )}

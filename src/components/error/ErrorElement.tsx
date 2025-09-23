@@ -2,13 +2,9 @@ import { Button } from "@progress/kendo-react-buttons";
 import Image from "next/image";
 import retryIcon from "@images/icon-retry.svg";
 import errorIcon from "@images/icon-error.svg";
-import { redirect } from "next/navigation";
-import { ButtonClasses, UnstyledContext } from "@progress/kendo-react-common";
+import { UnstyledContext } from "@progress/kendo-react-common";
 import kendoButtonResetterObject from "@/lib/kendoreact/buttonResetterObject";
 export default function ErrorElement() {
-  // const butn : ButtonClasses;
-  // butn.wrapper.
-
   return (
     <article className="error pbl-3 md-up-p-3 ">
       <Image src={errorIcon} alt="" height={50} />
