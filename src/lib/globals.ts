@@ -1,4 +1,4 @@
-"client only";
+"use client";
 
 const __global: any = window || {};
 type Globals = {
