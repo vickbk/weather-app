@@ -9,7 +9,7 @@ const CheckComponent = () => <Image src={checkIcon} alt="" />;
 
 export default function HeaderDropDown() {
   const data = [
-    { title: "Temperature", values: ["Celsius (C)", "Fahrenheit (F)"] },
+    { title: "Temperature", values: ["Celsius (°C)", "Fahrenheit (°F)"] },
     { title: "Wind Speed", values: ["km/h", "mph"] },
     { title: "Precipitation", values: ["millimeters (mm)", "inches (in)"] },
   ];
@@ -22,7 +22,7 @@ export default function HeaderDropDown() {
           onClick={() => setImperial(!isImperial)}
           className="no-border sp-5"
         >
-          Switch to Imperial
+          Switch to {isImperial ? "Metric" : "Imperial"}
         </button>
       </UnstyledContext.Provider>
       {data.map(({ title, values }, index) => (

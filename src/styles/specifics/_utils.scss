@@ -1,7 +1,9 @@
 @use "../main/colors" as c;
-.neutral-700 {
-  background-color: c.$neutral-700;
-}
-.neutral-600 {
-  background-color: c.$neutral-600;
+
+@each $accent,
+  $color in (300: c.$neutral-300, 600: c.$neutral-600, 700: c.$neutral-700)
+{
+  .neutral-#{$accent} {
+    background-color: $color;
+  }
 }

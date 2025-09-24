@@ -5,6 +5,7 @@ import { Skeleton } from "@progress/kendo-react-indicators";
 import { WeatherHourlyData } from "@/lib/types/weather-data";
 import weatherIcons from "../common/WeatherIcons";
 import { useEffect, useRef } from "react";
+import HourlyDropDown from "./HourlyDropDown";
 
 export default function HourlyData({
   status,
@@ -58,6 +59,7 @@ export default function HourlyData({
       <section ref={headerRef} className="flex space-between center">
         <h4 className="hourly__title">Hourly forecast</h4>
         <Dropdown
+          content={<HourlyDropDown />}
           specialClass="neutral-600"
           text={status !== "loading" ? "The day" : " - "}
         />

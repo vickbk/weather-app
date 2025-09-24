@@ -7,13 +7,14 @@
   inline-size: f.to-r-em(220);
   font-size: font.$preferred-size;
   text-align: start;
-  border: 1px solid c.$neutral-600;
+  border: 0.001em solid c.$neutral-600;
   z-index: 1;
   button {
     background: transparent;
   }
   .active {
     background: c.$neutral-600;
+    inline-size: 100%;
   }
   &-header {
     &-container {
