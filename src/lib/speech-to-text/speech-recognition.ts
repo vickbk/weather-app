@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { CustomGlobals } from "../globals";
+import CustomGlobals from "../globals/globals";
 
 export default function speechRecognition() {
   const [transcript, setTranscript] = useState("");

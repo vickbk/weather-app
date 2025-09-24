@@ -1,11 +1,11 @@
 "use client";
 
-const __global: any = window || {};
+const __global: any = globalThis || {};
 type Globals = {
   name: string;
   value: any;
 };
-export class CustomGlobals {
+export default class CustomGlobals {
   static add(...g: (Globals | [string, any])[]) {
     let allGlobals = g;
     let index = 0;
