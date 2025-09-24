@@ -1,8 +1,11 @@
+import getMemoItem from "@/lib/memorization/get-item";
 import { Coordinates } from "@/lib/types/places-types";
 
 export default async function getLocation() {
   const coords = new Promise<Coordinates>((resolve, reject) => {
     try {
+      const lastVisited = getMemoItem("last-visited");
+      if (lastVisited) return resolve(lastVisited as Coordinates);
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (coords) => resolve(retrieveLocation(coords)),

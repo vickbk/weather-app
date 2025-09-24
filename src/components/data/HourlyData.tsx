@@ -29,17 +29,18 @@ export default function HourlyData({
   const articleRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const holderRef = useRef<HTMLElement>(null);
-  useEffect(() => {
+  const resetArticleHeight = () => {
     setTimeout(() => {
       if (articleRef.current && headerRef.current && holderRef.current) {
-        const holder = holderRef.current;
-        holder.style.maxBlockSize = "600px";
-        holder.style.maxBlockSize = `calc(${
+        holderRef.current.style.maxBlockSize = "600px";
+        holderRef.current.style.maxBlockSize = `calc(${
           articleRef.current.offsetHeight - headerRef.current.offsetHeight
         }px - 3em)`;
       }
     }, 300);
-  }, [hourly]);
+  };
+  useEffect(resetArticleHeight, [hourly]);
+  useEffect(resetArticleHeight, []);
 
   return (
     <article

@@ -10,6 +10,7 @@ import loadLocationData from "@/actions/loadLocationData";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { WeatherData } from "@/lib/types/weather-data";
 import NoResultsElement from "./error/NoResultsElement";
+import addLastVisited from "@/lib/memorization/add-last-visited";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
@@ -43,6 +44,7 @@ export default function MainPage() {
         setStatus("error");
         return;
       }
+      if (locationData.length !== 0) addLastVisited(locationData[0]);
       setStatus("ready");
     }
   }, [locationData, loadingState]);
