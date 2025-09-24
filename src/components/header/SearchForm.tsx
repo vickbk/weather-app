@@ -1,12 +1,17 @@
 import { InputChangeEvent } from "@progress/kendo-react-inputs";
 import { startTransition, useActionState, useEffect, useState } from "react";
 import getPlaceSuggestions from "@/actions/getPlaceSuggestions";
-import { GeocodingPlaceResult } from "@/lib/types/geocoding";
+import { GeocodingPlaceResult, GeocodingResults } from "@/lib/types/geocoding";
 import { Coordinates } from "@/lib/types/places-types";
 import searchInit from "@/actions/searchInit";
 import { SearchTriggers } from "@/lib/types/search-types";
 import SearchCoordinates from "./search/SearchCoordinates";
 import SearchInputs from "./search/SearchInputs";
+import {
+  addRecentSearch,
+  getRecentSearches,
+} from "@/lib/memorization/recent-search";
+import { get } from "http";
 
 export default function SearchForm({
   triggers: { searchTrigger, errorTrigger },
@@ -24,12 +29,17 @@ export default function SearchForm({
     null
   );
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
+  const [recentSearches, setRecentSearches] = useState<GeocodingResults | null>(
+    null
+  );
 
   const handleSearchSuggestion = (e: InputChangeEvent) => {
-    setSearchInput(e.value);
+    const { value } = e;
+    setSearchInput(value);
     setCoordinates(null);
     setSearching(true);
-    startTransition(() => getSuggestionAction(e.value));
+    setRecentSearches(getRecentSearches(value));
+    !recentSearches && startTransition(() => getSuggestionAction(value));
   };
 
   useEffect(() => {
@@ -39,6 +49,7 @@ export default function SearchForm({
         console.log(searchResults.error);
         return;
       }
+      addRecentSearch(searchResults);
       startTransition(() => searchTrigger({ ...searchResults }));
       setSearching(false);
     }
@@ -64,7 +75,7 @@ export default function SearchForm({
         states={{
           searchInput,
           searching,
-          suggestions,
+          suggestions: recentSearches || suggestions,
           suggestionState,
           searchStatus,
         }}

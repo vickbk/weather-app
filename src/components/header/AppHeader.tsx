@@ -5,7 +5,6 @@ import SearchForm from "./SearchForm";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import ErrorElement from "../error/ErrorElement";
 import getDayTimeSlot from "@/lib/date/get-day-time-slot";
-import { WeatherRequest } from "@/lib/types/weather-request-response";
 import { SearchTriggers } from "@/lib/types/search-types";
 
 export default function AppHeader({
