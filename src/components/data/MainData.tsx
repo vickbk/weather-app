@@ -9,8 +9,10 @@ import weatherIcons from "../common/WeatherIcons";
 export default function MainData({
   status,
   data,
+  setDailyReady,
 }: {
   status: LoadingStatus;
+  setDailyReady: (ready: boolean) => void;
   data?: WeatherData;
 }) {
   const current = data?.hourly.find(
@@ -26,7 +28,11 @@ export default function MainData({
         status={status}
       />
       <MainDataDetails data={current} status={status} />
-      <MainDataDaily status={status} data={data} />
+      <MainDataDaily
+        status={status}
+        data={data}
+        setDailyReady={setDailyReady}
+      />
     </section>
   );
 }

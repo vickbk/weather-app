@@ -4,14 +4,16 @@ import { LoadingStatus } from "@/lib/types/loading-status";
 import { Skeleton } from "@progress/kendo-react-indicators";
 import { WeatherHourlyData } from "@/lib/types/weather-data";
 import weatherIcons from "../common/WeatherIcons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function HourlyData({
   status,
   hourly,
+  dailyReady,
 }: {
   status: LoadingStatus;
   hourly?: WeatherHourlyData[];
+  dailyReady: boolean;
 }) {
   const data =
     status === "loading"
@@ -30,17 +32,19 @@ export default function HourlyData({
   const headerRef = useRef<HTMLElement>(null);
   const holderRef = useRef<HTMLElement>(null);
   const resetArticleHeight = () => {
-    setTimeout(() => {
-      if (articleRef.current && headerRef.current && holderRef.current) {
-        holderRef.current.style.maxBlockSize = "600px";
-        holderRef.current.style.maxBlockSize = `calc(${
-          articleRef.current.offsetHeight - headerRef.current.offsetHeight
-        }px - 3em)`;
-      }
-    }, 300);
+    if (
+      dailyReady &&
+      articleRef.current &&
+      headerRef.current &&
+      holderRef.current
+    ) {
+      holderRef.current.style.maxBlockSize = "600px";
+      holderRef.current.style.maxBlockSize = `calc(${
+        articleRef.current.offsetHeight - headerRef.current.offsetHeight
+      }px - 3em)`;
+    }
   };
-  useEffect(resetArticleHeight, [hourly]);
-  useEffect(resetArticleHeight, []);
+  useEffect(resetArticleHeight, [dailyReady]);
 
   return (
     <article

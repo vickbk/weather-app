@@ -12,9 +12,11 @@ import { DailyDataType } from "@/lib/types/daily-data-type";
 export default function MainDataDaily({
   status,
   data: weatherData,
+  setDailyReady,
 }: {
   status: LoadingStatus;
   data?: WeatherData;
+  setDailyReady: (ready: boolean) => void;
 }) {
   const [dailyData, loadDaily, loadingState] = useActionState(
     loadLocationData,
@@ -27,7 +29,7 @@ export default function MainDataDaily({
   useEffect(() => {
     const { lat: latitude, lon: longitude } = weatherData ?? {};
 
-    if (status === "ready" && latitude && longitude)
+    if (status === "ready" && latitude && longitude) {
       startTransition(() =>
         loadDaily({
           latitude,
@@ -36,6 +38,8 @@ export default function MainDataDaily({
           end_date: getDateOnly(getNextDay(undefined, 7)),
         })
       );
+      setDailyReady(false);
+    }
   }, [status]);
 
   useEffect(() => {
@@ -46,6 +50,7 @@ export default function MainDataDaily({
       }
 
       setData(processDailyData(dailyData));
+      setDailyReady(true);
     }
   }, [dailyData, loadingState]);
 
