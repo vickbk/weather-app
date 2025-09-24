@@ -29,7 +29,6 @@ export default async function getLocation() {
 function retrieveLocation({
   coords: { latitude, longitude },
 }: GeolocationPosition) {
-  console.log({ longitude, latitude });
   return { longitude, latitude };
 }
 

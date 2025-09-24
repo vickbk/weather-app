@@ -4,7 +4,6 @@ import getMemoItem from "./get-item";
 import setMemoItem from "./set-item";
 
 export function addRecentSearch(recent: WeatherRequest) {
-  console.log(recent);
   if (typeof window === "undefined") return;
   const recentSearches = (getMemoItem("recent-searches") ||
     []) as WeatherRequest[];
@@ -29,7 +28,7 @@ export function getRecentSearches(place: string) {
   );
 }
 
-export function convertToGeocodingResult(
+function convertToGeocodingResult(
   searches: WeatherRequest[]
 ): GeocodingResults | null {
   if (searches.length === 0) return null;

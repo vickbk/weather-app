@@ -40,7 +40,7 @@ export default function MainPage() {
     if (loadingState) setStatus("loading");
     if (locationData && !loadingState) {
       if ("error" in locationData) {
-        console.log(loadLocationData);
+        console.log(locationData.error);
         setStatus("error");
         return;
       }
