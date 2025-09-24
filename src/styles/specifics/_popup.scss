@@ -1,0 +1,29 @@
+@use "../functions/" as f;
+@use "../main/font";
+@use "../main/colors" as c;
+
+.pop-up {
+  inset: 100% 0 auto auto;
+  inline-size: f.to-r-em(220);
+  font-size: font.$preferred-size;
+  text-align: start;
+  border: 1px solid c.$neutral-600;
+  z-index: 1;
+  button {
+    background: transparent;
+  }
+  .active {
+    background: c.$neutral-600;
+  }
+  &-header {
+    &-container {
+      .title {
+        color: c.$neutral-300;
+        font-size: 1rem;
+      }
+      & + & {
+        border-block-start: 0.05em solid c.$neutral-600;
+      }
+    }
+  }
+}

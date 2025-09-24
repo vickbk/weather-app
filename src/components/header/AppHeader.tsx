@@ -6,6 +6,7 @@ import { LoadingStatus } from "@/lib/types/loading-status";
 import ErrorElement from "../error/ErrorElement";
 import getDayTimeSlot from "@/lib/date/get-day-time-slot";
 import { SearchTriggers } from "@/lib/types/search-types";
+import HeaderDropDown from "./HeaderDropDown";
 
 export default function AppHeader({
   status,
@@ -32,7 +33,7 @@ export default function AppHeader({
           alt="icon image"
           className="header__top-image"
         />
-        <UnitSelector />
+        <UnitSelector content={<HeaderDropDown />} />
       </section>
       {status !== "error" ? (
         <>
