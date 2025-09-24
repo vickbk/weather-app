@@ -22,6 +22,7 @@ export default function MainPage() {
   useEffect(() => {
     (async () => {
       const location = await getLocation();
+      console.log(location);
       if ("error" in location) {
         console.log(location.error);
         setStatus("error");
