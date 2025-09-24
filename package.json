@@ -27,6 +27,7 @@
     "@progress/kendo-react-tooltip": "^12.0.2",
     "@progress/kendo-svg-icons": "^4.5.0",
     "@progress/kendo-theme-default": "^12.0.1",
+    "client-only": "^0.0.1",
     "next": "15.5.3",
     "openmeteo": "^1.2.0",
     "react": "19.1.0",

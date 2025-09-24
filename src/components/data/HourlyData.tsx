@@ -46,6 +46,10 @@ export default function HourlyData({
   };
   useEffect(resetArticleHeight, [dailyReady]);
 
+  useEffect(() => {
+    window.addEventListener("resize", resetArticleHeight);
+    return () => window.removeEventListener("resize", resetArticleHeight);
+  }, []);
   return (
     <article
       ref={articleRef}

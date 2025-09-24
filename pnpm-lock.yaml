@@ -65,6 +65,9 @@ importers:
       '@progress/kendo-theme-default':
         specifier: ^12.0.1
         version: 12.0.1
+      client-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       next:
         specifier: 15.5.3
         version: 15.5.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.92.1)

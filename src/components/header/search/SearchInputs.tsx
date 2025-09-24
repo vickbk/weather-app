@@ -6,19 +6,17 @@ import SearchBox from "./SearchBox";
 import Image from "next/image";
 import searchIcon from "@images/icon-search.svg";
 import { GeocodingPlaceResult, GeocodingResults } from "@/lib/types/geocoding";
+import speechRecognition from "@/lib/speech-to-text/speech-recognition";
+import SpeechToTextButton from "./SpeechToTextButton";
+import { getRecentSearches } from "@/lib/memorization/recent-search";
+import { useState, startTransition } from "react";
+import { Coordinates } from "@/lib/types/places-types";
 
 export default function SearchInputs({
-  states: {
-    searchInput,
-    searching,
-    suggestionState,
-    searchStatus,
-    suggestions,
-  },
-  methods: { setSearching, handleSearchSuggestion, getSearchItem },
+  states: { searching, suggestionState, searchStatus, suggestions },
+  methods: { setSearching, setCoordinates, getSuggestionAction },
 }: {
   states: {
-    searchInput: string;
     searching: boolean;
     suggestionState: boolean;
     searchStatus: boolean;
@@ -31,17 +29,40 @@ export default function SearchInputs({
   };
   methods: {
     setSearching: (state: boolean) => void;
-    handleSearchSuggestion: (e: InputChangeEvent) => void;
-    getSearchItem: (item: GeocodingPlaceResult) => void;
+    setCoordinates: (coords: Coordinates | null) => void;
+    getSuggestionAction: (input: string) => void;
   };
 }) {
+  const speechControls = speechRecognition();
+  const [searchInput, setSearchInput] = useState("");
+  const [recentSearches, setRecentSearches] = useState<GeocodingResults | null>(
+    null
+  );
+  const handleSearchSuggestion = (e: InputChangeEvent) => {
+    const { value } = e;
+    setSearchInput(value);
+    setCoordinates(null);
+    setSearching(true);
+    setRecentSearches(getRecentSearches(value));
+    !recentSearches && startTransition(() => getSuggestionAction(value));
+  };
+  const getSearchItem = ({
+    name,
+    country,
+    latitude,
+    longitude,
+  }: GeocodingPlaceResult) => {
+    setSearchInput(`${name}, ${country}`);
+    setCoordinates({ latitude: latitude!, longitude: longitude! });
+  };
+
   return (
     <UnstyledContext.Provider
       value={{ uInput: {}, ...kendoButtonResetterObject }}
     >
       <label className="search-label flex-grow">
         <Image
-          className="search-label-icon"
+          className="search-label-icons search"
           src={searchIcon}
           alt="search icon"
           width={18}
@@ -57,10 +78,18 @@ export default function SearchInputs({
           required
           autoComplete="off"
         />
+        {speechControls && (
+          <SpeechToTextButton
+            speechControls={speechControls}
+            setSearchInput={setSearchInput}
+          />
+        )}
         {searching && (
           <SearchBox
             searchProgress={suggestionState || searchStatus}
-            searchResults={(!searchStatus && suggestions) || null}
+            searchResults={
+              (!searchStatus && (recentSearches || suggestions)) || null
+            }
             selectSuggestion={getSearchItem}
           />
         )}

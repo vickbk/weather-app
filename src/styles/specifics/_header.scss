@@ -18,10 +18,16 @@
       position: relative;
       flex-basis: f.to-r-em(300px);
       max-inline-size: f.to-r-em(550px);
-      &-icon {
+      &-icons {
         position: absolute;
         inset: 0;
-        margin: auto 1.25em;
+        &.search {
+          margin: auto 1.25em;
+        }
+        &.microphone {
+          background: transparent;
+          margin: auto 0.25em auto calc(100% - 2.5em);
+        }
       }
     }
     &-input {

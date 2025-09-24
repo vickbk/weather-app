@@ -1,17 +1,11 @@
-import { InputChangeEvent } from "@progress/kendo-react-inputs";
 import { startTransition, useActionState, useEffect, useState } from "react";
 import getPlaceSuggestions from "@/actions/getPlaceSuggestions";
-import { GeocodingPlaceResult, GeocodingResults } from "@/lib/types/geocoding";
 import { Coordinates } from "@/lib/types/places-types";
 import searchInit from "@/actions/searchInit";
 import { SearchTriggers } from "@/lib/types/search-types";
 import SearchCoordinates from "./search/SearchCoordinates";
 import SearchInputs from "./search/SearchInputs";
-import {
-  addRecentSearch,
-  getRecentSearches,
-} from "@/lib/memorization/recent-search";
-import { get } from "http";
+import { addRecentSearch } from "@/lib/memorization/recent-search";
 
 export default function SearchForm({
   triggers: { searchTrigger, errorTrigger },
@@ -19,7 +13,6 @@ export default function SearchForm({
   triggers: SearchTriggers;
 }) {
   const [searching, setSearching] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
   const [suggestions, getSuggestionAction, suggestionState] = useActionState(
     getPlaceSuggestions,
     null
@@ -29,18 +22,6 @@ export default function SearchForm({
     null
   );
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
-  const [recentSearches, setRecentSearches] = useState<GeocodingResults | null>(
-    null
-  );
-
-  const handleSearchSuggestion = (e: InputChangeEvent) => {
-    const { value } = e;
-    setSearchInput(value);
-    setCoordinates(null);
-    setSearching(true);
-    setRecentSearches(getRecentSearches(value));
-    !recentSearches && startTransition(() => getSuggestionAction(value));
-  };
 
   useEffect(() => {
     if (searchResults && !searchStatus) {
@@ -55,15 +36,6 @@ export default function SearchForm({
     }
   }, [searchResults, searchStatus]);
 
-  const getSearchItem = ({
-    name,
-    country,
-    latitude,
-    longitude,
-  }: GeocodingPlaceResult) => {
-    setSearchInput(`${name}, ${country}`);
-    setCoordinates({ latitude: latitude!, longitude: longitude! });
-  };
   return (
     <form
       className="search grid sg-7 j-center xs-up-flex"
@@ -73,13 +45,16 @@ export default function SearchForm({
 
       <SearchInputs
         states={{
-          searchInput,
           searching,
-          suggestions: recentSearches || suggestions,
+          suggestions: suggestions,
           suggestionState,
           searchStatus,
         }}
-        methods={{ setSearching, handleSearchSuggestion, getSearchItem }}
+        methods={{
+          setSearching,
+          getSuggestionAction,
+          setCoordinates,
+        }}
       />
     </form>
   );
