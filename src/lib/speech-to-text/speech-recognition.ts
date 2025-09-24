@@ -1,12 +1,13 @@
-import "client-only";
+"use client";
 import { useState } from "react";
+import { CustomGlobals } from "../globals";
 
 export default function speechRecognition() {
   const [transcript, setTranscript] = useState("");
   const [isListening, setIsListening] = useState(false);
   const SpeechConstructor =
-    (window as any).SpeechRecognition ||
-    (window as any).webkitSpeechRecognition;
+    CustomGlobals.get("SpeechRecognition") ||
+    CustomGlobals.get("webkitSpeechRecognition");
   if (!SpeechConstructor) return null;
 
   const recognition = new SpeechConstructor() as any;
