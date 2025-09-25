@@ -65,7 +65,6 @@ export default function HeaderDropDown({
                   }`}
                   onClick={() => {
                     setMetric(key, units[key][idx]);
-                    closer();
                   }}
                 >
                   {value}

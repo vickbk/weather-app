@@ -55,7 +55,7 @@ export default function AppHeader({
       {status !== "error" ? (
         <>
           <h1 className="header__title pbl-1">{timeSlots.getTitle()}</h1>
-          <SearchForm triggers={triggers} />
+          <SearchForm triggers={triggers} units={units} />
         </>
       ) : (
         <ErrorElement />

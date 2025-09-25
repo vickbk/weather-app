@@ -1,5 +1,11 @@
 "use client";
-import { startTransition, useActionState, useEffect, useState } from "react";
+import {
+  startTransition,
+  use,
+  useActionState,
+  useEffect,
+  useState,
+} from "react";
 import Attribution from "./Attributions";
 import AppData from "./data/AppData";
 import AppHeader from "./header/AppHeader";
@@ -14,6 +20,7 @@ import addLastVisited from "@/lib/memorization/add-last-visited";
 import { getGMTTimezone } from "@/lib/date/get-gmt-timezone";
 import { getUnits } from "@/lib/memorization/units";
 import unitSetters from "@/actions/unitSetter";
+import getUnitBasedParams from "@/lib/open-meteo/get-unit-based-params";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
@@ -38,10 +45,11 @@ export default function MainPage() {
           end_date: getDateOnly(getNextDay(undefined, 6)),
           ...location,
           timezone: getGMTTimezone(),
+          ...getUnitBasedParams(units),
         });
       });
     })();
-  }, []);
+  }, [units]);
   useEffect(() => {
     if (loadingState) setStatus("loading");
     if (locationData && !loadingState) {
@@ -67,7 +75,11 @@ export default function MainPage() {
         />
         {status === "no-result" && <NoResultsElement />}
         {!["no-result", "error"].includes(status) && (
-          <AppData status={status} data={locationData as WeatherData[]} />
+          <AppData
+            status={status}
+            data={locationData as WeatherData[]}
+            units={units}
+          />
         )}
         <Attribution />
       </div>

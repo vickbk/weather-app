@@ -3,16 +3,19 @@ import getPlaceSuggestions from "@/actions/getPlaceSuggestions";
 import { Coordinates } from "@/lib/types/places-types";
 import searchInit from "@/actions/searchInit";
 import { SearchTriggers } from "@/lib/types/search-types";
-import SearchCoordinates from "./search/SearchCoordinates";
+import SearchAdditionalData from "./search/SearchAdditionalData";
 import SearchInputs from "./search/SearchInputs";
 import { addRecentSearch } from "@/lib/memorization/recent-search";
 import getNextDay from "@/lib/date/get-next-day";
 import getDateOnly from "@/lib/date/get-date-only";
+import { UnitsType } from "@/lib/types/units-types";
 
 export default function SearchForm({
   triggers: { searchTrigger, errorTrigger },
+  units,
 }: {
   triggers: SearchTriggers;
+  units: UnitsType;
 }) {
   const [searching, setSearching] = useState(false);
   const [suggestions, getSuggestionAction, suggestionState] = useActionState(
@@ -48,7 +51,7 @@ export default function SearchForm({
       className="search grid sg-7 j-center xs-up-flex"
       action={searchInitProcess}
     >
-      {coordinates && <SearchCoordinates coordinates={coordinates} />}
+      {<SearchAdditionalData coordinates={coordinates} units={units} />}
 
       <SearchInputs
         states={{

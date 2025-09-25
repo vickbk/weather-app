@@ -5,15 +5,18 @@ import MainDataOverview from "./MainDataOverview";
 import getDateOnly from "@/lib/date/get-date-only";
 import { WeatherData } from "@/lib/types/weather-data";
 import weatherIcons from "../common/WeatherIcons";
+import { UnitsType } from "@/lib/types/units-types";
 
 export default function MainData({
   status,
   data,
   setDailyReady,
+  units,
 }: {
   status: LoadingStatus;
   setDailyReady: (ready: boolean) => void;
   data?: WeatherData;
+  units: UnitsType;
 }) {
   const current = data?.hourly.find(
     ({ time }) => time.getHours() === new Date().getHours()
@@ -27,7 +30,7 @@ export default function MainData({
         date={new Date(getDateOnly())}
         status={status}
       />
-      <MainDataDetails data={current} status={status} />
+      <MainDataDetails data={current} status={status} units={units} />
       <MainDataDaily
         status={status}
         data={data}
