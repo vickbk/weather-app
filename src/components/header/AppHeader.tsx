@@ -7,13 +7,16 @@ import ErrorElement from "../error/ErrorElement";
 import getDayTimeSlot from "@/lib/date/get-day-time-slot";
 import { SearchTriggers } from "@/lib/types/search-types";
 import HeaderDropDown from "./HeaderDropDown";
+import { UnitsType } from "@/lib/types/units-types";
 
 export default function AppHeader({
   status,
   triggers,
+  units,
 }: {
   status: LoadingStatus;
   triggers: SearchTriggers;
+  units: UnitsType;
 }) {
   const timeSlots = {
     day: "today",
@@ -33,7 +36,14 @@ export default function AppHeader({
           alt="icon image"
           className="header__top-image"
         />
-        <UnitSelector content={<HeaderDropDown />} />
+        <UnitSelector
+          content={
+            <HeaderDropDown
+              units={units}
+              unitHandlers={triggers.unitHandlers}
+            />
+          }
+        />
       </section>
       {status !== "error" ? (
         <>

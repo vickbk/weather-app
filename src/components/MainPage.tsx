@@ -12,6 +12,8 @@ import { WeatherData } from "@/lib/types/weather-data";
 import NoResultsElement from "./error/NoResultsElement";
 import addLastVisited from "@/lib/memorization/add-last-visited";
 import { getGMTTimezone } from "@/lib/date/get-gmt-timezone";
+import { getUnits } from "@/lib/memorization/units";
+import unitSetters from "@/actions/unitSetter";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
@@ -19,6 +21,8 @@ export default function MainPage() {
     null
   );
   const [status, setStatus] = useState<LoadingStatus>("loading");
+  const [units, setUnits] = useState(getUnits());
+  const unitHandlers = unitSetters([units, setUnits]);
 
   useEffect(() => {
     (async () => {
@@ -54,7 +58,12 @@ export default function MainPage() {
       <div className="container__holder">
         <AppHeader
           status={status}
-          triggers={{ searchTrigger: getLocationData, errorTrigger: setStatus }}
+          triggers={{
+            searchTrigger: getLocationData,
+            errorTrigger: setStatus,
+            unitHandlers,
+          }}
+          units={units}
         />
         {status === "no-result" && <NoResultsElement />}
         {!["no-result", "error"].includes(status) && (

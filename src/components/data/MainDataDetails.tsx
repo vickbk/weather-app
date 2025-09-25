@@ -19,9 +19,9 @@ export default function MainDataDetails({
         ]
       : [
           ["Feels Like", `${ambientTemp?.toFixed()}°`],
-          ["Humidity", `${humidity}%`],
+          ["Humidity", `${humidity?.toFixed()}%`],
           ["Wind", `${wind?.toFixed()}km/h`],
-          ["Precipitation", `${precipitation}mm`],
+          ["Precipitation", `${precipitation?.toFixed()}mm`],
         ];
   return (
     <section className="data__details grid gc-2 gc-sm-up-4 g-1">

@@ -1,12 +1,23 @@
 import kendoButtonResetterObject from "@/lib/kendoreact/buttonResetterObject";
 import { UnstyledContext } from "@progress/kendo-react-common";
-import { useState } from "react";
 import checkIcon from "@images/icon-checkmark.svg";
 import Image from "next/image";
+import {
+  UnitHandlersType,
+  UnitKeys,
+  UnitsType,
+  UnitValues,
+} from "@/lib/types/units-types";
 
 const CheckComponent = () => <Image src={checkIcon} alt="" />;
 
-export default function HeaderDropDown() {
+export default function HeaderDropDown({
+  unitHandlers: { setMetric, setType },
+  units: { type, ...unitValues },
+}: {
+  unitHandlers: UnitHandlersType;
+  units: UnitsType;
+}) {
   const data = [
     {
       title: "Temperature",
@@ -20,35 +31,18 @@ export default function HeaderDropDown() {
       key: "precipitation",
     },
   ] as const;
-  const [isImperial, setImperial] = useState(false);
   // default to metric (true = metric, false = imperial)
-  const [units, setUnits] = useState({
-    temperature: true,
-    windSpeed: true,
-    precipitation: true,
-  });
-  type unitKeys = keyof typeof units;
-  const updateUnits = (type: unitKeys) => {
-    setUnits({ ...units, [type]: !units[type] });
-  };
-  const switchImperial = () => {
-    setUnits({
-      temperature: !isImperial,
-      windSpeed: !isImperial,
-      precipitation: !isImperial,
-    });
-    setImperial(!isImperial);
+  const units: Record<UnitKeys, UnitValues[]> = {
+    temperature: ["°C", "°F"],
+    windSpeed: ["km/h", "mph"],
+    precipitation: ["mm", "in"],
   };
 
   return (
     <>
       <UnstyledContext.Provider value={{ ...kendoButtonResetterObject }}>
-        <button
-          type="button"
-          onClick={switchImperial}
-          className="no-border sp-5"
-        >
-          Switch to {!isImperial ? "Metric" : "Imperial"}
+        <button type="button" onClick={setType} className="no-border sp-5">
+          Switch to {type === "imperial" ? "Metric" : "Imperial"}
         </button>
         {data.map(({ title, values, key }, index) => (
           <div key={index} className="pop-up-header-container grid">
@@ -58,13 +52,12 @@ export default function HeaderDropDown() {
                 <button
                   key={idx}
                   className={`flex space-between sp-5 sbr-5 no-border a-center${
-                    ((units[key] && !idx) || (!units[key] && !!idx)) &&
-                    " active"
+                    units[key].indexOf(unitValues[key]) === idx && " active"
                   }`}
-                  onClick={() => updateUnits(key)}
+                  onClick={() => setMetric(key, units[key][idx])}
                 >
                   {value}
-                  {((units[key] && !idx) || (!units[key] && !!idx)) && (
+                  {units[key].indexOf(unitValues[key]) === idx && (
                     <CheckComponent />
                   )}
                 </button>
