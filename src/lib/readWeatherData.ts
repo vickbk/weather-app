@@ -45,9 +45,7 @@ function getHourlyData(
         Object.entries(hourlyData).map(([key, values]) => [key, values?.[i]])
       );
       return {
-        time: new Date(
-          (timeVal + i * intervalVal + data.utcOffsetSeconds()) * 1000
-        ),
+        time: new Date((timeVal + i * intervalVal) * 1000),
         ...hourlyObj,
       };
     });

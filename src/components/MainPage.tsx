@@ -11,6 +11,7 @@ import { LoadingStatus } from "@/lib/types/loading-status";
 import { WeatherData } from "@/lib/types/weather-data";
 import NoResultsElement from "./error/NoResultsElement";
 import addLastVisited from "@/lib/memorization/add-last-visited";
+import { getGMTTimezone } from "@/lib/date/get-gmt-timezone";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
@@ -32,6 +33,7 @@ export default function MainPage() {
           start_date: getDateOnly(),
           end_date: getDateOnly(getNextDay(undefined, 6)),
           ...location,
+          timezone: getGMTTimezone(),
         });
       });
     })();

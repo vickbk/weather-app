@@ -13,4 +13,5 @@ export type WeatherRequest = {
   start_date?: string;
   end_date?: string;
   selected_city?: PlaceDisplay;
+  timezone: string;
 };
