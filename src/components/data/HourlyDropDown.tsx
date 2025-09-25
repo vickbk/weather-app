@@ -5,9 +5,11 @@ import { UnstyledContext } from "@progress/kendo-react-common";
 export default function HourlyDropDown({
   daySetter: [active, setDay],
   days,
+  closer,
 }: {
   daySetter: [selected: number, (day: number) => void];
   days: string[];
+  closer: () => void;
 }) {
   return (
     <>
@@ -22,6 +24,7 @@ export default function HourlyDropDown({
             }`}
             onClick={() => {
               setDay(key);
+              closer();
             }}
           >
             {day}

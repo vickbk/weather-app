@@ -18,6 +18,9 @@ export default function HourlyData({
   hourly?: WeatherHourlyData[];
   dailyReady: boolean;
 }) {
+  const [dropdownCloser, setDropdownCloser] = useState<(() => void) | null>(
+    null
+  );
   const dailyData = groupHourlyDataInDays(hourly ?? []);
   const [day, setDay] = useState(0);
 
@@ -75,9 +78,16 @@ export default function HourlyData({
       <section ref={headerRef} className="flex space-between center">
         <h4 className="hourly__title">Hourly forecast</h4>
         <Dropdown
-          content={<HourlyDropDown daySetter={[day, setDay]} days={days} />}
+          content={
+            <HourlyDropDown
+              closer={dropdownCloser!}
+              daySetter={[day, setDay]}
+              days={days}
+            />
+          }
           specialClass="neutral-600"
           text={status !== "loading" ? days[day] : " - "}
+          setCloser={setDropdownCloser}
         />
       </section>
       <section ref={holderRef} className="hourly__data-holder grid mbls-1 g-1">

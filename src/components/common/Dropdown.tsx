@@ -10,11 +10,13 @@ export default function Dropdown({
   icon,
   specialClass,
   content,
+  setCloser,
 }: {
   text: string;
   icon?: { text: string; img: any };
   specialClass?: string;
   content?: ReactElement;
+  setCloser?: (closer: () => void) => void;
 }) {
   const [open, doOpen] = useState(false);
   const popup = useRef<HTMLElement>(null);
@@ -27,6 +29,7 @@ export default function Dropdown({
         !button.current.contains(event.target as Node) &&
         doOpen(false);
     };
+    setCloser && setCloser(() => () => doOpen(false));
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
