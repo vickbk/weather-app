@@ -14,9 +14,11 @@ const CheckComponent = () => <Image src={checkIcon} alt="" />;
 export default function HeaderDropDown({
   unitHandlers: { setMetric, setType },
   units: { type, ...unitValues },
+  closer,
 }: {
   unitHandlers: UnitHandlersType;
   units: UnitsType;
+  closer: () => void;
 }) {
   const data = [
     {
@@ -41,7 +43,14 @@ export default function HeaderDropDown({
   return (
     <>
       <UnstyledContext.Provider value={{ ...kendoButtonResetterObject }}>
-        <button type="button" onClick={setType} className="no-border sp-5">
+        <button
+          type="button"
+          onClick={() => {
+            setType();
+            closer();
+          }}
+          className="no-border sp-5"
+        >
           Switch to {type === "imperial" ? "Metric" : "Imperial"}
         </button>
         {data.map(({ title, values, key }, index) => (
@@ -54,7 +63,10 @@ export default function HeaderDropDown({
                   className={`flex space-between sp-5 sbr-5 no-border a-center${
                     units[key].indexOf(unitValues[key]) === idx && " active"
                   }`}
-                  onClick={() => setMetric(key, units[key][idx])}
+                  onClick={() => {
+                    setMetric(key, units[key][idx]);
+                    closer();
+                  }}
                 >
                   {value}
                   {units[key].indexOf(unitValues[key]) === idx && (

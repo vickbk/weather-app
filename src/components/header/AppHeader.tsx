@@ -8,6 +8,7 @@ import getDayTimeSlot from "@/lib/date/get-day-time-slot";
 import { SearchTriggers } from "@/lib/types/search-types";
 import HeaderDropDown from "./HeaderDropDown";
 import { UnitsType } from "@/lib/types/units-types";
+import { useState } from "react";
 
 export default function AppHeader({
   status,
@@ -27,6 +28,10 @@ export default function AppHeader({
       return `How's the sky looking ${this?.[getDayTimeSlot()]}?`;
     },
   };
+  const [dropdownCloser, setDropdownCloser] = useState<(() => void) | null>(
+    null
+  );
+
   return (
     <header className="header">
       <section className="header__top flex space-between center">
@@ -41,8 +46,10 @@ export default function AppHeader({
             <HeaderDropDown
               units={units}
               unitHandlers={triggers.unitHandlers}
+              closer={dropdownCloser!}
             />
           }
+          setCloser={setDropdownCloser!}
         />
       </section>
       {status !== "error" ? (
