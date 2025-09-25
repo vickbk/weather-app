@@ -1,10 +1,13 @@
 import kendoButtonResetterObject from "@/lib/kendoreact/buttonResetterObject";
 import { Button } from "@progress/kendo-react-buttons";
 import { UnstyledContext } from "@progress/kendo-react-common";
-import { Label } from "@progress/kendo-react-labels";
 import { useState } from "react";
 
-export default function HourlyDropDown() {
+export default function HourlyDropDown({
+  setDay,
+}: {
+  setDay: (day: string) => void;
+}) {
   const days = [
     "Monday",
     "Tuesday",
@@ -14,7 +17,7 @@ export default function HourlyDropDown() {
     "Saturday",
     "Sunday",
   ];
-  const [active, setActive] = useState(0); // Just to avoid errors
+  const [active, setActive] = useState(-1); // Just to avoid errors
   return (
     <>
       {days.map((day, key) => (
@@ -24,7 +27,10 @@ export default function HourlyDropDown() {
             className={`flex space-between sp-5 sbr-5 a-center no-border ${
               active === key && " active"
             }`}
-            onClick={() => setActive(key)}
+            onClick={() => {
+              setActive(key);
+              setDay(day);
+            }}
           >
             {day}
           </Button>

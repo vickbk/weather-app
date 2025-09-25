@@ -4,7 +4,7 @@ import { LoadingStatus } from "@/lib/types/loading-status";
 import { Skeleton } from "@progress/kendo-react-indicators";
 import { WeatherHourlyData } from "@/lib/types/weather-data";
 import weatherIcons from "../common/WeatherIcons";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import HourlyDropDown from "./HourlyDropDown";
 
 export default function HourlyData({
@@ -32,6 +32,7 @@ export default function HourlyData({
   const articleRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const holderRef = useRef<HTMLElement>(null);
+  const [day, setDay] = useState("Today");
   const resetArticleHeight = () => {
     if (
       dailyReady &&
@@ -59,9 +60,9 @@ export default function HourlyData({
       <section ref={headerRef} className="flex space-between center">
         <h4 className="hourly__title">Hourly forecast</h4>
         <Dropdown
-          content={<HourlyDropDown />}
+          content={<HourlyDropDown setDay={setDay} />}
           specialClass="neutral-600"
-          text={status !== "loading" ? "The day" : " - "}
+          text={status !== "loading" ? day : " - "}
         />
       </section>
       <section ref={holderRef} className="hourly__data-holder grid mbls-1 g-1">

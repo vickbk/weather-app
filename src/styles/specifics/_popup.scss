@@ -12,6 +12,9 @@
   button {
     background: transparent;
   }
+  a {
+    color: c.$text-color;
+  }
   .active {
     background: c.$neutral-600;
     inline-size: 100%;
