@@ -6,6 +6,8 @@ import { SearchTriggers } from "@/lib/types/search-types";
 import SearchCoordinates from "./search/SearchCoordinates";
 import SearchInputs from "./search/SearchInputs";
 import { addRecentSearch } from "@/lib/memorization/recent-search";
+import getNextDay from "@/lib/date/get-next-day";
+import getDateOnly from "@/lib/date/get-date-only";
 
 export default function SearchForm({
   triggers: { searchTrigger, errorTrigger },
@@ -31,7 +33,12 @@ export default function SearchForm({
         return;
       }
       addRecentSearch(searchResults);
-      startTransition(() => searchTrigger({ ...searchResults }));
+      startTransition(() =>
+        searchTrigger({
+          ...searchResults,
+          end_date: getDateOnly(getNextDay(undefined, 6)),
+        })
+      );
       setSearching(false);
     }
   }, [searchResults, searchStatus]);
