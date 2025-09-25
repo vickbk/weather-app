@@ -35,9 +35,9 @@ export default function MainDataDaily({
               />
             ))
           : (data as DailyDataType[]).map(
-              ({ day, highest, lowest, icon: { image, desc } }) => (
+              ({ day, highest, lowest, icon: { image, desc } }, key) => (
                 <article
-                  key={day}
+                  key={key}
                   className="days-day text-center neutral-700 p-1 br-1"
                 >
                   <h5 className="day-title">{day}</h5>

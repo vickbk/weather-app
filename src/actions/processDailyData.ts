@@ -1,11 +1,13 @@
 import { WeatherData, WeatherHourlyData } from "@/lib/types/weather-data";
 import getDateOnly, { getDayShort } from "@/lib/date/get-date-only";
 import weatherIcons, { WeatherCode } from "@/components/common/WeatherIcons";
+import { getHourlydataDates } from "@/lib/open-meteo/process-hourlydata";
 
 export default function processDailyData(dailyData: WeatherData[]) {
   const [{ hourly }] = dailyData;
+  const processHourly = [...(hourly ?? [])];
 
-  return getDailyData(getDatesAndSort(hourly), hourly).map(
+  return getDailyData(getDatesAndSort(processHourly), processHourly).map(
     ({ day, highest, lowest, weatherCode }) => ({
       highest: `${highest.temp?.toFixed()}`,
       lowest: `${lowest.temp?.toFixed()}`,
@@ -36,7 +38,7 @@ function getDailyData(dates: string[], hourly: WeatherHourlyData[]) {
 
 function getDatesAndSort(hourly: WeatherHourlyData[]) {
   hourly.sort((a, b) => (b.temp ?? 0) - (a.temp ?? 0));
-  return Array.from(new Set(hourly?.map(({ time }) => getDateOnly(time))));
+  return getHourlydataDates(hourly);
 }
 
 function frequentWeatherCode(allCodes: WeatherCode[]) {

@@ -6,6 +6,8 @@ import { WeatherHourlyData } from "@/lib/types/weather-data";
 import weatherIcons from "../common/WeatherIcons";
 import { useEffect, useRef, useState } from "react";
 import HourlyDropDown from "./HourlyDropDown";
+import { groupHourlyDataInDays } from "@/lib/open-meteo/process-hourlydata";
+import reorderArray from "@/lib/globals/reorder-array";
 
 export default function HourlyData({
   status,
@@ -16,23 +18,36 @@ export default function HourlyData({
   hourly?: WeatherHourlyData[];
   dailyReady: boolean;
 }) {
-  const data =
-    status === "loading"
-      ? Array(8).fill({})
-      : hourly
-          ?.filter(({ time }) => time > new Date())
-          .map(({ time, temp, weatherCode }) => ({
-            time: time.toLocaleTimeString("en-US", {
-              hour12: true,
-              hour: "2-digit",
-            }),
-            temp: `${temp?.toFixed()}`,
-            icon: weatherIcons.get(weatherCode!, time),
-          })) ?? [];
-  const articleRef = useRef<HTMLElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
-  const holderRef = useRef<HTMLElement>(null);
-  const [day, setDay] = useState("Today");
+  const dailyData = groupHourlyDataInDays(hourly ?? []);
+  const [day, setDay] = useState(0);
+
+  const getDataForDay = () => {
+    const { hourly } = dailyData[day] ?? {};
+    return (
+      hourly
+        // if selected day is today, filter out hours that have already passed
+        ?.filter(({ time }) => (day === 0 ? time > new Date() : true))
+        // map to displayable format
+        .map(({ time, temp, weatherCode }) => ({
+          time: time.toLocaleTimeString("en-US", {
+            hour12: true,
+            hour: "2-digit",
+          }),
+          temp: `${temp?.toFixed()}`,
+          icon: weatherIcons.get(weatherCode!, time),
+        })) ?? []
+    );
+  };
+
+  const data = status === "loading" ? Array(8).fill({}) : getDataForDay() ?? [];
+
+  const [articleRef, headerRef, holderRef] = Array(3)
+    .fill(null)
+    .map(() => useRef<HTMLElement>(null));
+  const days = reorderArray<string>(
+    "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday".split(","),
+    new Date().getDay() - 1
+  );
   const resetArticleHeight = () => {
     if (
       dailyReady &&
@@ -60,9 +75,9 @@ export default function HourlyData({
       <section ref={headerRef} className="flex space-between center">
         <h4 className="hourly__title">Hourly forecast</h4>
         <Dropdown
-          content={<HourlyDropDown setDay={setDay} />}
+          content={<HourlyDropDown daySetter={[day, setDay]} days={days} />}
           specialClass="neutral-600"
-          text={status !== "loading" ? day : " - "}
+          text={status !== "loading" ? days[day] : " - "}
         />
       </section>
       <section ref={holderRef} className="hourly__data-holder grid mbls-1 g-1">
