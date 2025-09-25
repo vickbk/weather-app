@@ -2,10 +2,7 @@ import Image from "next/image";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { Skeleton } from "@progress/kendo-react-indicators";
 import { WeatherData } from "@/lib/types/weather-data";
-import { startTransition, useActionState, useEffect, useState } from "react";
-import loadLocationData from "@/actions/loadLocationData";
-import getDateOnly from "@/lib/date/get-date-only";
-import getNextDay from "@/lib/date/get-next-day";
+import { useEffect } from "react";
 import processDailyData from "@/actions/processDailyData";
 import { DailyDataType } from "@/lib/types/daily-data-type";
 
@@ -18,42 +15,13 @@ export default function MainDataDaily({
   data?: WeatherData;
   setDailyReady: (ready: boolean) => void;
 }) {
-  const [dailyData, loadDaily, loadingState] = useActionState(
-    loadLocationData,
-    null
-  );
-  const [data, setData] = useState<null[] | DailyDataType[]>(
-    Array(7).fill(null)
-  );
-
+  const data =
+    status === "ready" && weatherData
+      ? processDailyData([weatherData])
+      : Array(7).fill(null);
   useEffect(() => {
-    const { lat: latitude, lon: longitude } = weatherData ?? {};
-
-    if (status === "ready" && latitude && longitude) {
-      startTransition(() =>
-        loadDaily({
-          latitude,
-          longitude,
-          start_date: getDateOnly(getNextDay()),
-          end_date: getDateOnly(getNextDay(undefined, 7)),
-        })
-      );
-      setDailyReady(false);
-    }
+    setDailyReady(status === "ready");
   }, [status]);
-
-  useEffect(() => {
-    if (!loadingState && dailyData) {
-      if ("error" in dailyData) {
-        console.log(dailyData.error);
-        return;
-      }
-
-      setData(processDailyData(dailyData));
-      setDailyReady(true);
-    }
-  }, [dailyData, loadingState]);
-
   return (
     <section className="main__data-daily">
       <h4 className="daily-heading mb-1">Daily Forecast</h4>

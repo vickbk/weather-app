@@ -30,7 +30,7 @@ export default function MainPage() {
       startTransition(() => {
         getLocationData({
           start_date: getDateOnly(),
-          end_date: getDateOnly(getNextDay()),
+          end_date: getDateOnly(getNextDay(undefined, 6)),
           ...location,
         });
       });
@@ -41,10 +41,9 @@ export default function MainPage() {
     if (locationData && !loadingState) {
       if ("error" in locationData) {
         console.log(locationData.error);
-        setStatus("error");
-        return;
+        return setStatus("error");
       }
-      if (locationData.length !== 0) addLastVisited(locationData[0]);
+      locationData.length !== 0 && addLastVisited(locationData[0]);
       setStatus("ready");
     }
   }, [locationData, loadingState]);

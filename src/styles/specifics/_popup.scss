@@ -11,13 +11,14 @@
   z-index: 1;
   button {
     background: transparent;
+    inline-size: 100%;
+    text-align: start;
   }
   a {
     color: c.$text-color;
   }
   .active {
     background: c.$neutral-600;
-    inline-size: 100%;
   }
   &-header {
     &-container {
