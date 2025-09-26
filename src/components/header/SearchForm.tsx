@@ -1,5 +1,4 @@
-import { startTransition, useActionState, useEffect, useState } from "react";
-import getPlaceSuggestions from "@/actions/getPlaceSuggestions";
+import { useActionState, useEffect, useState } from "react";
 import { Coordinates } from "@/lib/types/places-types";
 import searchInit from "@/actions/searchInit";
 import { SearchTriggers } from "@/lib/types/search-types";
@@ -9,6 +8,7 @@ import { addRecentSearch } from "@/lib/memorization/recent-search";
 import getNextDay from "@/lib/date/get-next-day";
 import getDateOnly from "@/lib/date/get-date-only";
 import { UnitsType } from "@/lib/types/units-types";
+import errorProneTransition from "@/lib/globals/error-prone-transition";
 
 export default function SearchForm({
   triggers: { searchTrigger, errorTrigger },
@@ -18,10 +18,6 @@ export default function SearchForm({
   units: UnitsType;
 }) {
   const [searching, setSearching] = useState(false);
-  const [suggestions, getSuggestionAction, suggestionState] = useActionState(
-    getPlaceSuggestions,
-    null
-  );
   const [searchResults, searchInitProcess, searchStatus] = useActionState(
     searchInit,
     null
@@ -36,11 +32,14 @@ export default function SearchForm({
         return;
       }
       addRecentSearch(searchResults);
-      startTransition(() =>
-        searchTrigger({
-          ...searchResults,
-          end_date: getDateOnly(getNextDay(undefined, 6)),
-        })
+      errorProneTransition(
+        () =>
+          searchTrigger({
+            ...searchResults,
+            end_date: getDateOnly(getNextDay(undefined, 6)),
+          }),
+        errorTrigger,
+        "error"
       );
       setSearching(false);
     }
@@ -56,14 +55,12 @@ export default function SearchForm({
       <SearchInputs
         states={{
           searching,
-          suggestions: suggestions,
-          suggestionState,
           searchStatus,
         }}
         methods={{
           setSearching,
-          getSuggestionAction,
           setCoordinates,
+          errorTrigger,
         }}
       />
     </form>

@@ -1,5 +1,5 @@
 "use client";
-import { startTransition, useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Attribution from "./Attributions";
 import AppData from "./data/AppData";
 import AppHeader from "./header/AppHeader";
@@ -15,6 +15,7 @@ import { getGMTTimezone } from "@/lib/date/get-gmt-timezone";
 import { defaultUnits, getUnits } from "@/lib/memorization/units";
 import unitSetters from "@/actions/unitSetter";
 import getUnitBasedParams from "@/lib/open-meteo/get-unit-based-params";
+import errorProneTransition from "@/lib/globals/error-prone-transition";
 
 export default function MainPage() {
   const [locationData, getLocationData, loadingState] = useActionState(
@@ -33,15 +34,20 @@ export default function MainPage() {
         setStatus("error");
         return;
       }
-      startTransition(() => {
-        getLocationData({
-          start_date: getDateOnly(),
-          end_date: getDateOnly(getNextDay(undefined, 6)),
-          ...location,
-          timezone: getGMTTimezone(),
-          ...getUnitBasedParams(units),
-        });
-      });
+
+      errorProneTransition(
+        () => {
+          getLocationData({
+            start_date: getDateOnly(),
+            end_date: getDateOnly(getNextDay(undefined, 6)),
+            ...location,
+            timezone: getGMTTimezone(),
+            ...getUnitBasedParams(units),
+          });
+        },
+        setStatus,
+        "error"
+      );
     })();
   }, [units]);
   useEffect(() => {
@@ -69,13 +75,14 @@ export default function MainPage() {
           units={units}
         />
         {status === "no-result" && <NoResultsElement />}
-        {!["no-result", "error"].includes(status) && (
-          <AppData
-            status={status}
-            data={locationData as WeatherData[]}
-            units={units}
-          />
-        )}
+        {!["no-result", "error"].includes(status) &&
+          !(locationData && "error" in locationData) && (
+            <AppData
+              status={status}
+              data={locationData as WeatherData[]}
+              units={units}
+            />
+          )}
         <Attribution />
       </div>
     </main>

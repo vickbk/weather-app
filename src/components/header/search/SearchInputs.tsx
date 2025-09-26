@@ -9,28 +9,24 @@ import { GeocodingPlaceResult, GeocodingResults } from "@/lib/types/geocoding";
 import speechRecognition from "@/lib/speech-to-text/speech-recognition";
 import SpeechToTextButton from "./SpeechToTextButton";
 import { getRecentSearches } from "@/lib/memorization/recent-search";
-import { useState, startTransition } from "react";
+import { useActionState, useState } from "react";
 import { Coordinates } from "@/lib/types/places-types";
+import errorProneTransition from "@/lib/globals/error-prone-transition";
+import { LoadingStatus } from "@/lib/types/loading-status";
+import getPlaceSuggestions from "@/actions/getPlaceSuggestions";
 
 export default function SearchInputs({
-  states: { searching, suggestionState, searchStatus, suggestions },
-  methods: { setSearching, setCoordinates, getSuggestionAction },
+  states: { searching, searchStatus },
+  methods: { setSearching, setCoordinates, errorTrigger },
 }: {
   states: {
     searching: boolean;
-    suggestionState: boolean;
     searchStatus: boolean;
-    suggestions:
-      | GeocodingResults
-      | {
-          error: any;
-        }
-      | null;
   };
   methods: {
     setSearching: (state: boolean) => void;
     setCoordinates: (coords: Coordinates | null) => void;
-    getSuggestionAction: (input: string) => void;
+    errorTrigger: (status: LoadingStatus) => void;
   };
 }) {
   const speechControls = speechRecognition();
@@ -38,13 +34,24 @@ export default function SearchInputs({
   const [recentSearches, setRecentSearches] = useState<GeocodingResults | null>(
     null
   );
+
+  const [suggestions, getSuggestionAction, suggestionState] = useActionState(
+    getPlaceSuggestions,
+    null
+  );
+
   const handleSearchSuggestion = (e: InputChangeEvent) => {
     const { value } = e;
     setSearchInput(value);
     setCoordinates(null);
     setSearching(true);
     setRecentSearches(getRecentSearches(value));
-    !recentSearches && startTransition(() => getSuggestionAction(value));
+    !recentSearches &&
+      errorProneTransition(
+        () => getSuggestionAction(value),
+        errorTrigger,
+        "error"
+      );
   };
   const getSearchItem = ({
     name,
