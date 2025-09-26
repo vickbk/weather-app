@@ -1,6 +1,7 @@
 @use "../functions/" as f;
 @use "../main/font";
 @use "../main/colors" as c;
+@use "../globals/states";
 
 .pop-up {
   inset: 100% 0 auto auto;
@@ -13,12 +14,23 @@
     background: transparent;
     inline-size: 100%;
     text-align: start;
+    @include states.active-state {
+      background-color: c.$neutral-600;
+    }
   }
   a {
     color: c.$text-color;
   }
+  &-main {
+    &:hover {
+      background-color: c.$neutral-600;
+    }
+    &:focus {
+      outline: 0.1em solid c.$neutral-0;
+    }
+  }
   .active {
-    background: c.$neutral-600;
+    background-color: c.$neutral-600;
   }
   &-header {
     &-container {

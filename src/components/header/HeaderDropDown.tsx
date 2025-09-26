@@ -49,7 +49,7 @@ export default function HeaderDropDown({
             setType();
             closer();
           }}
-          className="no-border sp-5"
+          className="no-border pop-up-main sp-5 sbr-5"
         >
           Switch to {type === "imperial" ? "Metric" : "Imperial"}
         </button>

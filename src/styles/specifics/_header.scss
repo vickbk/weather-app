@@ -34,6 +34,10 @@
       inline-size: 100%;
       background-color: c.$neutral-700;
       color: c.$text-color;
+      &:focus {
+        outline: 0.1em solid c.$neutral-0;
+        border: 0.15em solid c.$neutral-900;
+      }
     }
     &-box {
       position: absolute;
@@ -48,6 +52,13 @@
     &-button {
       background-color: c.$blue-500;
       color: c.$text-color;
+      &:focus {
+        outline: 0.1em solid c.$blue-500;
+        border: 0.15em solid c.$neutral-900;
+      }
+      &:hover {
+        background-color: c.$blue-700;
+      }
       @include queries.from-mobile(queries.$small-screen) {
         max-inline-size: f.to-r-em(150);
       }
