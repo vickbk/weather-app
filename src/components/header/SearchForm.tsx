@@ -8,7 +8,9 @@ import { addRecentSearch } from "@/lib/memorization/recent-search";
 import getNextDay from "@/lib/date/get-next-day";
 import getDateOnly from "@/lib/date/get-date-only";
 import { UnitsType } from "@/lib/types/units-types";
-import errorProneTransition from "@/lib/globals/error-prone-transition";
+import errorProneTransition, {
+  formErrorProneAction,
+} from "@/lib/globals/error-prone-transition";
 
 export default function SearchForm({
   triggers: { searchTrigger, errorTrigger },
@@ -19,7 +21,7 @@ export default function SearchForm({
 }) {
   const [searching, setSearching] = useState(false);
   const [searchResults, searchInitProcess, searchStatus] = useActionState(
-    searchInit,
+    formErrorProneAction(searchInit, errorTrigger, "error"),
     null
   );
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
@@ -28,7 +30,7 @@ export default function SearchForm({
     if (searchResults && !searchStatus) {
       if ("error" in searchResults) {
         errorTrigger("no-result");
-        console.log(searchResults.error);
+        console.log(searchResults.error, searchResults);
         return;
       }
       addRecentSearch(searchResults);
