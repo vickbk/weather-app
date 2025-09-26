@@ -1,0 +1,46 @@
+@use "../functions/" as f;
+@use "../main/font";
+@use "../main/colors" as c;
+@use "../globals/states";
+
+.pop-up {
+  inset: 100% 0 auto auto;
+  inline-size: f.to-r-em(220);
+  font-size: font.$preferred-size;
+  text-align: start;
+  border: 0.001em solid c.$neutral-600;
+  z-index: 1;
+  button {
+    background: transparent;
+    inline-size: 100%;
+    text-align: start;
+    @include states.active-state {
+      background-color: c.$neutral-600;
+    }
+  }
+  a {
+    color: c.$text-color;
+  }
+  &-main {
+    &:hover {
+      background-color: c.$neutral-600;
+    }
+    &:focus {
+      outline: 0.1em solid c.$neutral-0;
+    }
+  }
+  .active {
+    background-color: c.$neutral-600;
+  }
+  &-header {
+    &-container {
+      .title {
+        color: c.$neutral-300;
+        font-size: 1rem;
+      }
+      & + & {
+        border-block-start: 0.05em solid c.$neutral-600;
+      }
+    }
+  }
+}

@@ -44,11 +44,8 @@ function getHourlyData(
       const hourlyObj = Object.fromEntries(
         Object.entries(hourlyData).map(([key, values]) => [key, values?.[i]])
       );
-      console.log(hourlyObj);
       return {
-        time: new Date(
-          (timeVal + i * intervalVal + data.utcOffsetSeconds()) * 1000
-        ),
+        time: new Date((timeVal + i * intervalVal) * 1000),
         ...hourlyObj,
       };
     });

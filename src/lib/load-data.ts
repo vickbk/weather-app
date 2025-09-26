@@ -25,6 +25,7 @@ export default async function loadData({
   start_date = getDateOnly(),
   end_date = getDateOnly(getNextDay()),
   selected_city,
+  ...others
 }: WeatherRequest) {
   const placeName =
     selected_city ||
@@ -37,6 +38,7 @@ export default async function loadData({
       start_date,
       end_date,
       hourly,
+      ...others,
     }),
     hourly,
     placeName

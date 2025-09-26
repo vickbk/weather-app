@@ -6,10 +6,14 @@ import getPlaceName from "./getPlaceName";
 import { PlaceDisplay } from "@/lib/types/places-types";
 
 export default async function searchInit(_: unknown, formData: FormData) {
-  const { name, latitude, longitude } = getFormFields<{
+  const { name, latitude, longitude, ...units } = getFormFields<{
     name: PlaceDisplay;
     latitude: string;
     longitude: string;
+    temperature_unit: "fahrenheit";
+    precipitation_unit: "inch";
+    wind_speed_unit: "mph";
+    timezone: string;
   }>(formData);
   try {
     if (latitude && longitude)
@@ -17,6 +21,7 @@ export default async function searchInit(_: unknown, formData: FormData) {
         selected_city: name,
         latitude: +latitude,
         longitude: +longitude,
+        ...units,
       };
 
     const { GOOGLEMAPS_GEOCODE_API: url, GOOGLEMAPS_KEY } = process.env;
@@ -32,6 +37,7 @@ export default async function searchInit(_: unknown, formData: FormData) {
       selected_city: getPlaceName(geoLocationData),
       latitude: lat! as unknown as number,
       longitude: lng! as unknown as number,
+      ...units,
     };
   } catch (error: any) {
     return { error: error.message };

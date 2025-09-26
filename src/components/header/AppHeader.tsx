@@ -5,15 +5,19 @@ import SearchForm from "./SearchForm";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import ErrorElement from "../error/ErrorElement";
 import getDayTimeSlot from "@/lib/date/get-day-time-slot";
-import { WeatherRequest } from "@/lib/types/weather-request-response";
 import { SearchTriggers } from "@/lib/types/search-types";
+import HeaderDropDown from "./HeaderDropDown";
+import { UnitsType } from "@/lib/types/units-types";
+import { useState } from "react";
 
 export default function AppHeader({
   status,
   triggers,
+  units,
 }: {
   status: LoadingStatus;
   triggers: SearchTriggers;
+  units: UnitsType;
 }) {
   const timeSlots = {
     day: "today",
@@ -24,6 +28,10 @@ export default function AppHeader({
       return `How's the sky looking ${this?.[getDayTimeSlot()]}?`;
     },
   };
+  const [dropdownCloser, setDropdownCloser] = useState<(() => void) | null>(
+    null
+  );
+
   return (
     <header className="header">
       <section className="header__top flex space-between center">
@@ -33,12 +41,21 @@ export default function AppHeader({
           alt="icon image"
           className="header__top-image"
         />
-        <UnitSelector />
+        <UnitSelector
+          content={
+            <HeaderDropDown
+              units={units}
+              unitHandlers={triggers.unitHandlers}
+              closer={dropdownCloser!}
+            />
+          }
+          setCloser={setDropdownCloser!}
+        />
       </section>
       {status !== "error" ? (
         <>
           <h1 className="header__title pbl-1">{timeSlots.getTitle()}</h1>
-          <SearchForm triggers={triggers} />
+          <SearchForm triggers={triggers} units={units} />
         </>
       ) : (
         <ErrorElement />
