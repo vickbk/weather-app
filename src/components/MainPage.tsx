@@ -1,11 +1,5 @@
 "use client";
-import {
-  startTransition,
-  use,
-  useActionState,
-  useEffect,
-  useState,
-} from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 import Attribution from "./Attributions";
 import AppData from "./data/AppData";
 import AppHeader from "./header/AppHeader";
@@ -18,7 +12,7 @@ import { WeatherData } from "@/lib/types/weather-data";
 import NoResultsElement from "./error/NoResultsElement";
 import addLastVisited from "@/lib/memorization/add-last-visited";
 import { getGMTTimezone } from "@/lib/date/get-gmt-timezone";
-import { getUnits } from "@/lib/memorization/units";
+import { defaultUnits, getUnits } from "@/lib/memorization/units";
 import unitSetters from "@/actions/unitSetter";
 import getUnitBasedParams from "@/lib/open-meteo/get-unit-based-params";
 
@@ -28,7 +22,7 @@ export default function MainPage() {
     null
   );
   const [status, setStatus] = useState<LoadingStatus>("loading");
-  const [units, setUnits] = useState(getUnits());
+  const [units, setUnits] = useState(defaultUnits);
   const unitHandlers = unitSetters([units, setUnits]);
 
   useEffect(() => {
@@ -61,6 +55,7 @@ export default function MainPage() {
       setStatus("ready");
     }
   }, [locationData, loadingState]);
+  useEffect(() => setUnits(getUnits()), []);
   return (
     <main className="container p-1">
       <div className="container__holder">

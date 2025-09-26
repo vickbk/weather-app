@@ -1,14 +1,10 @@
-import CustomGlobals from "../globals/globals";
 import getMemo from "./get-memo";
 
 export default function setMemoItem(params: string, value: any) {
   const path = params.split(".");
   const memo = getMemo();
   setNested(memo, path, value);
-  CustomGlobals.get("localStorage")?.setItem(
-    "weather-app-memo",
-    JSON.stringify(memo)
-  );
+  localStorage.setItem("weather-app-memo", JSON.stringify(memo));
 }
 
 function setNested(memo: Record<string, any>, path: string[], value: any) {
