@@ -47,7 +47,7 @@ $colorsMap: (
   .a-#{$name}:active {
     background-color: $color;
   }
-  .c-#{$name},
+  .c-#{$name}.c-#{$name},
   .hv-c-#{$name}:hover,
   .a-c-#{$name}:active {
     color: $color;

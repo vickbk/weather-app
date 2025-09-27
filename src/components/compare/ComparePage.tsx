@@ -41,7 +41,7 @@ export default function ComparePage() {
   };
   useEffect(() => {
     loadLastComparison(getLocationData, setStatus);
-  }, [units]);
+  }, [, units]);
   return (
     <main className="container p-1">
       <div className="container__holder">
@@ -63,7 +63,7 @@ export default function ComparePage() {
             status={status}
           />
         )}
-        <Attribution />
+        <Attribution path="/" display="Go back Home" />
       </div>
     </main>
   );
