@@ -2,13 +2,15 @@ import { LoadingStatus } from "@/lib/types/loading-status";
 import { WeatherData } from "@/lib/types/weather-data";
 import HourlyData from "../data/HourlyData";
 import { Skeleton } from "@progress/kendo-react-indicators";
+import { removeFromLastCompare } from "@/lib/memorization/compare-request";
+import { PlaceDisplay } from "@/lib/types/places-types";
 
 export default function ComparePlaces({
   places,
   setPlaces,
   status,
 }: {
-  places?: WeatherData[] | { placeName: string; hourly: undefined }[];
+  places?: WeatherData[] | { placeName: PlaceDisplay; hourly: undefined }[];
   setPlaces: (places: WeatherData[]) => void;
   status: LoadingStatus;
 }) {
@@ -16,13 +18,14 @@ export default function ComparePlaces({
     places ||
     Array(3)
       .fill(null)
-      .map(() => ({ placeName: "", hourly: undefined }));
-  const deleteItem = (selected: string) => {
+      .map(() => ({ placeName: "a, b", hourly: undefined }));
+  const deleteItem = (selected: PlaceDisplay) => {
     setPlaces(
       (places as WeatherData[]).filter(
         ({ placeName }) => placeName !== selected
       )
     );
+    removeFromLastCompare(selected);
   };
   return (
     <section className="pbl-3 grid gc-1 md-up-gc-2 lg-up-gc-3 g-2">

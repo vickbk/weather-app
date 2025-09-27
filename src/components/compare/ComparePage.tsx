@@ -10,7 +10,9 @@ import loadLocationData from "@/actions/loadLocationData";
 import { WeatherData } from "@/lib/types/weather-data";
 import ComparePlaces from "./ComparePlaces";
 import { WeatherRequest } from "@/lib/types/weather-request-response";
-import { PlaceDisplay } from "@/lib/types/places-types";
+import getSearchParams from "@/lib/compare/get-search-params";
+import { setLastCompareRequest } from "@/lib/memorization/compare-request";
+import loadLastComparison from "@/lib/compare/load-last-comparison";
 
 export default function ComparePage() {
   const [units, setUnits] = useState(defaultUnits);
@@ -29,38 +31,24 @@ export default function ComparePage() {
     }
     if (loadingState) setStatus("loading");
   }, [locationData, loadingState]);
-  const getSearchParams = (request: WeatherRequest) => {
-    const previousRquests = places.map(({ placeName, lat, lon }) => ({
-      placeName,
-      latitude: lat,
-      longitude: lon,
-    }));
-    const [lats, longs, placeNames]: (number | PlaceDisplay)[][] = Array(3)
-      .fill(null)
-      .map(() => []);
-    [
-      ...previousRquests,
-      { ...request, placeName: request.selected_city },
-    ].forEach(({ placeName, latitude, longitude }) => {
-      if (placeNames.includes(placeName as PlaceDisplay)) return;
-      lats.push(latitude as number);
-      longs.push(longitude as number);
-      placeNames.push(placeName as PlaceDisplay);
-    });
+  const getAllSearchResults = (request: WeatherRequest) => {
+    const allcoords = getSearchParams(request, places);
+    setLastCompareRequest(allcoords);
     getLocationData({
       ...request,
-      latitude: lats as number[],
-      longitude: longs as number[],
-      selected_city: placeNames as PlaceDisplay[],
+      ...allcoords,
     });
   };
+  useEffect(() => {
+    loadLastComparison(getLocationData, setStatus);
+  }, []);
   return (
     <main className="container p-1">
       <div className="container__holder">
         <AppHeader
           status={status}
           triggers={{
-            searchTrigger: getSearchParams,
+            searchTrigger: getAllSearchResults,
             errorTrigger: setStatus,
             unitHandlers,
           }}
