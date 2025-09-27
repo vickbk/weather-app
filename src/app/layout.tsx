@@ -39,16 +39,6 @@ export const metadata: Metadata = {
         url: "/weather-app-main/assets/images/favicon-32x32.png",
         href: "/weather-app-main/assets/images/favicon-32x32.png",
       },
-      {
-        media: "(prefers-color-scheme: dark)",
-        url: "/weather-app-main/assets/images/favicon-32x32.png",
-        href: "/weather-app-main/assets/images/favicon-32x32.png",
-      },
-      {
-        media: "(prefers-color-scheme: light)",
-        url: "/weather-app-main/assets/images/favicon-32x32.png",
-        href: "/weather-app-main/assets/images/favicon-32x32.png",
-      },
     ],
   },
 };

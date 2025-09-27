@@ -14,18 +14,23 @@ export default function AppHeader({
   status,
   triggers,
   units,
+  type = "default",
 }: {
   status: LoadingStatus;
   triggers: SearchTriggers;
   units: UnitsType;
+  type?: "compare" | "default";
 }) {
   const timeSlots = {
     day: "today",
     morning: "this morning",
     evening: "this evening",
     night: "tonight",
+    compare: "there",
     getTitle() {
-      return `How's the sky looking ${this?.[getDayTimeSlot()]}?`;
+      return `How's the sky looking ${
+        type === "compare" ? this.compare : this?.[getDayTimeSlot()]
+      }?`;
     },
   };
   const [dropdownCloser, setDropdownCloser] = useState<(() => void) | null>(

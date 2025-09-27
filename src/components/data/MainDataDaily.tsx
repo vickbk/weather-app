@@ -32,6 +32,7 @@ export default function MainDataDaily({
                 key={key}
                 className="pbl-7 br-2"
                 animation={{ type: "wave" }}
+                style={{ background: "hsl(243, 23%, 30%)" }}
               />
             ))
           : (data as DailyDataType[]).map(

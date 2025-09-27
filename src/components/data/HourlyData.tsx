@@ -99,6 +99,7 @@ export default function HourlyData({
               shape="rectangle"
               className="hourly__loader p-2 br-1"
               animation={{ type: "wave" }}
+              style={{ background: "hsl(243, 23%, 30%)" }}
             />
           ) : (
             <DataPerHour key={index} temp={temp} time={time} icon={icon} />
