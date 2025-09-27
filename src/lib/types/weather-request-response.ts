@@ -8,11 +8,11 @@ export type WeatherResponce = Awaited<
 >[number];
 
 export interface WeatherRequest extends UnitRequestParams {
-  latitude: number;
-  longitude: number;
+  latitude: number | number[];
+  longitude: number | number[];
   hourly?: weatherHourlyDisplayNameKeys[];
   start_date?: string;
   end_date?: string;
-  selected_city?: PlaceDisplay;
+  selected_city?: PlaceDisplay | PlaceDisplay[];
   timezone: string;
 }

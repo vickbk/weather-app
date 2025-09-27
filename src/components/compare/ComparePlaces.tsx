@@ -36,14 +36,14 @@ export default function ComparePlaces({
               shape="rectangle"
               animation={{ type: "wave" }}
               style={{ background: "hsl(243, 23%, 30%)" }}
-              className="p-2 m-1 neutral-600"
+              className="p-2 m-1"
             />
           ) : (
             <h2 className="sp-5 flex sg-5 space-between a-center">
               {placeName}{" "}
               {status === "ready" && (
                 <button
-                  className="neutral-600 no-border sbr-5 spbl-2 spi-5"
+                  className="orange-500 hv-out-orange-500 hv-b-neutral-700 no-border sbr-5 spbl-2 spi-5"
                   onClick={() => deleteItem(placeName)}
                 >
                   Remove

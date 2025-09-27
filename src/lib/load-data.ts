@@ -5,6 +5,7 @@ import getPlaceObject from "@/actions/getPlaceObject";
 import getPlaceName from "@/actions/getPlaceName";
 import getDateOnly from "./date/get-date-only";
 import getNextDay from "./date/get-next-day";
+import { PlaceDisplay } from "./types/places-types";
 
 export default async function loadData({
   latitude = 52.52,
@@ -29,7 +30,11 @@ export default async function loadData({
 }: WeatherRequest) {
   const placeName =
     selected_city ||
-    getPlaceName(await getPlaceObject(null, { latitude, longitude }));
+    ((!Array.isArray(latitude) &&
+      !Array.isArray(longitude) &&
+      getPlaceName(
+        await getPlaceObject(null, { latitude, longitude })
+      )) as PlaceDisplay);
 
   return readWeatherData(
     await fetchWeatherApi(process.env.OPEN_METEO_WEATHERFORCAST!, {

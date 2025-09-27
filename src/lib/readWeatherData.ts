@@ -6,15 +6,17 @@ import { WeatherResponce } from "./types/weather-request-response";
 export default function readWeatherData(
   weatherData: WeatherResponce[],
   hourlyIndexes: string[],
-  placeName: PlaceDisplay
+  placeName: PlaceDisplay | PlaceDisplay[]
 ): WeatherData[] {
-  return weatherData.map((data) => {
+  return weatherData.map((data, key) => {
     const latitude = data.latitude();
     const longitude = data.longitude();
     return {
       lat: latitude,
       lon: longitude,
-      placeName,
+      placeName: Array.isArray(placeName)
+        ? (placeName[key] as PlaceDisplay)
+        : placeName,
       elevation: data.elevation(),
       utcSec: data.utcOffsetSeconds(),
       hourly: getHourlyData(data, hourlyIndexes),

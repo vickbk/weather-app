@@ -10,6 +10,7 @@ import loadLocationData from "@/actions/loadLocationData";
 import { WeatherData } from "@/lib/types/weather-data";
 import ComparePlaces from "./ComparePlaces";
 import { WeatherRequest } from "@/lib/types/weather-request-response";
+import { PlaceDisplay } from "@/lib/types/places-types";
 
 export default function ComparePage() {
   const [units, setUnits] = useState(defaultUnits);
@@ -23,14 +24,35 @@ export default function ComparePage() {
   useEffect(() => {
     if (locationData && !loadingState) {
       if ("error" in locationData) return;
-      setPlaces([...places, ...locationData]);
+      setPlaces(locationData);
       setStatus("ready");
     }
     if (loadingState) setStatus("loading");
   }, [locationData, loadingState]);
   const getSearchParams = (request: WeatherRequest) => {
-    console.log(request);
-    getLocationData(request);
+    const previousRquests = places.map(({ placeName, lat, lon }) => ({
+      placeName,
+      latitude: lat,
+      longitude: lon,
+    }));
+    const [lats, longs, placeNames]: (number | PlaceDisplay)[][] = Array(3)
+      .fill(null)
+      .map(() => []);
+    [
+      ...previousRquests,
+      { ...request, placeName: request.selected_city },
+    ].forEach(({ placeName, latitude, longitude }) => {
+      if (placeNames.includes(placeName as PlaceDisplay)) return;
+      lats.push(latitude as number);
+      longs.push(longitude as number);
+      placeNames.push(placeName as PlaceDisplay);
+    });
+    getLocationData({
+      ...request,
+      latitude: lats as number[],
+      longitude: longs as number[],
+      selected_city: placeNames as PlaceDisplay[],
+    });
   };
   return (
     <main className="container p-1">

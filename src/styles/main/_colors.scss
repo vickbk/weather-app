@@ -27,3 +27,39 @@ $text-color: $neutral-0;
     --foreground: $primary-color;
   }
 }
+
+$colorsMap: (
+  neutral-900: $neutral-900,
+  neutral-800: $neutral-800,
+  neutral-700: $neutral-700,
+  neutral-600: $neutral-600,
+  neutral-300: $neutral-300,
+  neutral-200: $neutral-200,
+  neutral-0: $neutral-0,
+  orange-500: $orange-500,
+  blue-500: $blue-500,
+  blue-700: $blue-700,
+);
+
+@each $name, $color in $colorsMap {
+  .#{$name},
+  .hv-#{$name}:hover,
+  .a-#{$name}:active {
+    background-color: $color;
+  }
+  .c-#{$name},
+  .hv-c-#{$name}:hover,
+  .a-c-#{$name}:active {
+    color: $color;
+  }
+  .b-#{$name},
+  .hv-b-#{$name}:hover,
+  .a-c-#{$name}:active {
+    border: $color 2px solid;
+  }
+  .out-#{$name},
+  .hv-out-#{$name}:hover,
+  .a-out-#{$name}:active {
+    outline: $color 1px solid;
+  }
+}
