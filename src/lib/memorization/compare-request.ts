@@ -4,19 +4,22 @@ import { PlaceDisplay } from "../types/places-types";
 import { WeatherRequest } from "../types/weather-request-response";
 import getMemoItem from "./get-item";
 import setMemoItem from "./set-item";
+import { getUnits } from "./units";
 
 export const initialCompareRequest: WeatherRequest = {
   latitude: [] as number[],
   longitude: [] as number[],
   selected_city: [] as PlaceDisplay[],
-  timezone: getGMTTimezone(),
+  timezone: "GMT+0",
   ...getUnitBasedParams(),
 };
 
 export const getLastCompareRequest = () => {
-  return (
-    (getMemoItem("compare-request") as WeatherRequest) || initialCompareRequest
-  );
+  return {
+    ...(getMemoItem("compare-request") || initialCompareRequest),
+    timezone: getGMTTimezone(),
+    ...getUnitBasedParams(getUnits()),
+  } as WeatherRequest;
 };
 
 export const setLastCompareRequest = (request: {

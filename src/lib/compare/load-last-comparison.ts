@@ -8,6 +8,7 @@ export default function loadLastComparison(
   setStatus: (status: LoadingStatus) => void
 ) {
   const lastRequest = getLastCompareRequest();
+  console.log(lastRequest);
   const { latitude } = lastRequest;
   if (latitude && Array.isArray(latitude) && latitude.length !== 0)
     return errorProneTransition(
@@ -17,5 +18,5 @@ export default function loadLastComparison(
       setStatus,
       "error"
     );
-  setStatus("ready");
+  setStatus("no-result");
 }

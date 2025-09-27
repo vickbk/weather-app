@@ -41,7 +41,7 @@ export default function ComparePage() {
   };
   useEffect(() => {
     loadLastComparison(getLocationData, setStatus);
-  }, []);
+  }, [units]);
   return (
     <main className="container p-1">
       <div className="container__holder">
