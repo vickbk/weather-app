@@ -4,6 +4,7 @@ import HourlyData from "../data/HourlyData";
 import { Skeleton } from "@progress/kendo-react-indicators";
 import { removeFromLastCompare } from "@/lib/memorization/compare-request";
 import { PlaceDisplay } from "@/lib/types/places-types";
+import { useActionState, useState } from "react";
 
 export default function ComparePlaces({
   places,
@@ -27,6 +28,7 @@ export default function ComparePlaces({
     );
     removeFromLastCompare(selected);
   };
+  const [dayExternalIndex, onDayIndexChange] = useState(0);
   return (
     <section className="pbl-3 grid gc-1 md-up-gc-2 lg-up-gc-3 g-2">
       {places.map(({ placeName, hourly }, key) => (
@@ -54,7 +56,13 @@ export default function ComparePlaces({
               )}
             </h2>
           )}
-          <HourlyData status={status} hourly={hourly} dailyReady={true} />
+          <HourlyData
+            status={status}
+            hourly={hourly}
+            dailyReady={true}
+            dayExternalIndex={dayExternalIndex}
+            onDayIndexChange={onDayIndexChange}
+          />
         </section>
       ))}
     </section>

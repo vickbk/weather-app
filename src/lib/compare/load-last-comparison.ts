@@ -1,3 +1,5 @@
+import getDateOnly from "../date/get-date-only";
+import getNextDay from "../date/get-next-day";
 import errorProneTransition from "../globals/error-prone-transition";
 import { getLastCompareRequest } from "../memorization/compare-request";
 import { LoadingStatus } from "../types/loading-status";
@@ -12,7 +14,10 @@ export default function loadLastComparison(
   if (latitude && Array.isArray(latitude) && latitude.length !== 0)
     return errorProneTransition(
       () => {
-        getLocationData(lastRequest);
+        getLocationData({
+          ...lastRequest,
+          end_date: getDateOnly(getNextDay(undefined, 6)),
+        });
       },
       setStatus,
       "error"

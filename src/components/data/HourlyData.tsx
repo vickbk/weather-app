@@ -13,10 +13,14 @@ export default function HourlyData({
   status,
   hourly,
   dailyReady,
+  dayExternalIndex,
+  onDayIndexChange,
 }: {
   status: LoadingStatus;
   hourly?: WeatherHourlyData[];
   dailyReady: boolean;
+  dayExternalIndex?: number;
+  onDayIndexChange?: (index: number) => void;
 }) {
   const [dropdownCloser, setDropdownCloser] = useState<(() => void) | null>(
     null
@@ -71,6 +75,12 @@ export default function HourlyData({
     window.addEventListener("resize", resetArticleHeight);
     return () => window.removeEventListener("resize", resetArticleHeight);
   }, []);
+  useEffect(() => {
+    onDayIndexChange?.(day);
+  }, [day]);
+  useEffect(() => {
+    setDay(dayExternalIndex || 0);
+  }, [dayExternalIndex]);
   return (
     <article
       ref={articleRef}
