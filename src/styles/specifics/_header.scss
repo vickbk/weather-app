@@ -16,8 +16,8 @@
     font-size: f.clamp-builder(20, 25);
     &-label {
       position: relative;
-      flex-basis: f.to-r-em(300px);
-      max-inline-size: f.to-r-em(550px);
+      flex-basis: f.to-r-em(500px);
+      max-inline-size: f.to-r-em(526px);
       &-icons {
         position: absolute;
         inset: 0;
@@ -60,7 +60,7 @@
         background-color: c.$blue-700;
       }
       @include queries.from-mobile(queries.$small-screen) {
-        max-inline-size: f.to-r-em(150);
+        max-inline-size: f.to-r-em(114);
       }
     }
   }

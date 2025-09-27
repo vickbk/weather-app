@@ -26,10 +26,11 @@ export default function HourlyData({
 
   const getDataForDay = () => {
     const { hourly } = dailyData[day] ?? {};
+    const now = new Date();
     return (
       hourly
         // if selected day is today, filter out hours that have already passed
-        ?.filter(({ time }) => (day === 0 ? time > new Date() : true))
+        ?.filter(({ time }) => (day === 0 ? time > now : true))
         // map to displayable format
         .map(({ time, temp, weatherCode }) => ({
           time: time.toLocaleTimeString("en-US", {

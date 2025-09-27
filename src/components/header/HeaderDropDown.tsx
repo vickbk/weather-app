@@ -1,5 +1,3 @@
-import kendoButtonResetterObject from "@/lib/kendoreact/buttonResetterObject";
-import { UnstyledContext } from "@progress/kendo-react-common";
 import checkIcon from "@images/icon-checkmark.svg";
 import Image from "next/image";
 import {
@@ -42,40 +40,38 @@ export default function HeaderDropDown({
 
   return (
     <>
-      <UnstyledContext.Provider value={{ ...kendoButtonResetterObject }}>
-        <button
-          type="button"
-          onClick={() => {
-            setType();
-            closer();
-          }}
-          className="no-border pop-up-main sp-5 sbr-5"
-        >
-          Switch to {type === "imperial" ? "Metric" : "Imperial"}
-        </button>
-        {data.map(({ title, values, key }, index) => (
-          <div key={index} className="pop-up-header-container grid">
-            <p className="sp-5 title">{title}</p>
-            {values &&
-              values.map((value, idx) => (
-                <button
-                  key={idx}
-                  className={`flex space-between sp-5 sbr-5 no-border a-center${
-                    units[key].indexOf(unitValues[key]) === idx && " active"
-                  }`}
-                  onClick={() => {
-                    setMetric(key, units[key][idx]);
-                  }}
-                >
-                  {value}
-                  {units[key].indexOf(unitValues[key]) === idx && (
-                    <CheckComponent />
-                  )}
-                </button>
-              ))}
-          </div>
-        ))}
-      </UnstyledContext.Provider>
+      <button
+        type="button"
+        onClick={() => {
+          setType();
+          closer();
+        }}
+        className="no-border pop-up-main sp-5 sbr-5"
+      >
+        Switch to {type === "imperial" ? "Metric" : "Imperial"}
+      </button>
+      {data.map(({ title, values, key }, index) => (
+        <div key={index} className="pop-up-header-container grid">
+          <p className="sp-5 title">{title}</p>
+          {values &&
+            values.map((value, idx) => (
+              <button
+                key={idx}
+                className={`flex space-between sp-5 sbr-5 no-border a-center${
+                  units[key].indexOf(unitValues[key]) === idx && " active"
+                }`}
+                onClick={() => {
+                  setMetric(key, units[key][idx]);
+                }}
+              >
+                {value}
+                {units[key].indexOf(unitValues[key]) === idx && (
+                  <CheckComponent />
+                )}
+              </button>
+            ))}
+        </div>
+      ))}
     </>
   );
 }
