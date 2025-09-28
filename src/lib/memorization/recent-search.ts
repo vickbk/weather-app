@@ -23,7 +23,7 @@ export function getRecentSearches(place: string) {
   return convertToGeocodingResult(
     ((getMemoItem("recent-searches") || []) as WeatherRequest[]).filter(
       ({ selected_city }) =>
-        selected_city!.toLowerCase().includes(place.toLowerCase())
+        (selected_city! as string).toLowerCase().includes(place.toLowerCase())
     )
   );
 }
@@ -35,12 +35,12 @@ function convertToGeocodingResult(
   return {
     generationtime_ms: 0,
     results: searches.map(({ selected_city, latitude, longitude }) => {
-      const [city, country] = selected_city!.split(", ");
+      const [city, country] = (selected_city! as string).split(", ");
       return {
         name: city,
         country: country!,
-        latitude: latitude!,
-        longitude: longitude!,
+        latitude: latitude! as number,
+        longitude: longitude! as number,
       };
     }),
   };

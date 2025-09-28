@@ -18,7 +18,7 @@ export default function AppData({
   const [dailyReady, setDailyReady] = useState(false);
 
   return (
-    <section className="data grid g-2 mt-3">
+    <section className="data grid g-2 mbl-3">
       <MainData
         status={status}
         data={daily}

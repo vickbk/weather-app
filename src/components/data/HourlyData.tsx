@@ -13,10 +13,14 @@ export default function HourlyData({
   status,
   hourly,
   dailyReady,
+  dayExternalIndex,
+  onDayIndexChange,
 }: {
   status: LoadingStatus;
   hourly?: WeatherHourlyData[];
   dailyReady: boolean;
+  dayExternalIndex?: number;
+  onDayIndexChange?: (index: number) => void;
 }) {
   const [dropdownCloser, setDropdownCloser] = useState<(() => void) | null>(
     null
@@ -26,10 +30,11 @@ export default function HourlyData({
 
   const getDataForDay = () => {
     const { hourly } = dailyData[day] ?? {};
+    const now = new Date();
     return (
       hourly
         // if selected day is today, filter out hours that have already passed
-        ?.filter(({ time }) => (day === 0 ? time > new Date() : true))
+        ?.filter(({ time }) => (day === 0 ? time > now : true))
         // map to displayable format
         .map(({ time, temp, weatherCode }) => ({
           time: time.toLocaleTimeString("en-US", {
@@ -70,6 +75,12 @@ export default function HourlyData({
     window.addEventListener("resize", resetArticleHeight);
     return () => window.removeEventListener("resize", resetArticleHeight);
   }, []);
+  useEffect(() => {
+    onDayIndexChange?.(day);
+  }, [day]);
+  useEffect(() => {
+    setDay(dayExternalIndex || 0);
+  }, [dayExternalIndex]);
   return (
     <article
       ref={articleRef}
@@ -98,6 +109,7 @@ export default function HourlyData({
               shape="rectangle"
               className="hourly__loader p-2 br-1"
               animation={{ type: "wave" }}
+              style={{ background: "hsl(243, 23%, 30%)" }}
             />
           ) : (
             <DataPerHour key={index} temp={temp} time={time} icon={icon} />

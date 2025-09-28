@@ -19,7 +19,7 @@
       display: grid;
     }
     @for $i from 1 to 12 {
-      .gc-#{$class}-up-#{$i} {
+      .#{$class}-up-gc-#{$i} {
         grid-template-columns: repeat($i, 1fr);
       }
     }
