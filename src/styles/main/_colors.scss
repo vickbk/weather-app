@@ -44,22 +44,26 @@ $colorsMap: (
 @each $name, $color in $colorsMap {
   .#{$name},
   .hv-#{$name}:hover,
-  .a-#{$name}:active {
+  .a-#{$name}:active,
+  .a-#{$name}:focus {
     background-color: $color;
   }
   .c-#{$name}.c-#{$name},
   .hv-c-#{$name}:hover,
-  .a-c-#{$name}:active {
+  .a-c-#{$name}:active,
+  .a-c-#{$name}:focus {
     color: $color;
   }
   .b-#{$name},
   .hv-b-#{$name}:hover,
-  .a-c-#{$name}:active {
+  .a-b-#{$name}:active,
+  .a-b-#{$name}:focus {
     border: $color 2px solid;
   }
   .out-#{$name},
   .hv-out-#{$name}:hover,
-  .a-out-#{$name}:active {
+  .a-out-#{$name}:active,
+  .a-out-#{$name}:focus {
     outline: $color 1px solid;
   }
 }

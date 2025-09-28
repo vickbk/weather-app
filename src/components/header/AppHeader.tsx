@@ -59,7 +59,9 @@ export default function AppHeader({
       </section>
       {status !== "error" ? (
         <>
-          <h1 className="header__title pbl-1">{timeSlots.getTitle()}</h1>
+          <h1 className="header__title pbl-1 lg-up-pi-1 xl-up-pi-2">
+            {timeSlots.getTitle()}
+          </h1>
           <SearchForm triggers={triggers} units={units} />
         </>
       ) : (

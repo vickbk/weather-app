@@ -4,7 +4,7 @@ import HourlyData from "../data/HourlyData";
 import { Skeleton } from "@progress/kendo-react-indicators";
 import { removeFromLastCompare } from "@/lib/memorization/compare-request";
 import { PlaceDisplay } from "@/lib/types/places-types";
-import { useActionState, useState } from "react";
+import { useState } from "react";
 
 export default function ComparePlaces({
   places,
