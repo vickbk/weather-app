@@ -36,10 +36,13 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/weather-app-main/assets/images/favicon.svg",
-        href: "/weather-app-main/assets/images/favicon.svg",
+        url: "/weather-app-main/icons/favicon.svg",
+        href: "/weather-app-main//icons/favicon.svg",
       },
     ],
+  },
+  other: {
+    "apple-mobile-web-app-title": "V.Weather",
   },
 };
 
