@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/weather-app-main/assets/images/favicon-32x32.png",
-        href: "/weather-app-main/assets/images/favicon-32x32.png",
+        url: "/weather-app-main/assets/images/favicon.svg",
+        href: "/weather-app-main/assets/images/favicon.svg",
       },
     ],
   },
