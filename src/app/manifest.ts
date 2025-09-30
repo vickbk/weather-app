@@ -16,7 +16,7 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
       {
-        src: "//weather-app-main/icons/manifest-icon-512.maskable.png",
+        src: "/weather-app-main/icons/manifest-icon-512.maskable.png",
         sizes: "512x512",
         type: "image/png",
       },
