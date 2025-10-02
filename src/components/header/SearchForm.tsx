@@ -52,7 +52,7 @@ export default function SearchForm({
       className="search grid sg-7 j-center a-center xs-up-flex"
       action={searchInitProcess}
     >
-      {<SearchAdditionalData coordinates={coordinates} units={units} />}
+      <SearchAdditionalData coordinates={coordinates} units={units} />
 
       <SearchInputs
         states={{

@@ -22,5 +22,11 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "hsl(0, 0%, 100%)",
     background_color: "hsl(243, 96%, 9%)",
     display: "standalone",
+    related_applications: [
+      {
+        platform: "webapp",
+        url: "https://weather-app-henna-one-47.vercel.app/manifest.json",
+      },
+    ],
   };
 }

@@ -9,6 +9,7 @@ import {
 
 import "@progress/kendo-theme-default/dist/all.css";
 import "../styles/styles.scss";
+import ErrorBoundary from "./global-error";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,13 @@ const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
 });
 
+const [APP_DEFAULT_TITLE, APP_NAME, APP_DESCRIPTION, APP_TITLE_TEMPLATE] = [
+  "Weather App",
+  "V.Weather",
+  "Weather App - Challenge by Frontend Mentor",
+  "Weather App",
+];
+
 export const metadata: Metadata = {
   title: "Weather App",
   description: "Challenge by Frontend Mentor",
@@ -41,8 +49,31 @@ export const metadata: Metadata = {
       },
     ],
   },
-  other: {
-    "apple-mobile-web-app-title": "V.Weather",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_DEFAULT_TITLE,
+    // startUpImage: [],
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
   },
 };
 
@@ -56,7 +87,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} ${bricolageGrotesque.variable} antialiased`}
       >
-        {children}
+        <ErrorBoundary children={children} />
       </body>
     </html>
   );
