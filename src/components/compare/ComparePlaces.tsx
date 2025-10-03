@@ -44,7 +44,7 @@ export default function ComparePlaces({
               className="p-2 m-1"
             />
           ) : (
-            <h2 className="sp-5 flex sg-5 space-between a-center">
+            <h2 className="sp-5 flex flex-grow sg-5 space-between a-center">
               {placeName}{" "}
               {status === "ready" && (
                 <button
