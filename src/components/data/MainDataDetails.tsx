@@ -2,6 +2,7 @@ import { LoadingStatus } from "@/lib/types/loading-status";
 import { UnitsType } from "@/lib/types/units-types";
 import { WeatherHourlyData } from "@/lib/types/weather-data";
 import { useState } from "react";
+import DayTimeElement from "../common/DayTimeElement";
 
 export default function MainDataDetails({
   status,
@@ -51,6 +52,7 @@ export default function MainDataDetails({
           <p className="details-element-content smt-5">{content}</p>
         </article>
       ))}
+      {showMore && <DayTimeElement />}
       <div className="grid-full-width flex a-center g-1">
         <span className="flex-grow sp-1 neutral-700"></span>
         <button
