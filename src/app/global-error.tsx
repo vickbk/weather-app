@@ -1,5 +1,6 @@
 "use client";
 import ErrorElement from "@/components/error/ErrorElement";
+import TopHeader from "@/components/header/TopHeader";
 import React from "react";
 
 type ErrorBoundaryProps = {
@@ -35,7 +36,10 @@ class ErrorBoundary extends React.Component<
       // You can render any custom fallback UI
       return (
         <section className="container grid center text-center">
-          <ErrorElement />
+          <div>
+            <TopHeader />
+            <ErrorElement />
+          </div>
         </section>
       );
     }
