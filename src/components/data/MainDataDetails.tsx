@@ -1,6 +1,7 @@
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { UnitsType } from "@/lib/types/units-types";
 import { WeatherHourlyData } from "@/lib/types/weather-data";
+import { useState } from "react";
 
 export default function MainDataDetails({
   status,
@@ -11,6 +12,7 @@ export default function MainDataDetails({
   units: UnitsType;
   data?: WeatherHourlyData;
 }) {
+  const [showMore, setShowMore] = useState(false);
   const { precipitation, humidity, wind, ambientTemp } = weatherData ?? {};
   const data =
     status === "loading"
@@ -25,6 +27,17 @@ export default function MainDataDetails({
           ["Humidity", `${humidity?.toFixed()}%`],
           ["Wind", `${wind?.toFixed()}${windSpeed}`],
           ["Precipitation", `${precipitation?.toFixed()}${precipitationUnit}`],
+          ...(showMore
+            ? [
+                ["Feels Like", `${ambientTemp?.toFixed()}°`],
+                ["Humidity", `${humidity?.toFixed()}%`],
+                ["Wind", `${wind?.toFixed()}${windSpeed}`],
+                [
+                  "Precipitation",
+                  `${precipitation?.toFixed()}${precipitationUnit}`,
+                ],
+              ]
+            : []),
         ];
   return (
     <section className="data__details grid gc-2 sm-up-gc-4 g-1">
@@ -34,6 +47,17 @@ export default function MainDataDetails({
           <p className="details-element-content smt-5">{content}</p>
         </article>
       ))}
+      <div className="grid-full-width flex a-center g-1">
+        <span className="flex-grow sp-1 neutral-700"></span>
+        <button
+          type="button"
+          onClick={() => setShowMore(!showMore)}
+          className="sp-5 neutral-700 no-border sbr-5"
+        >
+          Show {showMore ? "less" : "more"}
+        </button>
+        <span className="flex-grow sp-1 neutral-700"></span>
+      </div>
     </section>
   );
 }
