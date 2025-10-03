@@ -20,10 +20,8 @@ export default function MainDataOverview({
     <>
       {status === "loading" ? (
         <article className="neutral-700 br-1 grid center pbl-7">
-          <h2 className="grid">
-            <Loader type="pulsing" size="large" themeColor="light" />
-            Loading...
-          </h2>
+          <Loader type="pulsing" size="large" themeColor="light" />
+          <h2>Loading...</h2>
         </article>
       ) : (
         <article className="main__data-overview pbl-2 pi-1 br-1 md-up-flex space-between sm-up-pbl-5 a-center">

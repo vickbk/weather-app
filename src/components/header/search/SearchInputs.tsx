@@ -79,6 +79,7 @@ export default function SearchInputs({
           className="search-input sp-5 pis-3 sbr-5 no-border"
           placeholder="Search for a place..."
           onBlur={() => setTimeout(() => setSearching(false), 500)}
+          type="text"
           name="name"
           value={searchInput}
           onChange={handleSearchSuggestion}

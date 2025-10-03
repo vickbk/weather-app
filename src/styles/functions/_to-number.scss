@@ -66,9 +66,9 @@ $unitMap: (
 // converts only strings without units
 @function convert-to-number($string, $lev: null) {
   $str-length: string.length($string);
-  @if $lev == null {
+  @if not $lev {
     $lev: string.index($string, ".");
-    @if $lev == null {
+    @if not $lev {
       $lev: $str-length - 1;
     } @else {
       $lev: $lev - 2;
