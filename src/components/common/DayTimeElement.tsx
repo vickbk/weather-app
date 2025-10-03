@@ -9,7 +9,7 @@ export default function DayTimeElement({
 }) {
   return (
     <article className="details-element grid-full-width p-1 neutral-700 br-1">
-      <section className="flex space-between">
+      <section className="flex space-between flex-wrap">
         {(
           [
             [sunrise, sunriseIcon, "Sunrise"],
