@@ -1,13 +1,21 @@
+import getDailyData from "./open-meteo/read-daily-data";
 import { PlaceDisplay } from "./types/places-types";
+import { WeatherDailyDisplayKeys } from "./types/weather-daily-display";
 import { WeatherData, WeatherHourlyData } from "./types/weather-data";
 import weatherHourlyDisplayName from "./types/weather-hourly-display-names";
 import { WeatherResponce } from "./types/weather-request-response";
 
-export default function readWeatherData(
-  weatherData: WeatherResponce[],
-  hourlyIndexes: string[],
-  placeName: PlaceDisplay | PlaceDisplay[]
-): WeatherData[] {
+export default function readWeatherData({
+  weatherData,
+  hourlyIndexes,
+  placeName,
+  dailyIndexes,
+}: {
+  weatherData: WeatherResponce[];
+  hourlyIndexes: string[];
+  placeName: PlaceDisplay | PlaceDisplay[];
+  dailyIndexes: WeatherDailyDisplayKeys[];
+}): WeatherData[] {
   return weatherData.map((data, key) => {
     const latitude = data.latitude();
     const longitude = data.longitude();
@@ -20,6 +28,7 @@ export default function readWeatherData(
       elevation: data.elevation(),
       utcSec: data.utcOffsetSeconds(),
       hourly: getHourlyData(data, hourlyIndexes),
+      daily: getDailyData(data, dailyIndexes),
     };
   });
 }

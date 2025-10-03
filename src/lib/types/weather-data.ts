@@ -1,4 +1,5 @@
 import { PlaceDisplay } from "./places-types";
+import { WeatherDailiData } from "./weather-daily-display";
 import { weatherHourlyDisplayNameValues } from "./weather-hourly-display-names";
 
 export type WeatherData = {
@@ -8,12 +9,13 @@ export type WeatherData = {
   elevation: number;
   utcSec: number;
   hourly: WeatherHourlyData[];
+  daily: WeatherDailiData;
 };
 
 export type WeatherHourlyAllData = {
   [key in Exclude<weatherHourlyDisplayNameValues, "time">]?: number;
 };
 
-export interface WeatherHourlyData extends WeatherHourlyAllData {
+export type WeatherHourlyData = WeatherHourlyAllData & {
   time: Date;
-}
+};
