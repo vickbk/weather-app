@@ -1,7 +1,6 @@
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { UnitsType } from "@/lib/types/units-types";
 import { WeatherHourlyData } from "@/lib/types/weather-data";
-import { useState } from "react";
 import DayTimeElement from "../common/DayTimeElement";
 import MoreTrigger from "./data-details/MoreTriggrer";
 import { getDataDetails } from "@/lib/open-meteo/data-details";
@@ -11,13 +10,14 @@ export default function MainDataDetails({
   data: weatherData,
   units,
   daily,
+  moreHandlers: [showMore, setShowMore],
 }: {
   status: LoadingStatus;
   units: UnitsType;
   daily: { sunrise?: Date; sunset?: Date };
   data?: WeatherHourlyData;
+  moreHandlers: [boolean, (showMore: boolean) => void];
 }) {
-  const [showMore, setShowMore] = useState(false);
   const data = getDataDetails({ showMore, data: weatherData, status, units });
 
   return (

@@ -10,11 +10,15 @@ import { UnitsType } from "@/lib/types/units-types";
 export default function MainData({
   status,
   data,
-  setDailyReady,
+  externalChangers: { setDailyReady, setShowMore, showMore },
   units,
 }: {
   status: LoadingStatus;
-  setDailyReady: (ready: boolean) => void;
+  externalChangers: {
+    setDailyReady: (ready: boolean) => void;
+    setShowMore: (showMore: boolean) => void;
+    showMore: boolean;
+  };
   data?: WeatherData;
   units: UnitsType;
 }) {
@@ -36,6 +40,7 @@ export default function MainData({
         status={status}
         units={units}
         daily={{ sunrise: sunrise[0], sunset: sunset[0] }}
+        moreHandlers={[showMore, setShowMore]}
       />
       <MainDataDaily
         status={status}

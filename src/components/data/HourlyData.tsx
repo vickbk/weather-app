@@ -12,15 +12,15 @@ import reorderArray from "@/lib/globals/reorder-array";
 export default function HourlyData({
   status,
   hourly,
-  dailyReady,
+  externalChanges: { dailyReady, showMore },
   dayExternalIndex,
   onDayIndexChange,
 }: {
   status: LoadingStatus;
   hourly?: WeatherHourlyData[];
-  dailyReady: boolean;
   dayExternalIndex?: number;
   onDayIndexChange?: (index: number) => void;
+  externalChanges: { dailyReady: boolean; showMore: boolean };
 }) {
   const [dropdownCloser, setDropdownCloser] = useState<(() => void) | null>(
     null
@@ -69,7 +69,7 @@ export default function HourlyData({
       }px - 3em)`;
     }
   };
-  useEffect(resetArticleHeight, [dailyReady]);
+  useEffect(resetArticleHeight, [dailyReady, showMore]);
 
   useEffect(() => {
     window.addEventListener("resize", resetArticleHeight);
