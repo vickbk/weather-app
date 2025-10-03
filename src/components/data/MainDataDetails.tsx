@@ -27,7 +27,7 @@ export default function MainDataDetails({
           ["Precipitation", `${precipitation?.toFixed()}${precipitationUnit}`],
         ];
   return (
-    <section className="data__details grid gc-2 gc-sm-up-4 g-1">
+    <section className="data__details grid gc-2 sm-up-gc-4 g-1">
       {data.map(([title, content]: string[]) => (
         <article className="details-element neutral-700 p-1 br-1" key={title}>
           <h3 className="details-element-title">{title}</h3>
