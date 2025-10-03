@@ -13,7 +13,15 @@ export default function MainDataDetails({
   data?: WeatherHourlyData;
 }) {
   const [showMore, setShowMore] = useState(false);
-  const { precipitation, humidity, wind, ambientTemp } = weatherData ?? {};
+  const {
+    precipitation,
+    humidity,
+    wind,
+    ambientTemp,
+    uvIndex,
+    visibility,
+    surfacePressure,
+  } = weatherData ?? {};
   const data =
     status === "loading"
       ? [
@@ -29,13 +37,9 @@ export default function MainDataDetails({
           ["Precipitation", `${precipitation?.toFixed()}${precipitationUnit}`],
           ...(showMore
             ? [
-                ["Feels Like", `${ambientTemp?.toFixed()}°`],
-                ["Humidity", `${humidity?.toFixed()}%`],
-                ["Wind", `${wind?.toFixed()}${windSpeed}`],
-                [
-                  "Precipitation",
-                  `${precipitation?.toFixed()}${precipitationUnit}`,
-                ],
+                ["UV Index", `${uvIndex?.toFixed()}`],
+                ["Visibility", `${((visibility ?? 0) / 1000).toFixed()}Km`],
+                ["Air Pressure", `${surfacePressure?.toFixed()}hPa`],
               ]
             : []),
         ];
