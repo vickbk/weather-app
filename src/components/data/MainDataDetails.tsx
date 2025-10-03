@@ -3,11 +3,13 @@ import { UnitsType } from "@/lib/types/units-types";
 import { WeatherHourlyData } from "@/lib/types/weather-data";
 import { useState } from "react";
 import DayTimeElement from "../common/DayTimeElement";
+import MoreTrigger from "./data-details/MoreTriggrer";
+import { getDataDetails } from "@/lib/open-meteo/data-details";
 
 export default function MainDataDetails({
   status,
   data: weatherData,
-  units: { windSpeed, precipitation: precipitationUnit },
+  units,
   daily,
 }: {
   status: LoadingStatus;
@@ -16,36 +18,8 @@ export default function MainDataDetails({
   data?: WeatherHourlyData;
 }) {
   const [showMore, setShowMore] = useState(false);
-  const {
-    precipitation,
-    humidity,
-    wind,
-    ambientTemp,
-    uvIndex,
-    visibility,
-    surfacePressure,
-  } = weatherData ?? {};
-  const data =
-    status === "loading"
-      ? [
-          ["Feels Like", "-"],
-          ["Humidity", "-"],
-          ["Wind", "-"],
-          ["Precipitation", "-"],
-        ]
-      : [
-          ["Feels Like", `${ambientTemp?.toFixed()}°`],
-          ["Humidity", `${humidity?.toFixed()}%`],
-          ["Wind", `${wind?.toFixed()}${windSpeed}`],
-          ["Precipitation", `${precipitation?.toFixed()}${precipitationUnit}`],
-          ...(showMore
-            ? [
-                ["UV Index", `${uvIndex?.toFixed()}`],
-                ["Visibility", `${((visibility ?? 0) / 1000).toFixed()}Km`],
-                ["Air Pressure", `${surfacePressure?.toFixed()}hPa`],
-              ]
-            : []),
-        ];
+  const data = getDataDetails({ showMore, data: weatherData, status, units });
+
   return (
     <section className="data__details grid gc-2 sm-up-gc-4 g-1">
       {data.map(([title, content]: string[]) => (
@@ -55,17 +29,9 @@ export default function MainDataDetails({
         </article>
       ))}
       {showMore && <DayTimeElement daily={daily} />}
-      <div className="grid-full-width flex a-center g-1">
-        <span className="flex-grow sp-1 neutral-700"></span>
-        <button
-          type="button"
-          onClick={() => setShowMore(!showMore)}
-          className="sp-5 neutral-700 no-border sbr-5"
-        >
-          Show {showMore ? "less" : "more"}
-        </button>
-        <span className="flex-grow sp-1 neutral-700"></span>
-      </div>
+      {status !== "loading" && (
+        <MoreTrigger showMore={showMore} setShowMore={setShowMore} />
+      )}
     </section>
   );
 }
