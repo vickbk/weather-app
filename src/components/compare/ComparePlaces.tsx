@@ -63,9 +63,9 @@ export default function ComparePlaces({
           <HourlyData
             status={status}
             hourly={hourly}
-            dailyReady={true}
             dayExternalIndex={dayExternalIndex}
             onDayIndexChange={onDayIndexChange}
+            externalChanges={{ dailyReady: true, showMore: true }}
           />
           <DayTimeElement
             daily={{
