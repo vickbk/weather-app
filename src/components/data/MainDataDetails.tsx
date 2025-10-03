@@ -8,9 +8,11 @@ export default function MainDataDetails({
   status,
   data: weatherData,
   units: { windSpeed, precipitation: precipitationUnit },
+  daily,
 }: {
   status: LoadingStatus;
   units: UnitsType;
+  daily: { sunrise?: Date; sunset?: Date };
   data?: WeatherHourlyData;
 }) {
   const [showMore, setShowMore] = useState(false);
@@ -52,7 +54,7 @@ export default function MainDataDetails({
           <p className="details-element-content smt-5">{content}</p>
         </article>
       ))}
-      {showMore && <DayTimeElement />}
+      {showMore && <DayTimeElement daily={daily} />}
       <div className="grid-full-width flex a-center g-1">
         <span className="flex-grow sp-1 neutral-700"></span>
         <button

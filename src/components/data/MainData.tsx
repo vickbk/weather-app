@@ -21,6 +21,7 @@ export default function MainData({
   const current = data?.hourly.find(
     ({ time }) => time.getHours() === new Date().getHours()
   );
+  const { sunrise = [], sunset = [] } = data?.daily || {};
   return (
     <section className="data__main grid g-2">
       <MainDataOverview
@@ -30,7 +31,12 @@ export default function MainData({
         date={new Date(getDateOnly())}
         status={status}
       />
-      <MainDataDetails data={current} status={status} units={units} />
+      <MainDataDetails
+        data={current}
+        status={status}
+        units={units}
+        daily={{ sunrise: sunrise[0], sunset: sunset[0] }}
+      />
       <MainDataDaily
         status={status}
         data={data}
