@@ -38,6 +38,7 @@ export default function Dropdown({
   return (
     <article className="relative">
       <button
+        type="button"
         ref={button}
         className={`${
           specialClass && specialClass + " "

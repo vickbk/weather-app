@@ -1,0 +1,53 @@
+"use client";
+import ErrorElement from "@/components/error/ErrorElement";
+import TopHeader from "@/components/header/TopHeader";
+import React from "react";
+
+type ErrorBoundaryProps = {
+  children?: React.ReactNode;
+};
+
+type ErrorBoundaryState = {
+  hasError: boolean;
+};
+
+class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+
+    // Define a state variable to track whether is an error or not
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError(error: any) {
+    // Update state so the next render will show the fallback UI
+
+    return { hasError: true };
+  }
+  componentDidCatch(error: any, errorInfo: any) {
+    // You can use your own error logging service here
+    console.log({ error, errorInfo });
+  }
+  render() {
+    // Check if the error is thrown
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return (
+        <section className="container grid center text-center">
+          <div>
+            <TopHeader />
+            <ErrorElement />
+          </div>
+        </section>
+      );
+    }
+
+    // Return children components in case of no error
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
