@@ -9,11 +9,13 @@
   a {
     color: c.$link-color;
     text-decoration: underline;
+    &.attribution-direction-link {
+      text-decoration: none;
+    }
     @include states.active-state {
       color: c.$blue-500;
       &.attribution-direction-link {
         color: c.$neutral-0;
-        text-decoration: none;
       }
     }
   }

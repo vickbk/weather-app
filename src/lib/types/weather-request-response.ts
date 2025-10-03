@@ -2,6 +2,7 @@ import { fetchWeatherApi } from "openmeteo";
 import { weatherHourlyDisplayNameKeys } from "./weather-hourly-display-names";
 import { PlaceDisplay } from "./places-types";
 import { UnitRequestParams } from "./units-types";
+import { WeatherDailyDisplayKeys } from "./weather-daily-display";
 
 export type WeatherResponce = Awaited<
   ReturnType<typeof fetchWeatherApi>
@@ -11,6 +12,7 @@ export interface WeatherRequest extends UnitRequestParams {
   latitude: number | number[];
   longitude: number | number[];
   hourly?: weatherHourlyDisplayNameKeys[];
+  daily?: WeatherDailyDisplayKeys[];
   start_date?: string;
   end_date?: string;
   selected_city?: PlaceDisplay | PlaceDisplay[];

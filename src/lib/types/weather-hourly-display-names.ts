@@ -10,6 +10,9 @@ const weatherHourlyDisplayName = {
   wind_speed_120m: "wind120",
   wind_speed_180m: "wind180",
   weather_code: "weatherCode",
+  uv_index: "uvIndex",
+  surface_pressure: "surfacePressure",
+  visibility: "visibility",
   get(name: string): string {
     return name in this && name !== "get"
       ? this[name as weatherHourlyDisplayNameKeys]

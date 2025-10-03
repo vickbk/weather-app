@@ -16,19 +16,20 @@ export default function AppData({
 }) {
   const [daily] = data ?? [];
   const [dailyReady, setDailyReady] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   return (
     <section className="data grid g-2 mbl-3">
       <MainData
         status={status}
         data={daily}
-        setDailyReady={setDailyReady}
         units={units}
+        externalChangers={{ setDailyReady, setShowMore, showMore }}
       />
       <HourlyData
         status={status}
         hourly={daily?.hourly}
-        dailyReady={dailyReady}
+        externalChanges={{ dailyReady, showMore }}
       />
     </section>
   );

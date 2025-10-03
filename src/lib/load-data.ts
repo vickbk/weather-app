@@ -22,10 +22,14 @@ export default async function loadData({
     "wind_speed_120m",
     "wind_speed_180m",
     "weather_code",
+    "visibility",
+    "uv_index",
+    "surface_pressure",
   ],
   start_date = getDateOnly(),
   end_date = getDateOnly(getNextDay()),
   selected_city,
+  daily = ["sunrise", "sunset"],
   ...others
 }: WeatherRequest) {
   const placeName =
@@ -36,16 +40,18 @@ export default async function loadData({
         await getPlaceObject(null, { latitude, longitude })
       )) as PlaceDisplay);
 
-  return readWeatherData(
-    await fetchWeatherApi(process.env.OPEN_METEO_WEATHERFORCAST!, {
+  return readWeatherData({
+    weatherData: await fetchWeatherApi(process.env.OPEN_METEO_WEATHERFORCAST!, {
       latitude,
       longitude,
       start_date,
       end_date,
       hourly,
+      daily,
       ...others,
     }),
-    hourly,
-    placeName
-  );
+    hourlyIndexes: hourly,
+    placeName,
+    dailyIndexes: daily,
+  });
 }

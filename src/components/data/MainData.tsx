@@ -10,17 +10,22 @@ import { UnitsType } from "@/lib/types/units-types";
 export default function MainData({
   status,
   data,
-  setDailyReady,
+  externalChangers: { setDailyReady, setShowMore, showMore },
   units,
 }: {
   status: LoadingStatus;
-  setDailyReady: (ready: boolean) => void;
+  externalChangers: {
+    setDailyReady: (ready: boolean) => void;
+    setShowMore: (showMore: boolean) => void;
+    showMore: boolean;
+  };
   data?: WeatherData;
   units: UnitsType;
 }) {
   const current = data?.hourly.find(
     ({ time }) => time.getHours() === new Date().getHours()
   );
+  const { sunrise = [], sunset = [] } = data?.daily || {};
   return (
     <section className="data__main grid g-2">
       <MainDataOverview
@@ -30,7 +35,13 @@ export default function MainData({
         date={new Date(getDateOnly())}
         status={status}
       />
-      <MainDataDetails data={current} status={status} units={units} />
+      <MainDataDetails
+        data={current}
+        status={status}
+        units={units}
+        daily={{ sunrise: sunrise[0], sunset: sunset[0] }}
+        moreHandlers={[showMore, setShowMore]}
+      />
       <MainDataDaily
         status={status}
         data={data}

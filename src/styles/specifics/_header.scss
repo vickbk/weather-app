@@ -34,9 +34,9 @@
       inline-size: 100%;
       background-color: c.$neutral-700;
       color: c.$text-color;
+      border: 0.15em solid c.$neutral-900;
       &:focus {
         outline: 0.1em solid c.$neutral-0;
-        border: 0.15em solid c.$neutral-900;
       }
     }
     &-box {
@@ -52,9 +52,9 @@
     &-button {
       background-color: c.$blue-500;
       color: c.$text-color;
+      border: 0.15em solid c.$neutral-900;
       &:focus {
         outline: 0.1em solid c.$blue-500;
-        border: 0.15em solid c.$neutral-900;
       }
       &:hover {
         background-color: c.$blue-700;

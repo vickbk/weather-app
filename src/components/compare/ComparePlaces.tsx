@@ -5,13 +5,16 @@ import { Skeleton } from "@progress/kendo-react-indicators";
 import { removeFromLastCompare } from "@/lib/memorization/compare-request";
 import { PlaceDisplay } from "@/lib/types/places-types";
 import { useState } from "react";
+import DayTimeElement from "../common/DayTimeElement";
 
 export default function ComparePlaces({
   places,
   setPlaces,
   status,
 }: {
-  places?: WeatherData[] | { placeName: PlaceDisplay; hourly: undefined }[];
+  places?:
+    | WeatherData[]
+    | { placeName: PlaceDisplay; hourly: undefined; daily: undefined }[];
   setPlaces: (places: WeatherData[]) => void;
   status: LoadingStatus;
 }) {
@@ -19,7 +22,7 @@ export default function ComparePlaces({
     places ||
     Array(3)
       .fill(null)
-      .map(() => ({ placeName: "a, b", hourly: undefined }));
+      .map(() => ({ placeName: "a, b", hourly: undefined, daily: undefined }));
   const deleteItem = (selected: PlaceDisplay) => {
     setPlaces(
       (places as WeatherData[]).filter(
@@ -31,7 +34,7 @@ export default function ComparePlaces({
   const [dayExternalIndex, onDayIndexChange] = useState(0);
   return (
     <section className="pbl-3 grid gc-1 md-up-gc-2 lg-up-gc-3 g-2">
-      {places.map(({ placeName, hourly }, key) => (
+      {places.map(({ placeName, hourly, daily }, key) => (
         <section
           key={key}
           className="neutral-700 br-1 flex-column space-between"
@@ -44,7 +47,7 @@ export default function ComparePlaces({
               className="p-2 m-1"
             />
           ) : (
-            <h2 className="sp-5 flex sg-5 space-between a-center">
+            <h2 className="sp-5 flex flex-grow sg-5 space-between a-center">
               {placeName}{" "}
               {status === "ready" && (
                 <button
@@ -56,12 +59,19 @@ export default function ComparePlaces({
               )}
             </h2>
           )}
+
           <HourlyData
             status={status}
             hourly={hourly}
-            dailyReady={true}
             dayExternalIndex={dayExternalIndex}
             onDayIndexChange={onDayIndexChange}
+            externalChanges={{ dailyReady: true, showMore: true }}
+          />
+          <DayTimeElement
+            daily={{
+              sunrise: daily?.sunrise?.[dayExternalIndex],
+              sunset: daily?.sunset?.[dayExternalIndex],
+            }}
           />
         </section>
       ))}
