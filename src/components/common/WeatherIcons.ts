@@ -40,7 +40,7 @@ const weatherIcons = {
   82: [rain, "Rain showers violent"],
   85: [snow, "Snow showers slight"],
   86: [snow, "heavy"],
-  95: [storm, "	Thunderstorm: Slight or moderate"],
+  95: [storm, "Thunderstorm: Slight or moderate"],
   96: [storm, "Thunderstorm with slight"],
   99: [storm, "heavy hail"],
   get(code: number, time?: Date) {
@@ -54,4 +54,7 @@ const weatherIcons = {
 } as const;
 
 export type WeatherCode = Exclude<keyof typeof weatherIcons, "get">;
+export type WeatherCodeDescription = (typeof weatherIcons)[WeatherCode][1];
+export type WeatherIcon = { image: any; desc: WeatherCodeDescription };
+
 export default weatherIcons;
