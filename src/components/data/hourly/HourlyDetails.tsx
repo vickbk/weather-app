@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getUnits } from "@/lib/memorization/units";
 
 export default function HourlyDetails({ data }: { data: WeatherHourlyData }) {
-  const [details, setDetails] = useState([["", ""]]);
+  const [details, setDetails] = useState([["Loading", "Loading"]]);
   useEffect(() => {
     setDetails(
       getDataDetails({

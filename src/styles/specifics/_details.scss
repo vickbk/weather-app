@@ -4,12 +4,12 @@
 .details {
   &-element {
     &-title {
-      font-size: f.clamp-builder(1.2rem, 1.5rem);
+      font-size: f.clamp-builder(1.2rem, 1.3rem);
       font-weight: font.$weight-natural;
       color: c.$neutral-200;
     }
     &-content {
-      font-size: f.clamp-builder(2rem, 3rem);
+      font-size: f.clamp-builder(2rem, 2.3rem);
     }
   }
 }
