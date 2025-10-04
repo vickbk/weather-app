@@ -3,10 +3,13 @@ import DataPerHour from "./DataPerHour";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { Skeleton } from "@progress/kendo-react-indicators";
 import { WeatherHourlyData } from "@/lib/types/weather-data";
-import weatherIcons from "../common/WeatherIcons";
 import { useEffect, useRef, useState } from "react";
 import HourlyDropDown from "./HourlyDropDown";
-import { groupHourlyDataInDays } from "@/lib/open-meteo/process-hourlydata";
+import {
+  getDataForDay,
+  groupHourlyDataInDays,
+  resetHourlyContainerHeight,
+} from "@/lib/open-meteo/process-hourlydata";
 import reorderArray from "@/lib/globals/reorder-array";
 
 export default function HourlyData({
@@ -28,47 +31,26 @@ export default function HourlyData({
   const dailyData = groupHourlyDataInDays(hourly ?? []);
   const [day, setDay] = useState(0);
 
-  const getDataForDay = () => {
-    const { hourly } = dailyData[day] ?? {};
-    const now = new Date();
-    return (
-      hourly
-        // if selected day is today, filter out hours that have already passed
-        ?.filter(({ time }) => (day === 0 ? time > now : true))
-        // map to displayable format
-        .map(({ time, temp, weatherCode }) => ({
-          time: time.toLocaleTimeString("en-US", {
-            hour12: true,
-            hour: "2-digit",
-          }),
-          temp: `${temp?.toFixed()}`,
-          icon: weatherIcons.get(weatherCode!, time),
-        })) ?? []
-    );
-  };
-
-  const data = status === "loading" ? Array(8).fill({}) : getDataForDay() ?? [];
+  const data =
+    status === "loading"
+      ? Array(8).fill({})
+      : getDataForDay(dailyData[day], day) ?? [];
 
   const [articleRef, headerRef, holderRef] = Array(3)
     .fill(null)
     .map(() => useRef<HTMLElement>(null));
-  const days = reorderArray<string>(
+  const days = reorderArray(
     "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday".split(","),
     new Date().getDay() - 1
   );
-  const resetArticleHeight = () => {
-    if (
-      dailyReady &&
-      articleRef.current &&
-      headerRef.current &&
-      holderRef.current
-    ) {
-      holderRef.current.style.maxBlockSize = "600px";
-      holderRef.current.style.maxBlockSize = `calc(${
-        articleRef.current.offsetHeight - headerRef.current.offsetHeight
-      }px - 3em)`;
-    }
-  };
+  const resetArticleHeight = () =>
+    resetHourlyContainerHeight({
+      dailyReady,
+      articleRef,
+      headerRef,
+      holderRef,
+    });
+
   useEffect(resetArticleHeight, [dailyReady, showMore]);
 
   useEffect(() => {
