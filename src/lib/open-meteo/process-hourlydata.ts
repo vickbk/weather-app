@@ -1,6 +1,6 @@
 import weatherIcons from "@/components/common/WeatherIcons";
 import getDateOnly from "../date/get-date-only";
-import { HourlyData } from "../types/hourly-data-types";
+import { HourlyData, HourlyDisplayData } from "../types/hourly-data-types";
 import { WeatherHourlyData } from "../types/weather-data";
 import { RefObject } from "react";
 
@@ -18,24 +18,27 @@ export const getHourlydataDates = (hourly: WeatherHourlyData[]) => {
   return Array.from(new Set(hourly.map(({ time }) => getDateOnly(time))));
 };
 
-export const getDataForDay = (data: HourlyData, dayIndex: number) => {
-  const { hourly } = data;
+export function filterOutPassedHoursForCurrentDay(
+  data: WeatherHourlyData[],
+  dayIndex: number
+) {
   const now = new Date();
-  return (
-    hourly
-      // if selected day is today, filter out hours that have already passed
-      ?.filter(({ time }) => (dayIndex === 0 ? time > now : true))
-      // map to displayable format
-      .map(({ time, temp, weatherCode }) => ({
-        time: time.toLocaleTimeString("en-US", {
-          hour12: true,
-          hour: "2-digit",
-        }),
-        temp: `${temp?.toFixed()}`,
-        icon: weatherIcons.get(weatherCode!, time),
-      })) ?? []
-  );
-};
+  return dayIndex === 0 ? data.filter(({ time }) => time > now) : data;
+}
+export function getDataForDisplay({
+  time,
+  temp,
+  weatherCode,
+}: WeatherHourlyData) {
+  return {
+    time: time.toLocaleTimeString("en-US", {
+      hour12: true,
+      hour: "2-digit",
+    }),
+    temp: `${temp?.toFixed()}`,
+    icon: weatherIcons.get(weatherCode!, time),
+  };
+}
 
 export const resetHourlyContainerHeight = ({
   dailyReady,

@@ -2,16 +2,15 @@ import Image from "next/image";
 import dropdown from "@images/icon-dropdown.svg";
 import HourlyDetails from "./hourly/HourlyDetails";
 import { useState } from "react";
+import { WeatherHourlyData } from "@/lib/types/weather-data";
+import { getDataForDisplay } from "@/lib/open-meteo/process-hourlydata";
 
-export default function DataPerHour({
-  icon: { image, desc },
-  time,
-  temp,
-}: {
-  icon: { image: any; desc: string };
-  time: string;
-  temp: string;
-}) {
+export default function DataPerHour({ hourly }: { hourly: WeatherHourlyData }) {
+  const {
+    time,
+    temp,
+    icon: { image, desc },
+  } = getDataForDisplay(hourly);
   const [details, showDetails] = useState(false);
   const [arrow, showArrow] = useState(false);
   return (
@@ -25,7 +24,7 @@ export default function DataPerHour({
       <p className="hourly__data-time">{time}</p>
       <p className="mis-auto">{temp}°</p>
       {arrow && <Image src={dropdown} alt="" />}
-      {details && <HourlyDetails />}
+      {details && <HourlyDetails data={hourly} />}
     </article>
   );
 }

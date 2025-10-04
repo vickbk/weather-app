@@ -6,7 +6,7 @@ import { WeatherHourlyData } from "@/lib/types/weather-data";
 import { useEffect, useRef, useState } from "react";
 import HourlyDropDown from "./HourlyDropDown";
 import {
-  getDataForDay,
+  filterOutPassedHoursForCurrentDay,
   groupHourlyDataInDays,
   resetHourlyContainerHeight,
 } from "@/lib/open-meteo/process-hourlydata";
@@ -30,11 +30,10 @@ export default function HourlyData({
   );
   const dailyData = groupHourlyDataInDays(hourly ?? []);
   const [day, setDay] = useState(0);
-
   const data =
     status === "loading"
       ? Array(8).fill({})
-      : getDataForDay(dailyData[day], day) ?? [];
+      : filterOutPassedHoursForCurrentDay(dailyData[day].hourly, day);
 
   const [articleRef, headerRef, holderRef] = Array(3)
     .fill(null)
@@ -84,7 +83,7 @@ export default function HourlyData({
         />
       </section>
       <section ref={holderRef} className="hourly__data-holder grid mbls-1 g-1">
-        {data.map(({ temp, time, icon }, index) =>
+        {(data as WeatherHourlyData[]).map((hourly, index) =>
           status === "loading" ? (
             <Skeleton
               key={index}
@@ -94,7 +93,7 @@ export default function HourlyData({
               style={{ background: "hsl(243, 23%, 30%)" }}
             />
           ) : (
-            <DataPerHour key={index} temp={temp} time={time} icon={icon} />
+            <DataPerHour key={index} hourly={hourly} />
           )
         )}
       </section>
