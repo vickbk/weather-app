@@ -55,10 +55,12 @@ Users should be able to:
 - [React](https://reactjs.org/) - JS library
 - [Next.js](https://nextjs.org/) - React framework
 - [Kendo React](https://www.telerik.com/kendo-react-ui) - React Component library
+- [Open Meteo](https://open-meteo.com/) - Weather API provider
+- [Google Maps]() - Name to coordinates for better match
 
 ### What I learned
 
-In this project I learned about the Kendo React Component Library and used some of their free components here.
+In this project I learned about Open-Meteo API and the use of their provided data, I also learnt about the Kendo React Component Library and used some of their free components here.
 
 ### Useful resources
 
@@ -67,6 +69,7 @@ In this project I learned about the Kendo React Component Library and used some 
 - [Frontend Mentor](https://www.frontendmentor.io) - Currently working with frontend mentor is upskilling me and I want to learn more here... Im not yet to leave
 - [Josh Comeau](https://www.joshwcomeau.com/) - Josh Comeau is now my new favorite for learning CSS tricks with interactive courses
 - [Kendo React](https://www.telerik.com/kendo-react-ui) - This platform offers some good styled react components
+- [Open Meteo](https://open-meteo.com/) - API for weather data
 
 ## Author
 
