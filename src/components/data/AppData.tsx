@@ -2,7 +2,6 @@ import { LoadingStatus } from "@/lib/types/loading-status";
 import HourlyData from "./HourlyData";
 import MainData from "./MainData";
 import { WeatherData } from "@/lib/types/weather-data";
-import { useState } from "react";
 import { UnitsType } from "@/lib/types/units-types";
 
 export default function AppData({
@@ -15,22 +14,11 @@ export default function AppData({
   units: UnitsType;
 }) {
   const [daily] = data ?? [];
-  const [dailyReady, setDailyReady] = useState(false);
-  const [showMore, setShowMore] = useState(false);
 
   return (
     <section className="data grid g-2 mbl-3">
-      <MainData
-        status={status}
-        data={daily}
-        units={units}
-        externalChangers={{ setDailyReady, setShowMore, showMore }}
-      />
-      <HourlyData
-        status={status}
-        hourly={daily?.hourly}
-        externalChanges={{ dailyReady, showMore }}
-      />
+      <MainData status={status} data={daily} units={units} />
+      <HourlyData status={status} hourly={daily?.hourly} />
     </section>
   );
 }

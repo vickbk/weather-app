@@ -33,7 +33,7 @@ export default function ComparePlaces({
   };
   const [dayExternalIndex, onDayIndexChange] = useState(0);
   return (
-    <section className="pbl-3 grid gc-1 md-up-gc-2 lg-up-gc-3 g-2">
+    <section className="compare pbl-3 grid gc-1 md-up-gc-2 lg-up-gc-3 g-2">
       {places.map(({ placeName, hourly, daily }, key) => (
         <section
           key={key}
@@ -65,7 +65,6 @@ export default function ComparePlaces({
             hourly={hourly}
             dayExternalIndex={dayExternalIndex}
             onDayIndexChange={onDayIndexChange}
-            externalChanges={{ dailyReady: true, showMore: true }}
           />
           <DayTimeElement
             daily={{

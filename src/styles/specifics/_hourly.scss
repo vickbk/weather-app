@@ -1,7 +1,14 @@
 @use "../main/font";
 @use "../functions/" as f;
+@use "../globals/" as g;
 
 .hourly {
+  max-block-size: f.to-r-em(600);
+  @include g.mobile-queries(g.$pc) {
+    contain: size;
+    grid-template-rows: auto 1fr;
+    max-block-size: unset;
+  }
   &__title {
     font-size: f.clamp-builder(1.3rem, 1.5rem);
   }
@@ -11,8 +18,16 @@
       font-weight: font.$weight-natural;
     }
     &-holder {
-      max-block-size: f.to-r-em(600);
       overflow-y: auto;
+    }
+    .details-dropdown {
+      display: none;
+    }
+    &:hover,
+    &:focus {
+      .details-dropdown {
+        display: unset;
+      }
     }
   }
   &__loader {

@@ -8,14 +8,12 @@ import HourlyDropDown from "./HourlyDropDown";
 import {
   filterOutPassedHoursForCurrentDay,
   groupHourlyDataInDays,
-  resetHourlyContainerHeight,
 } from "@/lib/open-meteo/process-hourlydata";
 import reorderArray from "@/lib/globals/reorder-array";
 
 export default function HourlyData({
   status,
   hourly,
-  externalChanges: { dailyReady, showMore },
   dayExternalIndex,
   onDayIndexChange,
 }: {
@@ -23,7 +21,6 @@ export default function HourlyData({
   hourly?: WeatherHourlyData[];
   dayExternalIndex?: number;
   onDayIndexChange?: (index: number) => void;
-  externalChanges: { dailyReady: boolean; showMore: boolean };
 }) {
   const [dropdownCloser, setDropdownCloser] = useState<(() => void) | null>(
     null
@@ -35,27 +32,11 @@ export default function HourlyData({
       ? Array(8).fill({})
       : filterOutPassedHoursForCurrentDay(dailyData[day].hourly, day);
 
-  const [articleRef, headerRef, holderRef] = Array(3)
-    .fill(null)
-    .map(() => useRef<HTMLElement>(null));
   const days = reorderArray(
     "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday".split(","),
     new Date().getDay() - 1
   );
-  const resetArticleHeight = () =>
-    resetHourlyContainerHeight({
-      dailyReady,
-      articleRef,
-      headerRef,
-      holderRef,
-    });
 
-  useEffect(resetArticleHeight, [dailyReady, showMore]);
-
-  useEffect(() => {
-    window.addEventListener("resize", resetArticleHeight);
-    return () => window.removeEventListener("resize", resetArticleHeight);
-  }, []);
   useEffect(() => {
     onDayIndexChange?.(day);
   }, [day]);
@@ -63,11 +44,8 @@ export default function HourlyData({
     setDay(dayExternalIndex || 0);
   }, [dayExternalIndex]);
   return (
-    <article
-      ref={articleRef}
-      className="data__hourly hourly neutral-700 br-1 p-1"
-    >
-      <section ref={headerRef} className="flex space-between center">
+    <article className="data__hourly hourly grid g-1 neutral-700 br-1 p-1">
+      <section className="flex space-between center">
         <h4 className="hourly__title">Hourly forecast</h4>
         <Dropdown
           content={
@@ -82,7 +60,7 @@ export default function HourlyData({
           setCloser={setDropdownCloser}
         />
       </section>
-      <section ref={holderRef} className="hourly__data-holder grid mbls-1 g-1">
+      <section className="hourly__data-holder flex-column g-1">
         {(data as WeatherHourlyData[]).map((hourly, index) =>
           status === "loading" ? (
             <Skeleton

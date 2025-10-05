@@ -15,8 +15,8 @@ export default function DayTimeElement({
             [sunrise, sunriseIcon, "Sunrise"],
             [sunset, sunsetIcon, "Sunset"],
           ] as const
-        ).map(([time, icon, title]) => (
-          <article className="grid sm-up-flex sg-5 pbl-1 a-center">
+        ).map(([time, icon, title], key) => (
+          <article className="grid sm-up-flex sg-5 pbl-1 a-center" key={key}>
             <Image src={icon} height={50} alt={`${title} Image`} />
             <div>
               <h3 className="details-element-title">{title}</h3>

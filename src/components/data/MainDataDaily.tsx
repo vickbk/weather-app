@@ -2,26 +2,20 @@ import Image from "next/image";
 import { LoadingStatus } from "@/lib/types/loading-status";
 import { Skeleton } from "@progress/kendo-react-indicators";
 import { WeatherData } from "@/lib/types/weather-data";
-import { useEffect } from "react";
 import processDailyData from "@/actions/processDailyData";
 import { DailyDataType } from "@/lib/types/daily-data-type";
 
 export default function MainDataDaily({
   status,
   data: weatherData,
-  setDailyReady,
 }: {
   status: LoadingStatus;
   data?: WeatherData;
-  setDailyReady: (ready: boolean) => void;
 }) {
   const data =
     status === "ready" && weatherData
       ? processDailyData([weatherData])
       : Array(7).fill(null);
-  useEffect(() => {
-    setDailyReady(status === "ready");
-  }, [status]);
   return (
     <section className="main__data-daily">
       <h4 className="daily-heading mb-1">Daily Forecast</h4>

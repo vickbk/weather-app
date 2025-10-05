@@ -39,27 +39,3 @@ export function getDataForDisplay({
     icon: weatherIcons.get(weatherCode!, time),
   };
 }
-
-export const resetHourlyContainerHeight = ({
-  dailyReady,
-  articleRef,
-  headerRef,
-  holderRef,
-}: {
-  dailyReady: boolean;
-  articleRef: RefObject<HTMLElement | null>;
-  headerRef: RefObject<HTMLElement | null>;
-  holderRef: RefObject<HTMLElement | null>;
-}) => {
-  if (
-    dailyReady &&
-    articleRef.current &&
-    headerRef.current &&
-    holderRef.current
-  ) {
-    holderRef.current.style.maxBlockSize = "600px";
-    holderRef.current.style.maxBlockSize = `calc(${
-      articleRef.current.offsetHeight - headerRef.current.offsetHeight
-    }px - 3em)`;
-  }
-};
