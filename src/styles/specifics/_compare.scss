@@ -1,0 +1,7 @@
+@use "../functions/" as f;
+.compare {
+  .hourly {
+    contain: unset;
+    max-block-size: f.to-r-em(600);
+  }
+}
