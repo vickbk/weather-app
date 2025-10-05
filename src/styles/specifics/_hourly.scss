@@ -20,6 +20,15 @@
     &-holder {
       overflow-y: auto;
     }
+    .details-dropdown {
+      display: none;
+    }
+    &:hover,
+    &:focus {
+      .details-dropdown {
+        display: unset;
+      }
+    }
   }
   &__loader {
     display: block;
