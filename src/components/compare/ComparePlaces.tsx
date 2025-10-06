@@ -6,6 +6,8 @@ import { removeFromLastCompare } from "@/lib/memorization/compare-request";
 import { PlaceDisplay } from "@/lib/types/places-types";
 import { useState } from "react";
 import DayTimeElement from "../common/DayTimeElement";
+import { SvgIcon } from "@progress/kendo-react-common";
+import { xIcon } from "@progress/kendo-svg-icons";
 
 export default function ComparePlaces({
   places,
@@ -35,10 +37,7 @@ export default function ComparePlaces({
   return (
     <section className="compare pbl-3 grid gc-1 md-up-gc-2 lg-up-gc-3 g-2">
       {places.map(({ placeName, hourly, daily }, key) => (
-        <section
-          key={key}
-          className="neutral-700 br-1 flex-column space-between"
-        >
+        <section key={key} className="neutral-700 br-1 flex-column">
           {status === "loading" ? (
             <Skeleton
               shape="rectangle"
@@ -47,14 +46,18 @@ export default function ComparePlaces({
               className="p-2 m-1"
             />
           ) : (
-            <h2 className="sp-5 flex flex-grow sg-5 space-between a-center">
-              {placeName}{" "}
+            <h2 className="compare__title sp-5 smbls-5 flex sg-5 space-between a-center">
+              <span className="compare__title-text">{placeName}</span>{" "}
               {status === "ready" && (
                 <button
-                  className="orange-500 hv-out-orange-500 hv-b-neutral-700 no-border sbr-5 spbl-2 spi-5"
+                  className="neutral-700 hv-out-orange-500 a-out-orange-500 no-border br-5 sp-2 spi-4"
                   onClick={() => deleteItem(placeName)}
                 >
-                  Remove
+                  <SvgIcon
+                    icon={xIcon}
+                    color="hsl(28, 100%, 52%)"
+                    size={"xlarge"}
+                  />
                 </button>
               )}
             </h2>
@@ -66,6 +69,7 @@ export default function ComparePlaces({
             dayExternalIndex={dayExternalIndex}
             onDayIndexChange={onDayIndexChange}
           />
+          <div className="mbls-auto"></div>
           <DayTimeElement
             daily={{
               sunrise: daily?.sunrise?.[dayExternalIndex],

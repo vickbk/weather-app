@@ -1,5 +1,17 @@
 @use "../functions/" as f;
 .compare {
+  &__title {
+    font-size: f.clamp-builder(1.4rem, 1.6rem);
+    block-size: 3.5rem;
+    &-text {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
   .hourly {
     contain: unset;
     &__data-holder {
