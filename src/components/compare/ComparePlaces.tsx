@@ -51,7 +51,7 @@ export default function ComparePlaces({
               {placeName}{" "}
               {status === "ready" && (
                 <button
-                  className="orange-500 hv-out-orange-500 hv-b-neutral-700 no-border sbr-5 spbl-2 spi-5"
+                  className="orange-500 hv-out-orange-500 b-neutral-700 sbr-5 spbl-2 spi-5"
                   onClick={() => deleteItem(placeName)}
                 >
                   Remove
