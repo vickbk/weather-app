@@ -2,6 +2,8 @@
 .compare {
   .hourly {
     contain: unset;
-    max-block-size: f.to-r-em(600);
+    &__data-holder {
+      max-block-size: f.to-r-em(600);
+    }
   }
 }
