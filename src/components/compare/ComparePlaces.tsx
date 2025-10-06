@@ -46,8 +46,8 @@ export default function ComparePlaces({
               className="p-2 m-1"
             />
           ) : (
-            <h2 className="sp-5 flex sg-5 space-between a-start">
-              {placeName}{" "}
+            <h2 className="compare__title sp-5 smbls-5 flex sg-5 space-between a-center">
+              <span className="compare__title-text">{placeName}</span>{" "}
               {status === "ready" && (
                 <button
                   className="neutral-700 hv-out-orange-500 a-out-orange-500 no-border br-5 sp-2 spi-4"
@@ -69,6 +69,7 @@ export default function ComparePlaces({
             dayExternalIndex={dayExternalIndex}
             onDayIndexChange={onDayIndexChange}
           />
+          <div className="mbls-auto"></div>
           <DayTimeElement
             daily={{
               sunrise: daily?.sunrise?.[dayExternalIndex],
